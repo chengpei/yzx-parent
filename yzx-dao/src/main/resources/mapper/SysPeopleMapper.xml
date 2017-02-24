@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.SysPeopleMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.SysPeople" >
+    <result column="PU_PEOPLE_ID" property="puPeopleId" jdbcType="VARCHAR" />
+    <result column="PU_APP_ID" property="puAppId" jdbcType="VARCHAR" />
+    <result column="PU_REAL_NAME" property="puRealName" jdbcType="VARCHAR" />
+    <result column="PU_NICKNAME" property="puNickname" jdbcType="VARCHAR" />
+    <result column="PU_SEX" property="puSex" jdbcType="VARCHAR" />
+    <result column="PU_ICON" property="puIcon" jdbcType="VARCHAR" />
+    <result column="PU_CREATEDATE" property="puCreatedate" jdbcType="DATE" />
+    <result column="PU_CREATEID" property="puCreateid" jdbcType="VARCHAR" />
+    <result column="PU_UPDATEDATE" property="puUpdatedate" jdbcType="DATE" />
+    <result column="PU_UPDATEID" property="puUpdateid" jdbcType="VARCHAR" />
+    <result column="PU_ADDRESS" property="puAddress" jdbcType="VARCHAR" />
+    <result column="PU_PROVINCE" property="puProvince" jdbcType="DECIMAL" />
+    <result column="PU_CITY" property="puCity" jdbcType="DECIMAL" />
+    <result column="PU_DISTRICT" property="puDistrict" jdbcType="DECIMAL" />
+    <result column="PU_STREET" property="puStreet" jdbcType="DECIMAL" />
+    <result column="PU_REMARK" property="puRemark" jdbcType="VARCHAR" />
+    <result column="DEF1" property="def1" jdbcType="CHAR" />
+    <result column="DEF2" property="def2" jdbcType="CHAR" />
+    <result column="DEF3" property="def3" jdbcType="CHAR" />
+    <result column="DEF4" property="def4" jdbcType="CHAR" />
+    <result column="DEF5" property="def5" jdbcType="CHAR" />
+    <result column="DEF6" property="def6" jdbcType="CHAR" />
+    <result column="DEF7" property="def7" jdbcType="CHAR" />
+    <result column="DEF8" property="def8" jdbcType="CHAR" />
+    <result column="DEF9" property="def9" jdbcType="CHAR" />
+    <result column="DEF10" property="def10" jdbcType="CHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.whpe.bean.SysPeople" >
+    insert into SYS_PEOPLE (PU_PEOPLE_ID, PU_APP_ID, PU_REAL_NAME, 
+      PU_NICKNAME, PU_SEX, PU_ICON, 
+      PU_CREATEDATE, PU_CREATEID, PU_UPDATEDATE, 
+      PU_UPDATEID, PU_ADDRESS, PU_PROVINCE, 
+      PU_CITY, PU_DISTRICT, PU_STREET, 
+      PU_REMARK, DEF1, DEF2, DEF3, 
+      DEF4, DEF5, DEF6, DEF7, 
+      DEF8, DEF9, DEF10)
+    values (#{puPeopleId,jdbcType=VARCHAR}, #{puAppId,jdbcType=VARCHAR}, #{puRealName,jdbcType=VARCHAR}, 
+      #{puNickname,jdbcType=VARCHAR}, #{puSex,jdbcType=VARCHAR}, #{puIcon,jdbcType=VARCHAR}, 
+      #{puCreatedate,jdbcType=DATE}, #{puCreateid,jdbcType=VARCHAR}, #{puUpdatedate,jdbcType=DATE}, 
+      #{puUpdateid,jdbcType=VARCHAR}, #{puAddress,jdbcType=VARCHAR}, #{puProvince,jdbcType=DECIMAL}, 
+      #{puCity,jdbcType=DECIMAL}, #{puDistrict,jdbcType=DECIMAL}, #{puStreet,jdbcType=DECIMAL}, 
+      #{puRemark,jdbcType=VARCHAR}, #{def1,jdbcType=CHAR}, #{def2,jdbcType=CHAR}, #{def3,jdbcType=CHAR}, 
+      #{def4,jdbcType=CHAR}, #{def5,jdbcType=CHAR}, #{def6,jdbcType=CHAR}, #{def7,jdbcType=CHAR}, 
+      #{def8,jdbcType=CHAR}, #{def9,jdbcType=CHAR}, #{def10,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.SysPeople" >
+    insert into SYS_PEOPLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="puPeopleId != null" >
+        PU_PEOPLE_ID,
+      </if>
+      <if test="puAppId != null" >
+        PU_APP_ID,
+      </if>
+      <if test="puRealName != null" >
+        PU_REAL_NAME,
+      </if>
+      <if test="puNickname != null" >
+        PU_NICKNAME,
+      </if>
+      <if test="puSex != null" >
+        PU_SEX,
+      </if>
+      <if test="puIcon != null" >
+        PU_ICON,
+      </if>
+      <if test="puCreatedate != null" >
+        PU_CREATEDATE,
+      </if>
+      <if test="puCreateid != null" >
+        PU_CREATEID,
+      </if>
+      <if test="puUpdatedate != null" >
+        PU_UPDATEDATE,
+      </if>
+      <if test="puUpdateid != null" >
+        PU_UPDATEID,
+      </if>
+      <if test="puAddress != null" >
+        PU_ADDRESS,
+      </if>
+      <if test="puProvince != null" >
+        PU_PROVINCE,
+      </if>
+      <if test="puCity != null" >
+        PU_CITY,
+      </if>
+      <if test="puDistrict != null" >
+        PU_DISTRICT,
+      </if>
+      <if test="puStreet != null" >
+        PU_STREET,
+      </if>
+      <if test="puRemark != null" >
+        PU_REMARK,
+      </if>
+      <if test="def1 != null" >
+        DEF1,
+      </if>
+      <if test="def2 != null" >
+        DEF2,
+      </if>
+      <if test="def3 != null" >
+        DEF3,
+      </if>
+      <if test="def4 != null" >
+        DEF4,
+      </if>
+      <if test="def5 != null" >
+        DEF5,
+      </if>
+      <if test="def6 != null" >
+        DEF6,
+      </if>
+      <if test="def7 != null" >
+        DEF7,
+      </if>
+      <if test="def8 != null" >
+        DEF8,
+      </if>
+      <if test="def9 != null" >
+        DEF9,
+      </if>
+      <if test="def10 != null" >
+        DEF10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="puPeopleId != null" >
+        #{puPeopleId,jdbcType=VARCHAR},
+      </if>
+      <if test="puAppId != null" >
+        #{puAppId,jdbcType=VARCHAR},
+      </if>
+      <if test="puRealName != null" >
+        #{puRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="puNickname != null" >
+        #{puNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="puSex != null" >
+        #{puSex,jdbcType=VARCHAR},
+      </if>
+      <if test="puIcon != null" >
+        #{puIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="puCreatedate != null" >
+        #{puCreatedate,jdbcType=DATE},
+      </if>
+      <if test="puCreateid != null" >
+        #{puCreateid,jdbcType=VARCHAR},
+      </if>
+      <if test="puUpdatedate != null" >
+        #{puUpdatedate,jdbcType=DATE},
+      </if>
+      <if test="puUpdateid != null" >
+        #{puUpdateid,jdbcType=VARCHAR},
+      </if>
+      <if test="puAddress != null" >
+        #{puAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="puProvince != null" >
+        #{puProvince,jdbcType=DECIMAL},
+      </if>
+      <if test="puCity != null" >
+        #{puCity,jdbcType=DECIMAL},
+      </if>
+      <if test="puDistrict != null" >
+        #{puDistrict,jdbcType=DECIMAL},
+      </if>
+      <if test="puStreet != null" >
+        #{puStreet,jdbcType=DECIMAL},
+      </if>
+      <if test="puRemark != null" >
+        #{puRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="def1 != null" >
+        #{def1,jdbcType=CHAR},
+      </if>
+      <if test="def2 != null" >
+        #{def2,jdbcType=CHAR},
+      </if>
+      <if test="def3 != null" >
+        #{def3,jdbcType=CHAR},
+      </if>
+      <if test="def4 != null" >
+        #{def4,jdbcType=CHAR},
+      </if>
+      <if test="def5 != null" >
+        #{def5,jdbcType=CHAR},
+      </if>
+      <if test="def6 != null" >
+        #{def6,jdbcType=CHAR},
+      </if>
+      <if test="def7 != null" >
+        #{def7,jdbcType=CHAR},
+      </if>
+      <if test="def8 != null" >
+        #{def8,jdbcType=CHAR},
+      </if>
+      <if test="def9 != null" >
+        #{def9,jdbcType=CHAR},
+      </if>
+      <if test="def10 != null" >
+        #{def10,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

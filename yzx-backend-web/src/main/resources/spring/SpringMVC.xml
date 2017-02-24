@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:webflow-config="http://www.springframework.org/schema/webflow-config"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--<mvc:annotation-driven/>-->
+    <mvc:annotation-driven>
+        <!-- 使用FastJSON 作为json解析器，而非默认的Jackson -->
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json</value>
+                        <value>application/xml</value>
+                        <value>text/html</value>
+                    </list>
+                </property>
+                <property name="fastJsonConfig" ref="fastJsonConfig"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- SpringMVC容器中只注册带有@controller注解的Bean -->
+    <context:component-scan base-package="com.whpe" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+
+    <!-- FastJson 配置 -->
+    <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
+        <property name="charset" value="utf-8"/>
+        <property name="serializerFeatures">
+            <array>
+                <!-- 是否输出值为null的字段，配置就输出 -->
+                <value type="com.alibaba.fastjson.serializer.SerializerFeature">WriteMapNullValue</value>
+                <!-- 字符类型字段如果为null,输出为"",而非null -->
+                <value type="com.alibaba.fastjson.serializer.SerializerFeature">WriteNullStringAsEmpty</value>
+                <!-- Data格式化输出 -->
+                <value type="com.alibaba.fastjson.serializer.SerializerFeature">WriteDateUseDateFormat</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+
+</beans>

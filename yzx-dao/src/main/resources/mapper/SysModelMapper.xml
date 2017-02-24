@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.SysModelMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.SysModel" >
+    <id column="MODEL_ID" property="modelId" jdbcType="VARCHAR" />
+    <result column="MODEL_CODE" property="modelCode" jdbcType="VARCHAR" />
+    <result column="MODEL_NAME" property="modelName" jdbcType="VARCHAR" />
+    <result column="MODEL_PARENTID" property="modelParentid" jdbcType="VARCHAR" />
+    <result column="MODEL_URL" property="modelUrl" jdbcType="VARCHAR" />
+    <result column="MODEL_ICON" property="modelIcon" jdbcType="VARCHAR" />
+    <result column="MODEL_SORT" property="modelSort" jdbcType="DECIMAL" />
+    <result column="MODEL_ISMENU" property="modelIsmenu" jdbcType="DECIMAL" />
+    <result column="MODEL_CREATEDATE" property="modelCreatedate" jdbcType="CHAR" />
+    <result column="MODEL_CREATEID" property="modelCreateid" jdbcType="VARCHAR" />
+    <result column="MODEL_UPDATEDATE" property="modelUpdatedate" jdbcType="CHAR" />
+    <result column="MODEL_UPDATEID" property="modelUpdateid" jdbcType="VARCHAR" />
+    <result column="MODEL_TAG" property="modelTag" jdbcType="VARCHAR" />
+    <result column="DEF1" property="def1" jdbcType="CHAR" />
+    <result column="DEF2" property="def2" jdbcType="CHAR" />
+    <result column="DEF3" property="def3" jdbcType="CHAR" />
+    <result column="DEF4" property="def4" jdbcType="CHAR" />
+    <result column="DEF5" property="def5" jdbcType="CHAR" />
+    <result column="DEF6" property="def6" jdbcType="CHAR" />
+    <result column="DEF7" property="def7" jdbcType="CHAR" />
+    <result column="DEF8" property="def8" jdbcType="CHAR" />
+    <result column="DEF9" property="def9" jdbcType="CHAR" />
+    <result column="DEF10" property="def10" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MODEL_ID, MODEL_CODE, MODEL_NAME, MODEL_PARENTID, MODEL_URL, MODEL_ICON, MODEL_SORT, 
+    MODEL_ISMENU, MODEL_CREATEDATE, MODEL_CREATEID, MODEL_UPDATEDATE, MODEL_UPDATEID, 
+    MODEL_TAG, DEF1, DEF2, DEF3, DEF4, DEF5, DEF6, DEF7, DEF8, DEF9, DEF10
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_MODEL
+    where MODEL_ID = #{modelId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_MODEL
+    where MODEL_ID = #{modelId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.SysModel" >
+    insert into SYS_MODEL (MODEL_ID, MODEL_CODE, MODEL_NAME, 
+      MODEL_PARENTID, MODEL_URL, MODEL_ICON, 
+      MODEL_SORT, MODEL_ISMENU, MODEL_CREATEDATE, 
+      MODEL_CREATEID, MODEL_UPDATEDATE, MODEL_UPDATEID, 
+      MODEL_TAG, DEF1, DEF2, DEF3, 
+      DEF4, DEF5, DEF6, DEF7, 
+      DEF8, DEF9, DEF10)
+    values (#{modelId,jdbcType=VARCHAR}, #{modelCode,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, 
+      #{modelParentid,jdbcType=VARCHAR}, #{modelUrl,jdbcType=VARCHAR}, #{modelIcon,jdbcType=VARCHAR}, 
+      #{modelSort,jdbcType=DECIMAL}, #{modelIsmenu,jdbcType=DECIMAL}, #{modelCreatedate,jdbcType=CHAR}, 
+      #{modelCreateid,jdbcType=VARCHAR}, #{modelUpdatedate,jdbcType=CHAR}, #{modelUpdateid,jdbcType=VARCHAR}, 
+      #{modelTag,jdbcType=VARCHAR}, #{def1,jdbcType=CHAR}, #{def2,jdbcType=CHAR}, #{def3,jdbcType=CHAR}, 
+      #{def4,jdbcType=CHAR}, #{def5,jdbcType=CHAR}, #{def6,jdbcType=CHAR}, #{def7,jdbcType=CHAR}, 
+      #{def8,jdbcType=CHAR}, #{def9,jdbcType=CHAR}, #{def10,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.SysModel" >
+    insert into SYS_MODEL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="modelId != null" >
+        MODEL_ID,
+      </if>
+      <if test="modelCode != null" >
+        MODEL_CODE,
+      </if>
+      <if test="modelName != null" >
+        MODEL_NAME,
+      </if>
+      <if test="modelParentid != null" >
+        MODEL_PARENTID,
+      </if>
+      <if test="modelUrl != null" >
+        MODEL_URL,
+      </if>
+      <if test="modelIcon != null" >
+        MODEL_ICON,
+      </if>
+      <if test="modelSort != null" >
+        MODEL_SORT,
+      </if>
+      <if test="modelIsmenu != null" >
+        MODEL_ISMENU,
+      </if>
+      <if test="modelCreatedate != null" >
+        MODEL_CREATEDATE,
+      </if>
+      <if test="modelCreateid != null" >
+        MODEL_CREATEID,
+      </if>
+      <if test="modelUpdatedate != null" >
+        MODEL_UPDATEDATE,
+      </if>
+      <if test="modelUpdateid != null" >
+        MODEL_UPDATEID,
+      </if>
+      <if test="modelTag != null" >
+        MODEL_TAG,
+      </if>
+      <if test="def1 != null" >
+        DEF1,
+      </if>
+      <if test="def2 != null" >
+        DEF2,
+      </if>
+      <if test="def3 != null" >
+        DEF3,
+      </if>
+      <if test="def4 != null" >
+        DEF4,
+      </if>
+      <if test="def5 != null" >
+        DEF5,
+      </if>
+      <if test="def6 != null" >
+        DEF6,
+      </if>
+      <if test="def7 != null" >
+        DEF7,
+      </if>
+      <if test="def8 != null" >
+        DEF8,
+      </if>
+      <if test="def9 != null" >
+        DEF9,
+      </if>
+      <if test="def10 != null" >
+        DEF10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="modelId != null" >
+        #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCode != null" >
+        #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelParentid != null" >
+        #{modelParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelUrl != null" >
+        #{modelUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="modelIcon != null" >
+        #{modelIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="modelSort != null" >
+        #{modelSort,jdbcType=DECIMAL},
+      </if>
+      <if test="modelIsmenu != null" >
+        #{modelIsmenu,jdbcType=DECIMAL},
+      </if>
+      <if test="modelCreatedate != null" >
+        #{modelCreatedate,jdbcType=CHAR},
+      </if>
+      <if test="modelCreateid != null" >
+        #{modelCreateid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelUpdatedate != null" >
+        #{modelUpdatedate,jdbcType=CHAR},
+      </if>
+      <if test="modelUpdateid != null" >
+        #{modelUpdateid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelTag != null" >
+        #{modelTag,jdbcType=VARCHAR},
+      </if>
+      <if test="def1 != null" >
+        #{def1,jdbcType=CHAR},
+      </if>
+      <if test="def2 != null" >
+        #{def2,jdbcType=CHAR},
+      </if>
+      <if test="def3 != null" >
+        #{def3,jdbcType=CHAR},
+      </if>
+      <if test="def4 != null" >
+        #{def4,jdbcType=CHAR},
+      </if>
+      <if test="def5 != null" >
+        #{def5,jdbcType=CHAR},
+      </if>
+      <if test="def6 != null" >
+        #{def6,jdbcType=CHAR},
+      </if>
+      <if test="def7 != null" >
+        #{def7,jdbcType=CHAR},
+      </if>
+      <if test="def8 != null" >
+        #{def8,jdbcType=CHAR},
+      </if>
+      <if test="def9 != null" >
+        #{def9,jdbcType=CHAR},
+      </if>
+      <if test="def10 != null" >
+        #{def10,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.SysModel" >
+    update SYS_MODEL
+    <set >
+      <if test="modelCode != null" >
+        MODEL_CODE = #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        MODEL_NAME = #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelParentid != null" >
+        MODEL_PARENTID = #{modelParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelUrl != null" >
+        MODEL_URL = #{modelUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="modelIcon != null" >
+        MODEL_ICON = #{modelIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="modelSort != null" >
+        MODEL_SORT = #{modelSort,jdbcType=DECIMAL},
+      </if>
+      <if test="modelIsmenu != null" >
+        MODEL_ISMENU = #{modelIsmenu,jdbcType=DECIMAL},
+      </if>
+      <if test="modelCreatedate != null" >
+        MODEL_CREATEDATE = #{modelCreatedate,jdbcType=CHAR},
+      </if>
+      <if test="modelCreateid != null" >
+        MODEL_CREATEID = #{modelCreateid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelUpdatedate != null" >
+        MODEL_UPDATEDATE = #{modelUpdatedate,jdbcType=CHAR},
+      </if>
+      <if test="modelUpdateid != null" >
+        MODEL_UPDATEID = #{modelUpdateid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelTag != null" >
+        MODEL_TAG = #{modelTag,jdbcType=VARCHAR},
+      </if>
+      <if test="def1 != null" >
+        DEF1 = #{def1,jdbcType=CHAR},
+      </if>
+      <if test="def2 != null" >
+        DEF2 = #{def2,jdbcType=CHAR},
+      </if>
+      <if test="def3 != null" >
+        DEF3 = #{def3,jdbcType=CHAR},
+      </if>
+      <if test="def4 != null" >
+        DEF4 = #{def4,jdbcType=CHAR},
+      </if>
+      <if test="def5 != null" >
+        DEF5 = #{def5,jdbcType=CHAR},
+      </if>
+      <if test="def6 != null" >
+        DEF6 = #{def6,jdbcType=CHAR},
+      </if>
+      <if test="def7 != null" >
+        DEF7 = #{def7,jdbcType=CHAR},
+      </if>
+      <if test="def8 != null" >
+        DEF8 = #{def8,jdbcType=CHAR},
+      </if>
+      <if test="def9 != null" >
+        DEF9 = #{def9,jdbcType=CHAR},
+      </if>
+      <if test="def10 != null" >
+        DEF10 = #{def10,jdbcType=CHAR},
+      </if>
+    </set>
+    where MODEL_ID = #{modelId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.SysModel" >
+    update SYS_MODEL
+    set MODEL_CODE = #{modelCode,jdbcType=VARCHAR},
+      MODEL_NAME = #{modelName,jdbcType=VARCHAR},
+      MODEL_PARENTID = #{modelParentid,jdbcType=VARCHAR},
+      MODEL_URL = #{modelUrl,jdbcType=VARCHAR},
+      MODEL_ICON = #{modelIcon,jdbcType=VARCHAR},
+      MODEL_SORT = #{modelSort,jdbcType=DECIMAL},
+      MODEL_ISMENU = #{modelIsmenu,jdbcType=DECIMAL},
+      MODEL_CREATEDATE = #{modelCreatedate,jdbcType=CHAR},
+      MODEL_CREATEID = #{modelCreateid,jdbcType=VARCHAR},
+      MODEL_UPDATEDATE = #{modelUpdatedate,jdbcType=CHAR},
+      MODEL_UPDATEID = #{modelUpdateid,jdbcType=VARCHAR},
+      MODEL_TAG = #{modelTag,jdbcType=VARCHAR},
+      DEF1 = #{def1,jdbcType=CHAR},
+      DEF2 = #{def2,jdbcType=CHAR},
+      DEF3 = #{def3,jdbcType=CHAR},
+      DEF4 = #{def4,jdbcType=CHAR},
+      DEF5 = #{def5,jdbcType=CHAR},
+      DEF6 = #{def6,jdbcType=CHAR},
+      DEF7 = #{def7,jdbcType=CHAR},
+      DEF8 = #{def8,jdbcType=CHAR},
+      DEF9 = #{def9,jdbcType=CHAR},
+      DEF10 = #{def10,jdbcType=CHAR}
+    where MODEL_ID = #{modelId,jdbcType=VARCHAR}
+  </update>
+</mapper>

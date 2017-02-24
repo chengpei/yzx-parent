@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <!-- 1. 数据源  -->
+    <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- driverClassName可不配，不配根据url自动识别 -->
+        <property name="driverClassName" value="${jdbc.driverClass}"/>
+        <!-- 最大连接池数量 -->
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <!-- 初始化时建立物理连接的个数 -->
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <!--获取连接时最大等待时间，单位毫秒  -->
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <!-- 最小连接池数量 -->
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <!-- Destroy线程会检测连接的间隔时间 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
+        <!--Destory线程中如果检测到当前连接的最后活跃时间和当前时间的差值大于minEvictableIdleTimeMillis，则关闭当前连接-->
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
+        <!--用来检测连接是否有效的sql，要求是一个查询语句。 -->
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}"/>
+        <!--申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。 -->
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="testOnReturn" value="${jdbc.testOnReturn}"/>
+        <!-- -是否缓存preparedStatement，也就是PSCache -->
+        <!--<property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}"/>-->
+        <!--<property name="maxPoolPreparedStatementPerConnectionSize"-->
+        <!--value="${jdbc.maxPoolPreparedStatementPerConnectionSize}"/>-->
+        <!-- 开启Druid的监控统计功能 -->
+        <property name="filters" value="stat"/>
+        <!-- 超过时间限制是否回收 -->
+        <!--<property name="removeAbandoned" value="${jdbc.removeAbandoned}"></property>-->
+        <!-- 超时时间；单位为秒。180秒 -->
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"></property>
+        <!-- 关闭abanded连接时输出错误日志  测试用
+        <property name="logAbandoned" value="true" /> -->
+    </bean>
+
+    <!--2. 创建SqlSessionFactory，同时指定数据源-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="druidDataSource"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/**/*.xml</value>
+            </list>
+        </property>
+        <!-- 没有mybatis配置文件时，使用上一行配置 -->
+        <!--<property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            <!-- 数据库方言 -->
+                            helperDialect=oracle
+                            <!-- 分页合理化参数 -->
+                            reasonable=true
+                            <!--supportMethodsArguments=true-->
+                            <!--params=count=countSql-->
+                            <!-- 根据多数据源自动识别对应方言的分页 -->
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!--此配置为手动添加Mapper，手动一个个创建
+    <bean id="messageBoardMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.chengpei.dao.mapper.MessageBoardMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>-->
+
+    <!--
+        3. 此配置为自动添加Mapper，mybatis自动扫描加载Sql映射文件 : MapperScannerConfigurer
+            sqlSessionFactory / basePackage-->
+    <bean id="config" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.whpe.dao"/>
+        <!-- 单数据源可不配置，多数据源需要配置对应数据源sqlSessionFactoryBeanName -->
+        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />-->
+    </bean>
+
+    <!-- 4. 事务管理 : DataSourceTransactionManager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="druidDataSource"/>
+    </bean>
+
+    <!-- 5. 使用声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--
+        Spring中常用事务类型：
+            REQUIRED	支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。
+            SUPPORTS	支持当前事务，如果当前没有事务，就以非事务方式执行。
+            MANDATORY	支持当前事务，如果当前没有事务，就抛出异常。
+            REQUIRES_NEW	新建事务，如果当前存在事务，把当前事务挂起。
+            NOT_SUPPORTED	以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。
+            NEVER	以非事务方式执行，如果当前存在事务，则抛出异常。
+            REQUIRED	如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。
+     -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="do*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="modify*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="change*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="release*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- 以下两种方式都可以配置多个事务 start -->
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="servicePointcut" expression="execution(* com.whpe.service.*.*(..))"/>
+
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut"/>
+    </aop:config>
+
+</beans>

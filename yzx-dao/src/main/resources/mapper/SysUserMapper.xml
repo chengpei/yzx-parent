@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.SysUser" >
+    <result column="U_ID" property="uId" jdbcType="VARCHAR" />
+    <result column="U_APP_ID" property="uAppId" jdbcType="VARCHAR" />
+    <result column="U_PHONE" property="uPhone" jdbcType="VARCHAR" />
+    <result column="U_ACCOUNT" property="uAccount" jdbcType="VARCHAR" />
+    <result column="U_PASSWORD" property="uPassword" jdbcType="VARCHAR" />
+    <result column="U_USERTYPE" property="uUsertype" jdbcType="VARCHAR" />
+    <result column="U_LOCKED" property="uLocked" jdbcType="VARCHAR" />
+    <result column="U_ENABLED" property="uEnabled" jdbcType="VARCHAR" />
+    <result column="U_CREATEDATE" property="uCreatedate" jdbcType="DATE" />
+    <result column="U_UPDATEID" property="uUpdateid" jdbcType="VARCHAR" />
+    <result column="U_UPDATEDATE" property="uUpdatedate" jdbcType="DATE" />
+    <result column="U_CODE2" property="uCode2" jdbcType="VARCHAR" />
+    <result column="U_CODE" property="uCode" jdbcType="VARCHAR" />
+    <result column="U_PHONECHECK" property="uPhonecheck" jdbcType="DECIMAL" />
+    <result column="U_REMARK" property="uRemark" jdbcType="VARCHAR" />
+    <result column="DEF1" property="def1" jdbcType="CHAR" />
+    <result column="DEF2" property="def2" jdbcType="CHAR" />
+    <result column="DEF3" property="def3" jdbcType="CHAR" />
+    <result column="DEF4" property="def4" jdbcType="CHAR" />
+    <result column="DEF5" property="def5" jdbcType="CHAR" />
+    <result column="DEF6" property="def6" jdbcType="CHAR" />
+    <result column="DEF7" property="def7" jdbcType="CHAR" />
+    <result column="DEF8" property="def8" jdbcType="CHAR" />
+    <result column="DEF9" property="def9" jdbcType="CHAR" />
+    <result column="DEF10" property="def10" jdbcType="CHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.whpe.bean.SysUser" >
+    insert into SYS_USER (U_ID, U_APP_ID, U_PHONE, 
+      U_ACCOUNT, U_PASSWORD, U_USERTYPE, 
+      U_LOCKED, U_ENABLED, U_CREATEDATE, 
+      U_UPDATEID, U_UPDATEDATE, U_CODE2, 
+      U_CODE, U_PHONECHECK, U_REMARK, 
+      DEF1, DEF2, DEF3, DEF4, 
+      DEF5, DEF6, DEF7, DEF8, 
+      DEF9, DEF10)
+    values (#{uId,jdbcType=VARCHAR}, #{uAppId,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, 
+      #{uAccount,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}, #{uUsertype,jdbcType=VARCHAR}, 
+      #{uLocked,jdbcType=VARCHAR}, #{uEnabled,jdbcType=VARCHAR}, #{uCreatedate,jdbcType=DATE}, 
+      #{uUpdateid,jdbcType=VARCHAR}, #{uUpdatedate,jdbcType=DATE}, #{uCode2,jdbcType=VARCHAR}, 
+      #{uCode,jdbcType=VARCHAR}, #{uPhonecheck,jdbcType=DECIMAL}, #{uRemark,jdbcType=VARCHAR}, 
+      #{def1,jdbcType=CHAR}, #{def2,jdbcType=CHAR}, #{def3,jdbcType=CHAR}, #{def4,jdbcType=CHAR}, 
+      #{def5,jdbcType=CHAR}, #{def6,jdbcType=CHAR}, #{def7,jdbcType=CHAR}, #{def8,jdbcType=CHAR}, 
+      #{def9,jdbcType=CHAR}, #{def10,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.SysUser" >
+    insert into SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="uAppId != null" >
+        U_APP_ID,
+      </if>
+      <if test="uPhone != null" >
+        U_PHONE,
+      </if>
+      <if test="uAccount != null" >
+        U_ACCOUNT,
+      </if>
+      <if test="uPassword != null" >
+        U_PASSWORD,
+      </if>
+      <if test="uUsertype != null" >
+        U_USERTYPE,
+      </if>
+      <if test="uLocked != null" >
+        U_LOCKED,
+      </if>
+      <if test="uEnabled != null" >
+        U_ENABLED,
+      </if>
+      <if test="uCreatedate != null" >
+        U_CREATEDATE,
+      </if>
+      <if test="uUpdateid != null" >
+        U_UPDATEID,
+      </if>
+      <if test="uUpdatedate != null" >
+        U_UPDATEDATE,
+      </if>
+      <if test="uCode2 != null" >
+        U_CODE2,
+      </if>
+      <if test="uCode != null" >
+        U_CODE,
+      </if>
+      <if test="uPhonecheck != null" >
+        U_PHONECHECK,
+      </if>
+      <if test="uRemark != null" >
+        U_REMARK,
+      </if>
+      <if test="def1 != null" >
+        DEF1,
+      </if>
+      <if test="def2 != null" >
+        DEF2,
+      </if>
+      <if test="def3 != null" >
+        DEF3,
+      </if>
+      <if test="def4 != null" >
+        DEF4,
+      </if>
+      <if test="def5 != null" >
+        DEF5,
+      </if>
+      <if test="def6 != null" >
+        DEF6,
+      </if>
+      <if test="def7 != null" >
+        DEF7,
+      </if>
+      <if test="def8 != null" >
+        DEF8,
+      </if>
+      <if test="def9 != null" >
+        DEF9,
+      </if>
+      <if test="def10 != null" >
+        DEF10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="uAppId != null" >
+        #{uAppId,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null" >
+        #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uAccount != null" >
+        #{uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uUsertype != null" >
+        #{uUsertype,jdbcType=VARCHAR},
+      </if>
+      <if test="uLocked != null" >
+        #{uLocked,jdbcType=VARCHAR},
+      </if>
+      <if test="uEnabled != null" >
+        #{uEnabled,jdbcType=VARCHAR},
+      </if>
+      <if test="uCreatedate != null" >
+        #{uCreatedate,jdbcType=DATE},
+      </if>
+      <if test="uUpdateid != null" >
+        #{uUpdateid,jdbcType=VARCHAR},
+      </if>
+      <if test="uUpdatedate != null" >
+        #{uUpdatedate,jdbcType=DATE},
+      </if>
+      <if test="uCode2 != null" >
+        #{uCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="uCode != null" >
+        #{uCode,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhonecheck != null" >
+        #{uPhonecheck,jdbcType=DECIMAL},
+      </if>
+      <if test="uRemark != null" >
+        #{uRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="def1 != null" >
+        #{def1,jdbcType=CHAR},
+      </if>
+      <if test="def2 != null" >
+        #{def2,jdbcType=CHAR},
+      </if>
+      <if test="def3 != null" >
+        #{def3,jdbcType=CHAR},
+      </if>
+      <if test="def4 != null" >
+        #{def4,jdbcType=CHAR},
+      </if>
+      <if test="def5 != null" >
+        #{def5,jdbcType=CHAR},
+      </if>
+      <if test="def6 != null" >
+        #{def6,jdbcType=CHAR},
+      </if>
+      <if test="def7 != null" >
+        #{def7,jdbcType=CHAR},
+      </if>
+      <if test="def8 != null" >
+        #{def8,jdbcType=CHAR},
+      </if>
+      <if test="def9 != null" >
+        #{def9,jdbcType=CHAR},
+      </if>
+      <if test="def10 != null" >
+        #{def10,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
