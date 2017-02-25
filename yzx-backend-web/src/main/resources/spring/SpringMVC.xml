@@ -34,7 +34,7 @@
         <property name="serializerFeatures">
             <array>
                 <!-- 是否输出值为null的字段，配置就输出 -->
-                <value type="com.alibaba.fastjson.serializer.SerializerFeature">WriteMapNullValue</value>
+                <!--<value type="com.alibaba.fastjson.serializer.SerializerFeature">WriteMapNullValue</value>-->
                 <!-- 字符类型字段如果为null,输出为"",而非null -->
                 <value type="com.alibaba.fastjson.serializer.SerializerFeature">WriteNullStringAsEmpty</value>
                 <!-- Data格式化输出 -->

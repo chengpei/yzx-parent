@@ -51,15 +51,6 @@
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>inter</servlet-name>
-        <servlet-class>com.whpe.yzxManage.whpe.servlet.app.InterfaceServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>inter</servlet-name>
-        <url-pattern>/Yzx/app.do</url-pattern>
-    </servlet-mapping>
-
     <!-- 字符过滤器 -->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
