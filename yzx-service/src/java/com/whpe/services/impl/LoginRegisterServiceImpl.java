@@ -44,4 +44,11 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
         return 0;
     }
 
+    @Override
+    public boolean doRegister(String phoneNumber, String password) {
+        // TODO 写用户表
+
+        return true;
+    }
+
 }

@@ -8,4 +8,6 @@ public interface LoginRegisterService {
     boolean sendSMSCheckCode(String phoneNumber, String checkCode);
 
     int countCurrDaySMS(String phoneNumber);
+
+    boolean doRegister(String phoneNumber, String password);
 }

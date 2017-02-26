@@ -1,40 +1,66 @@
 package com.whpe.api;
 
 import com.whpe.bean.Result;
-import com.whpe.bean.SmsSendLog;
 import com.whpe.controller.CommonController;
 import com.whpe.services.LoginRegisterService;
 import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-@RestController
+@Controller
 public class LoginRegisterController extends CommonController{
 
     @Resource
     private LoginRegisterService loginRegisterService;
 
     @RequestMapping(value = "/api/doLogin", method = RequestMethod.POST)
-    public Result doLogin(){
+    @ResponseBody
+    public Result doLogin(String phoneNumber, String password){
+        if(StringUtils.isEmpty(phoneNumber)){
+            return new Result(false, "手机号不能为空");
+        }
+        if(StringUtils.isEmpty(password)){
+            return new Result(false, "密码不能为空");
+        }
 
 
         return new Result(true, "登陆成功");
     }
 
     @RequestMapping(value = "/api/doRegister", method = RequestMethod.POST)
-    public Result doRegister(){
-
-
-        return new Result(true, "注册成功");
+    @ResponseBody
+    public Result doRegister(String phoneNumber, String password, String checkCode, HttpSession session){
+        if(StringUtils.isEmpty(phoneNumber)){
+            return new Result(false, "手机号不能为空");
+        }
+        if(StringUtils.isEmpty(password)){
+            return new Result(false, "密码不能为空");
+        }
+        if(StringUtils.isEmpty(checkCode)){
+            return new Result(false, "验证码不能为空");
+        }
+        String rightCheckCode = (String) session.getAttribute(phoneNumber);
+        if(StringUtils.isEmpty(rightCheckCode)){
+            return new Result(false, "验证码已经失效");
+        }
+        if(!checkCode.equals(rightCheckCode)){
+            return new Result(false, "验证码错误");
+        }
+        session.removeAttribute(phoneNumber);
+        if(loginRegisterService.doRegister(phoneNumber, password)){
+            return new Result(true, "注册成功");
+        }else {
+            return new Result(false, "注册失败");
+        }
     }
 
     @RequestMapping(value = "/api/sendSMSCheckCode", method = RequestMethod.POST)
+    @ResponseBody
     public Result sendSMSCheckCode(String phoneNumber, HttpSession session){
         if(StringUtils.isEmpty(phoneNumber)){
             return new Result(false, "手机号为空");
@@ -52,6 +78,24 @@ public class LoginRegisterController extends CommonController{
         }else {
             return new Result(false, "发送失败");
         }
+    }
+
+    @RequestMapping(value = "/api/changePassword", method = RequestMethod.POST)
+    @ResponseBody
+    public Result sendSMSCheckCode(String phoneNumber,String oldPassword, String newPassword, String checkCode, HttpSession session){
+        if(StringUtils.isEmpty(phoneNumber)){
+            return new Result(false, "手机号不能为空");
+        }
+        if(StringUtils.isEmpty(oldPassword)){
+            return new Result(false, "老密码不能为空");
+        }
+        if(StringUtils.isEmpty(newPassword)){
+            return new Result(false, "新密码不能为空");
+        }
+        if(StringUtils.isEmpty(checkCode)){
+            return new Result(false, "验证码不能为空");
+        }
+        return new Result(true, "修改成功");
     }
 
 }
