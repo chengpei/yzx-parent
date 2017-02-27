@@ -14,4 +14,6 @@ public interface SysAppUserMapper {
     int updateByPrimaryKeySelective(SysAppUser record);
 
     int updateByPrimaryKey(SysAppUser record);
+
+    SysAppUser selectByCondition(SysAppUser sysAppUser);
 }

@@ -39,11 +39,33 @@
     from SYS_APP_USER
     where U_ID = #{uId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.whpe.bean.SysAppUser">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_APP_USER
+    <where>
+      <if test="uId != null">
+        and U_ID = #{uId,jdbcType=VARCHAR}
+      </if>
+      <if test="uPhone != null">
+        and U_PHONE = #{uPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="uEnabled != null">
+        and U_ENABLED = #{uEnabled,jdbcType=VARCHAR}
+      </if>
+      <if test="uPassword != null">
+        and U_PASSWORD = #{uPassword,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from SYS_APP_USER
     where U_ID = #{uId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.whpe.bean.SysAppUser" >
+    <selectKey keyProperty="uId" resultType="java.lang.String" order="BEFORE">
+      select sys_guid() from dual
+    </selectKey>
     insert into SYS_APP_USER (U_ID, U_APP_ID, U_PHONE, 
       U_ACCOUNT, U_PASSWORD, U_USERTYPE, 
       U_LOCKED, U_ENABLED, U_CREATEDATE, 
@@ -62,11 +84,12 @@
       #{def9,jdbcType=CHAR}, #{def10,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.SysAppUser" >
+    <selectKey keyProperty="uId" resultType="java.lang.String" order="BEFORE">
+      select sys_guid() from dual
+    </selectKey>
     insert into SYS_APP_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="uId != null" >
         U_ID,
-      </if>
       <if test="uAppId != null" >
         U_APP_ID,
       </if>
@@ -141,9 +164,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="uId != null" >
-        #{uId,jdbcType=VARCHAR},
-      </if>
+      #{uId,jdbcType=VARCHAR},
       <if test="uAppId != null" >
         #{uAppId,jdbcType=VARCHAR},
       </if>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.SmsSendLogMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.SmsSendLog" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="ACCEPT_PHONE" property="acceptPhone" jdbcType="VARCHAR" />
+    <result column="SMS_CONTENT" property="smsContent" jdbcType="VARCHAR" />
+    <result column="SEND_STATUS" property="sendStatus" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACCEPT_PHONE, SMS_CONTENT, SEND_STATUS, REMARK, CREATE_TIME, SEND_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SMS_SEND_LOG
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="countCurrDaySMS" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT COUNT(1) from SMS_SEND_LOG where ACCEPT_PHONE=#{acceptPhone,jdbcType=VARCHAR}
+    and trunc(sysdate)=trunc(CREATE_TIME)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SMS_SEND_LOG
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.SmsSendLog" >
+    insert into SMS_SEND_LOG (ID, ACCEPT_PHONE, SMS_CONTENT, 
+      SEND_STATUS, REMARK, CREATE_TIME, 
+      SEND_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{acceptPhone,jdbcType=VARCHAR}, #{smsContent,jdbcType=VARCHAR}, 
+      #{sendStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{sendTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.SmsSendLog" >
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+      select sms_send_log_seq.nextval from dual
+    </selectKey>
+    insert into SMS_SEND_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="acceptPhone != null" >
+        ACCEPT_PHONE,
+      </if>
+      <if test="smsContent != null" >
+        SMS_CONTENT,
+      </if>
+      <if test="sendStatus != null" >
+        SEND_STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="acceptPhone != null" >
+        #{acceptPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null" >
+        #{smsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        #{sendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.SmsSendLog" >
+    update SMS_SEND_LOG
+    <set >
+      <if test="acceptPhone != null" >
+        ACCEPT_PHONE = #{acceptPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null" >
+        SMS_CONTENT = #{smsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        SEND_STATUS = #{sendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME = #{sendTime,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.SmsSendLog" >
+    update SMS_SEND_LOG
+    set ACCEPT_PHONE = #{acceptPhone,jdbcType=VARCHAR},
+      SMS_CONTENT = #{smsContent,jdbcType=VARCHAR},
+      SEND_STATUS = #{sendStatus,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      SEND_TIME = #{sendTime,jdbcType=DATE}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,8 +1,10 @@
 package com.whpe.api;
 
 import com.whpe.bean.Result;
+import com.whpe.bean.SysAppUser;
 import com.whpe.controller.CommonController;
 import com.whpe.services.LoginRegisterService;
+import com.whpe.utils.MD5Utils;
 import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +29,13 @@ public class LoginRegisterController extends CommonController{
         if(StringUtils.isEmpty(password)){
             return new Result(false, "密码不能为空");
         }
-
-
-        return new Result(true, "登陆成功");
+        SysAppUser sysAppUser = loginRegisterService.doLogin(phoneNumber, password);
+        if(sysAppUser == null){
+            return new Result(false, "用户名或密码不正确");
+        }
+        Result result = new Result(true, "登陆成功");
+        result.put("token", sysAppUser.getDef1());
+        return result;
     }
 
     @RequestMapping(value = "/api/doRegister", method = RequestMethod.POST)
@@ -50,6 +56,10 @@ public class LoginRegisterController extends CommonController{
         }
         if(!checkCode.equals(rightCheckCode)){
             return new Result(false, "验证码错误");
+        }
+        // 判断该手机号是否已经注册
+        if(loginRegisterService.checkPhoneExist(phoneNumber)){
+            return new Result(false, "该手机号已经注册过");
         }
         session.removeAttribute(phoneNumber);
         if(loginRegisterService.doRegister(phoneNumber, password)){
@@ -82,7 +92,7 @@ public class LoginRegisterController extends CommonController{
 
     @RequestMapping(value = "/api/changePassword", method = RequestMethod.POST)
     @ResponseBody
-    public Result sendSMSCheckCode(String phoneNumber,String oldPassword, String newPassword, String checkCode, HttpSession session){
+    public Result changePassword(String phoneNumber,String oldPassword, String newPassword, String checkCode, HttpSession session){
         if(StringUtils.isEmpty(phoneNumber)){
             return new Result(false, "手机号不能为空");
         }
@@ -95,7 +105,31 @@ public class LoginRegisterController extends CommonController{
         if(StringUtils.isEmpty(checkCode)){
             return new Result(false, "验证码不能为空");
         }
-        return new Result(true, "修改成功");
+
+        String rightCheckCode = (String) session.getAttribute(phoneNumber);
+        if(StringUtils.isEmpty(rightCheckCode)){
+            return new Result(false, "验证码已经失效");
+        }
+        if(!checkCode.equals(rightCheckCode)){
+            return new Result(false, "验证码错误");
+        }
+
+        // 检查老密码是否正确
+        SysAppUser sysAppUser = new SysAppUser();
+        sysAppUser.setuPhone(phoneNumber);
+        sysAppUser.setuPassword(MD5Utils.getMD5(oldPassword).toString());
+        SysAppUser appUser = loginRegisterService.selectBeanByCondition(sysAppUser);
+        if(appUser == null){
+            return new Result(false, "老密码不正确");
+        }
+
+        appUser.setuPassword(newPassword);
+        if(loginRegisterService.updateByPrimaryKeySelective(appUser) > 0){
+            return new Result(true, "修改成功");
+        }else {
+            return new Result(false, "修改失败");
+        }
+
     }
 
 }

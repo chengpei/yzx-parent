@@ -1,19 +1,21 @@
 package com.whpe.bean;
 
-/**
- * Created by chengpei on 2017/2/26.
- */
-public class SmsSendLog {
+import java.util.Date;
 
+public class SmsSendLog {
     private Long id;
 
     private String acceptPhone;
 
     private String smsContent;
 
-    private String sendStatus; // 0-æœªå‘é€  1-æ­£åœ¨å‘é€  2-å‘é€æˆåŠŸ  3-å‘é€å¤±è´¥
+    private String sendStatus; // 0-Î´·¢ËÍ  1-ÕıÔÚ·¢ËÍ  2-·¢ËÍ³É¹¦  3-·¢ËÍÊ§°Ü
 
     private String remark;
+
+    private Date createTime;
+
+    private Date sendTime;
 
     public Long getId() {
         return id;
@@ -28,7 +30,7 @@ public class SmsSendLog {
     }
 
     public void setAcceptPhone(String acceptPhone) {
-        this.acceptPhone = acceptPhone;
+        this.acceptPhone = acceptPhone == null ? null : acceptPhone.trim();
     }
 
     public String getSmsContent() {
@@ -36,7 +38,7 @@ public class SmsSendLog {
     }
 
     public void setSmsContent(String smsContent) {
-        this.smsContent = smsContent;
+        this.smsContent = smsContent == null ? null : smsContent.trim();
     }
 
     public String getSendStatus() {
@@ -44,7 +46,7 @@ public class SmsSendLog {
     }
 
     public void setSendStatus(String sendStatus) {
-        this.sendStatus = sendStatus;
+        this.sendStatus = sendStatus == null ? null : sendStatus.trim();
     }
 
     public String getRemark() {
@@ -52,6 +54,22 @@ public class SmsSendLog {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark;
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
     }
 }
