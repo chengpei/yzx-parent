@@ -32,18 +32,18 @@
 		</javaClientGenerator>
 		
 
-		<table tableName="sys_model" enableCountByExample="false" enableSelectByExample="false"
-			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
-		/>
+		<!--<table tableName="sys_model" enableCountByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+		<!--/>-->
 		<table tableName="sys_people" enableCountByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
 				/>
-		<table tableName="sys_app_user" enableCountByExample="false" enableSelectByExample="false"
-			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
-				/>
-		<table tableName="sys_user" enableCountByExample="false" enableSelectByExample="false"
-			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
-				/>
+		<!--<table tableName="sys_app_user" enableCountByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+				<!--/>-->
+		<!--<table tableName="sys_user" enableCountByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+				<!--/>-->
 
 	</context>
     

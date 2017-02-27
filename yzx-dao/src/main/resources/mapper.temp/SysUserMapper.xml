@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.whpe.dao.SysUserMapper" >
   <resultMap id="BaseResultMap" type="com.whpe.bean.SysUser" >
-    <result column="U_ID" property="uId" jdbcType="VARCHAR" />
+    <id column="U_ID" property="uId" jdbcType="VARCHAR" />
     <result column="U_APP_ID" property="uAppId" jdbcType="VARCHAR" />
     <result column="U_PHONE" property="uPhone" jdbcType="VARCHAR" />
     <result column="U_ACCOUNT" property="uAccount" jdbcType="VARCHAR" />
@@ -28,6 +28,21 @@
     <result column="DEF9" property="def9" jdbcType="CHAR" />
     <result column="DEF10" property="def10" jdbcType="CHAR" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    U_ID, U_APP_ID, U_PHONE, U_ACCOUNT, U_PASSWORD, U_USERTYPE, U_LOCKED, U_ENABLED, 
+    U_CREATEDATE, U_UPDATEID, U_UPDATEDATE, U_CODE2, U_CODE, U_PHONECHECK, U_REMARK, 
+    DEF1, DEF2, DEF3, DEF4, DEF5, DEF6, DEF7, DEF8, DEF9, DEF10
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_USER
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_USER
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.whpe.bean.SysUser" >
     insert into SYS_USER (U_ID, U_APP_ID, U_PHONE, 
       U_ACCOUNT, U_PASSWORD, U_USERTYPE, 
@@ -203,4 +218,110 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.SysUser" >
+    update SYS_USER
+    <set >
+      <if test="uAppId != null" >
+        U_APP_ID = #{uAppId,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null" >
+        U_PHONE = #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uAccount != null" >
+        U_ACCOUNT = #{uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uUsertype != null" >
+        U_USERTYPE = #{uUsertype,jdbcType=VARCHAR},
+      </if>
+      <if test="uLocked != null" >
+        U_LOCKED = #{uLocked,jdbcType=VARCHAR},
+      </if>
+      <if test="uEnabled != null" >
+        U_ENABLED = #{uEnabled,jdbcType=VARCHAR},
+      </if>
+      <if test="uCreatedate != null" >
+        U_CREATEDATE = #{uCreatedate,jdbcType=DATE},
+      </if>
+      <if test="uUpdateid != null" >
+        U_UPDATEID = #{uUpdateid,jdbcType=VARCHAR},
+      </if>
+      <if test="uUpdatedate != null" >
+        U_UPDATEDATE = #{uUpdatedate,jdbcType=DATE},
+      </if>
+      <if test="uCode2 != null" >
+        U_CODE2 = #{uCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="uCode != null" >
+        U_CODE = #{uCode,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhonecheck != null" >
+        U_PHONECHECK = #{uPhonecheck,jdbcType=DECIMAL},
+      </if>
+      <if test="uRemark != null" >
+        U_REMARK = #{uRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="def1 != null" >
+        DEF1 = #{def1,jdbcType=CHAR},
+      </if>
+      <if test="def2 != null" >
+        DEF2 = #{def2,jdbcType=CHAR},
+      </if>
+      <if test="def3 != null" >
+        DEF3 = #{def3,jdbcType=CHAR},
+      </if>
+      <if test="def4 != null" >
+        DEF4 = #{def4,jdbcType=CHAR},
+      </if>
+      <if test="def5 != null" >
+        DEF5 = #{def5,jdbcType=CHAR},
+      </if>
+      <if test="def6 != null" >
+        DEF6 = #{def6,jdbcType=CHAR},
+      </if>
+      <if test="def7 != null" >
+        DEF7 = #{def7,jdbcType=CHAR},
+      </if>
+      <if test="def8 != null" >
+        DEF8 = #{def8,jdbcType=CHAR},
+      </if>
+      <if test="def9 != null" >
+        DEF9 = #{def9,jdbcType=CHAR},
+      </if>
+      <if test="def10 != null" >
+        DEF10 = #{def10,jdbcType=CHAR},
+      </if>
+    </set>
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.SysUser" >
+    update SYS_USER
+    set U_APP_ID = #{uAppId,jdbcType=VARCHAR},
+      U_PHONE = #{uPhone,jdbcType=VARCHAR},
+      U_ACCOUNT = #{uAccount,jdbcType=VARCHAR},
+      U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+      U_USERTYPE = #{uUsertype,jdbcType=VARCHAR},
+      U_LOCKED = #{uLocked,jdbcType=VARCHAR},
+      U_ENABLED = #{uEnabled,jdbcType=VARCHAR},
+      U_CREATEDATE = #{uCreatedate,jdbcType=DATE},
+      U_UPDATEID = #{uUpdateid,jdbcType=VARCHAR},
+      U_UPDATEDATE = #{uUpdatedate,jdbcType=DATE},
+      U_CODE2 = #{uCode2,jdbcType=VARCHAR},
+      U_CODE = #{uCode,jdbcType=VARCHAR},
+      U_PHONECHECK = #{uPhonecheck,jdbcType=DECIMAL},
+      U_REMARK = #{uRemark,jdbcType=VARCHAR},
+      DEF1 = #{def1,jdbcType=CHAR},
+      DEF2 = #{def2,jdbcType=CHAR},
+      DEF3 = #{def3,jdbcType=CHAR},
+      DEF4 = #{def4,jdbcType=CHAR},
+      DEF5 = #{def5,jdbcType=CHAR},
+      DEF6 = #{def6,jdbcType=CHAR},
+      DEF7 = #{def7,jdbcType=CHAR},
+      DEF8 = #{def8,jdbcType=CHAR},
+      DEF9 = #{def9,jdbcType=CHAR},
+      DEF10 = #{def10,jdbcType=CHAR}
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </update>
 </mapper>

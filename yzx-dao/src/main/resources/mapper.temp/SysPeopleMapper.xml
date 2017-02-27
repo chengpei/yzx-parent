@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.whpe.dao.SysPeopleMapper" >
   <resultMap id="BaseResultMap" type="com.whpe.bean.SysPeople" >
-    <result column="PU_PEOPLE_ID" property="puPeopleId" jdbcType="VARCHAR" />
+    <id column="PU_PEOPLE_ID" property="puPeopleId" jdbcType="VARCHAR" />
     <result column="PU_APP_ID" property="puAppId" jdbcType="VARCHAR" />
     <result column="PU_REAL_NAME" property="puRealName" jdbcType="VARCHAR" />
     <result column="PU_NICKNAME" property="puNickname" jdbcType="VARCHAR" />
@@ -29,6 +29,21 @@
     <result column="DEF9" property="def9" jdbcType="CHAR" />
     <result column="DEF10" property="def10" jdbcType="CHAR" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    PU_PEOPLE_ID, PU_APP_ID, PU_REAL_NAME, PU_NICKNAME, PU_SEX, PU_ICON, PU_CREATEDATE, 
+    PU_CREATEID, PU_UPDATEDATE, PU_UPDATEID, PU_ADDRESS, PU_PROVINCE, PU_CITY, PU_DISTRICT, 
+    PU_STREET, PU_REMARK, DEF1, DEF2, DEF3, DEF4, DEF5, DEF6, DEF7, DEF8, DEF9, DEF10
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_PEOPLE
+    where PU_PEOPLE_ID = #{puPeopleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_PEOPLE
+    where PU_PEOPLE_ID = #{puPeopleId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.whpe.bean.SysPeople" >
     insert into SYS_PEOPLE (PU_PEOPLE_ID, PU_APP_ID, PU_REAL_NAME, 
       PU_NICKNAME, PU_SEX, PU_ICON, 
@@ -210,4 +225,114 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.SysPeople" >
+    update SYS_PEOPLE
+    <set >
+      <if test="puAppId != null" >
+        PU_APP_ID = #{puAppId,jdbcType=VARCHAR},
+      </if>
+      <if test="puRealName != null" >
+        PU_REAL_NAME = #{puRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="puNickname != null" >
+        PU_NICKNAME = #{puNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="puSex != null" >
+        PU_SEX = #{puSex,jdbcType=VARCHAR},
+      </if>
+      <if test="puIcon != null" >
+        PU_ICON = #{puIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="puCreatedate != null" >
+        PU_CREATEDATE = #{puCreatedate,jdbcType=DATE},
+      </if>
+      <if test="puCreateid != null" >
+        PU_CREATEID = #{puCreateid,jdbcType=VARCHAR},
+      </if>
+      <if test="puUpdatedate != null" >
+        PU_UPDATEDATE = #{puUpdatedate,jdbcType=DATE},
+      </if>
+      <if test="puUpdateid != null" >
+        PU_UPDATEID = #{puUpdateid,jdbcType=VARCHAR},
+      </if>
+      <if test="puAddress != null" >
+        PU_ADDRESS = #{puAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="puProvince != null" >
+        PU_PROVINCE = #{puProvince,jdbcType=DECIMAL},
+      </if>
+      <if test="puCity != null" >
+        PU_CITY = #{puCity,jdbcType=DECIMAL},
+      </if>
+      <if test="puDistrict != null" >
+        PU_DISTRICT = #{puDistrict,jdbcType=DECIMAL},
+      </if>
+      <if test="puStreet != null" >
+        PU_STREET = #{puStreet,jdbcType=DECIMAL},
+      </if>
+      <if test="puRemark != null" >
+        PU_REMARK = #{puRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="def1 != null" >
+        DEF1 = #{def1,jdbcType=CHAR},
+      </if>
+      <if test="def2 != null" >
+        DEF2 = #{def2,jdbcType=CHAR},
+      </if>
+      <if test="def3 != null" >
+        DEF3 = #{def3,jdbcType=CHAR},
+      </if>
+      <if test="def4 != null" >
+        DEF4 = #{def4,jdbcType=CHAR},
+      </if>
+      <if test="def5 != null" >
+        DEF5 = #{def5,jdbcType=CHAR},
+      </if>
+      <if test="def6 != null" >
+        DEF6 = #{def6,jdbcType=CHAR},
+      </if>
+      <if test="def7 != null" >
+        DEF7 = #{def7,jdbcType=CHAR},
+      </if>
+      <if test="def8 != null" >
+        DEF8 = #{def8,jdbcType=CHAR},
+      </if>
+      <if test="def9 != null" >
+        DEF9 = #{def9,jdbcType=CHAR},
+      </if>
+      <if test="def10 != null" >
+        DEF10 = #{def10,jdbcType=CHAR},
+      </if>
+    </set>
+    where PU_PEOPLE_ID = #{puPeopleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.SysPeople" >
+    update SYS_PEOPLE
+    set PU_APP_ID = #{puAppId,jdbcType=VARCHAR},
+      PU_REAL_NAME = #{puRealName,jdbcType=VARCHAR},
+      PU_NICKNAME = #{puNickname,jdbcType=VARCHAR},
+      PU_SEX = #{puSex,jdbcType=VARCHAR},
+      PU_ICON = #{puIcon,jdbcType=VARCHAR},
+      PU_CREATEDATE = #{puCreatedate,jdbcType=DATE},
+      PU_CREATEID = #{puCreateid,jdbcType=VARCHAR},
+      PU_UPDATEDATE = #{puUpdatedate,jdbcType=DATE},
+      PU_UPDATEID = #{puUpdateid,jdbcType=VARCHAR},
+      PU_ADDRESS = #{puAddress,jdbcType=VARCHAR},
+      PU_PROVINCE = #{puProvince,jdbcType=DECIMAL},
+      PU_CITY = #{puCity,jdbcType=DECIMAL},
+      PU_DISTRICT = #{puDistrict,jdbcType=DECIMAL},
+      PU_STREET = #{puStreet,jdbcType=DECIMAL},
+      PU_REMARK = #{puRemark,jdbcType=VARCHAR},
+      DEF1 = #{def1,jdbcType=CHAR},
+      DEF2 = #{def2,jdbcType=CHAR},
+      DEF3 = #{def3,jdbcType=CHAR},
+      DEF4 = #{def4,jdbcType=CHAR},
+      DEF5 = #{def5,jdbcType=CHAR},
+      DEF6 = #{def6,jdbcType=CHAR},
+      DEF7 = #{def7,jdbcType=CHAR},
+      DEF8 = #{def8,jdbcType=CHAR},
+      DEF9 = #{def9,jdbcType=CHAR},
+      DEF10 = #{def10,jdbcType=CHAR}
+    where PU_PEOPLE_ID = #{puPeopleId,jdbcType=VARCHAR}
+  </update>
 </mapper>
