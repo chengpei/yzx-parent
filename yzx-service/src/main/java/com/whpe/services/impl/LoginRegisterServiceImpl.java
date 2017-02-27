@@ -35,6 +35,7 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
         SmsSendLog smsSendLog = new SmsSendLog();
         smsSendLog.setAcceptPhone(phoneNumber);
         smsSendLog.setSmsContent("您的验证码为{" + checkCode + "}");
+        smsSendLog.setCreateTime(new Date());
         try {
             if(sendSMSService.sendSms(smsSendLog)){
                 smsSendLog.setSendStatus("2");

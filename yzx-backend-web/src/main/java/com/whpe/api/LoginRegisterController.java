@@ -122,7 +122,7 @@ public class LoginRegisterController extends CommonController{
         if(appUser == null){
             return new Result(false, "老密码不正确");
         }
-
+        session.removeAttribute(phoneNumber);
         appUser.setuPassword(MD5Utils.getMD5(newPassword).toString());
         if(loginRegisterService.updateByPrimaryKeySelective(appUser) > 0){
             return new Result(true, "修改成功");

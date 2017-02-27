@@ -32,8 +32,8 @@
       SEND_STATUS, REMARK, CREATE_TIME, 
       SEND_TIME)
     values (#{id,jdbcType=DECIMAL}, #{acceptPhone,jdbcType=VARCHAR}, #{smsContent,jdbcType=VARCHAR}, 
-      #{sendStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
-      #{sendTime,jdbcType=DATE})
+      #{sendStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{sendTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.SmsSendLog" >
     <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
@@ -80,10 +80,10 @@
         #{remark,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="sendTime != null" >
-        #{sendTime,jdbcType=DATE},
+        #{sendTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -103,10 +103,10 @@
         REMARK = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        CREATE_TIME = #{createTime,jdbcType=DATE},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="sendTime != null" >
-        SEND_TIME = #{sendTime,jdbcType=DATE},
+        SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where ID = #{id,jdbcType=DECIMAL}
@@ -117,8 +117,8 @@
       SMS_CONTENT = #{smsContent,jdbcType=VARCHAR},
       SEND_STATUS = #{sendStatus,jdbcType=VARCHAR},
       REMARK = #{remark,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=DATE},
-      SEND_TIME = #{sendTime,jdbcType=DATE}
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      SEND_TIME = #{sendTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=DECIMAL}
   </update>
 </mapper>
