@@ -3,7 +3,7 @@
 <log4j:configuration>
 
 	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="${catalina.home}/logs/bottleLog/bottle.log"/>
+		<param name="File" value="${catalina.home}/logs/yzxLog/yzx.log"/>
 		<param name="DatePattern" value="-yyyy-MM-dd"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} - [%p]-[%c] - %m%n"/>
