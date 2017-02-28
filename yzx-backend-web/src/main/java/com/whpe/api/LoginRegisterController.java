@@ -40,22 +40,12 @@ public class LoginRegisterController extends CommonController{
 
     @RequestMapping(value = "/api/doRegister", method = RequestMethod.POST)
     @ResponseBody
-    public Result doRegister(String phoneNumber, String password, String checkCode, HttpSession session){
+    public Result doRegister(String phoneNumber, String password, HttpSession session){
         if(StringUtils.isEmpty(phoneNumber)){
             return new Result(false, "手机号不能为空");
         }
         if(StringUtils.isEmpty(password)){
             return new Result(false, "密码不能为空");
-        }
-        if(StringUtils.isEmpty(checkCode)){
-            return new Result(false, "验证码不能为空");
-        }
-        String rightCheckCode = (String) session.getAttribute(phoneNumber);
-        if(StringUtils.isEmpty(rightCheckCode)){
-            return new Result(false, "验证码已经失效");
-        }
-        if(!checkCode.equals(rightCheckCode)){
-            return new Result(false, "验证码错误");
         }
         // 判断该手机号是否已经注册
         if(loginRegisterService.checkPhoneExist(phoneNumber)){
@@ -71,9 +61,12 @@ public class LoginRegisterController extends CommonController{
 
     @RequestMapping(value = "/api/sendSMSCheckCode", method = RequestMethod.POST)
     @ResponseBody
-    public Result sendSMSCheckCode(String phoneNumber, HttpSession session){
+    public Result sendSMSCheckCode(String phoneNumber, String smsType, HttpSession session){
         if(StringUtils.isEmpty(phoneNumber)){
             return new Result(false, "手机号为空");
+        }
+        if(StringUtils.isEmpty(smsType)){
+            return new Result(false, "短信类型为空");
         }
         // 统计该手机号当天发送的短信次数
         if(loginRegisterService.countCurrDaySMS(phoneNumber) > 5){
@@ -81,7 +74,7 @@ public class LoginRegisterController extends CommonController{
         }
         String checkCode = StringUtils.getRadomString(6);
         logger.debug("生成的验证码为 == " + checkCode);
-        if(loginRegisterService.sendSMSCheckCode(phoneNumber, checkCode)){
+        if(loginRegisterService.sendSMSCheckCode(phoneNumber, smsType, checkCode)){
             // session中存放手机号对应的验证码
             session.setAttribute(phoneNumber, checkCode);
             return new Result(true, "发送成功");
@@ -92,44 +85,48 @@ public class LoginRegisterController extends CommonController{
 
     @RequestMapping(value = "/api/changePassword", method = RequestMethod.POST)
     @ResponseBody
-    public Result changePassword(String phoneNumber,String oldPassword, String newPassword, String checkCode, HttpSession session){
+    public Result changePassword(String phoneNumber, String newPassword, HttpSession session){
         if(StringUtils.isEmpty(phoneNumber)){
             return new Result(false, "手机号不能为空");
-        }
-        if(StringUtils.isEmpty(oldPassword)){
-            return new Result(false, "老密码不能为空");
         }
         if(StringUtils.isEmpty(newPassword)){
             return new Result(false, "新密码不能为空");
         }
-        if(StringUtils.isEmpty(checkCode)){
-            return new Result(false, "验证码不能为空");
-        }
 
-        String rightCheckCode = (String) session.getAttribute(phoneNumber);
-        if(StringUtils.isEmpty(rightCheckCode)){
-            return new Result(false, "验证码已经失效");
-        }
-        if(!checkCode.equals(rightCheckCode)){
-            return new Result(false, "验证码错误");
-        }
-
-        // 检查老密码是否正确
+        // 检查用户是否存在
         SysAppUser sysAppUser = new SysAppUser();
         sysAppUser.setuPhone(phoneNumber);
-        sysAppUser.setuPassword(MD5Utils.getMD5(oldPassword).toString());
         SysAppUser appUser = loginRegisterService.selectBeanByCondition(sysAppUser);
         if(appUser == null){
-            return new Result(false, "老密码不正确");
+            return new Result(false, "用户没有注册");
         }
-        session.removeAttribute(phoneNumber);
         appUser.setuPassword(MD5Utils.getMD5(newPassword).toString());
         if(loginRegisterService.updateByPrimaryKeySelective(appUser) > 0){
             return new Result(true, "修改成功");
         }else {
             return new Result(false, "修改失败");
         }
+    }
 
+    @RequestMapping(value = "/api/examineCheckCode", method = RequestMethod.POST)
+    @ResponseBody
+    public Result examineCheckCode(String phoneNumber, String checkCode, HttpSession session){
+        if(StringUtils.isEmpty(phoneNumber)){
+            return new Result(false, "手机号不能为空");
+        }
+        if(StringUtils.isEmpty(checkCode)){
+            return new Result(false, "验证码不能为空");
+        }
+        String rightCheckCode = (String) session.getAttribute(phoneNumber);
+        if(StringUtils.isEmpty(rightCheckCode)){
+            return new Result(false, "验证码已经失效");
+        }
+        if(!checkCode.equals(rightCheckCode)){
+            return new Result(false, "验证码错误");
+        }else {
+            session.removeAttribute(phoneNumber);
+            return new Result(true, "验证码正确");
+        }
     }
 
 }

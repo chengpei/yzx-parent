@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.SmsTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.SmsTemplate" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="TEMPLATE_CONTENT" property="templateContent" jdbcType="VARCHAR" />
+    <result column="TEMPLATE_TYPE" property="templateType" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TEMPLATE_CONTENT, TEMPLATE_TYPE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SMS_TEMPLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectByTemplateType" resultMap="BaseResultMap" parameterType="com.whpe.bean.SmsTemplate">
+    select
+    <include refid="Base_Column_List" />
+    from SMS_TEMPLATE WHERE TEMPLATE_TYPE = #{templateType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SMS_TEMPLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.SmsTemplate" >
+    insert into SMS_TEMPLATE (ID, TEMPLATE_CONTENT, TEMPLATE_TYPE, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{templateContent,jdbcType=VARCHAR}, #{templateType,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.SmsTemplate" >
+    insert into SMS_TEMPLATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="templateContent != null" >
+        TEMPLATE_CONTENT,
+      </if>
+      <if test="templateType != null" >
+        TEMPLATE_TYPE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="templateContent != null" >
+        #{templateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="templateType != null" >
+        #{templateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.SmsTemplate" >
+    update SMS_TEMPLATE
+    <set >
+      <if test="templateContent != null" >
+        TEMPLATE_CONTENT = #{templateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="templateType != null" >
+        TEMPLATE_TYPE = #{templateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.SmsTemplate" >
+    update SMS_TEMPLATE
+    set TEMPLATE_CONTENT = #{templateContent,jdbcType=VARCHAR},
+      TEMPLATE_TYPE = #{templateType,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

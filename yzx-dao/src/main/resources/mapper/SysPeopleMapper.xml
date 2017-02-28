@@ -55,7 +55,7 @@
       DEF8, DEF9, DEF10)
     values (#{puPeopleId,jdbcType=VARCHAR}, #{puAppId,jdbcType=VARCHAR}, #{puRealName,jdbcType=VARCHAR}, 
       #{puNickname,jdbcType=VARCHAR}, #{puSex,jdbcType=VARCHAR}, #{puIcon,jdbcType=VARCHAR}, 
-      #{puCreatedate,jdbcType=DATE}, #{puCreateid,jdbcType=VARCHAR}, #{puUpdatedate,jdbcType=DATE}, 
+      #{puCreatedate,jdbcType=TIMESTAMP}, #{puCreateid,jdbcType=VARCHAR}, #{puUpdatedate,jdbcType=TIMESTAMP},
       #{puUpdateid,jdbcType=VARCHAR}, #{puAddress,jdbcType=VARCHAR}, #{puProvince,jdbcType=DECIMAL}, 
       #{puCity,jdbcType=DECIMAL}, #{puDistrict,jdbcType=DECIMAL}, #{puStreet,jdbcType=DECIMAL}, 
       #{puRemark,jdbcType=VARCHAR}, #{def1,jdbcType=CHAR}, #{def2,jdbcType=CHAR}, #{def3,jdbcType=CHAR}, 
@@ -164,13 +164,13 @@
         #{puIcon,jdbcType=VARCHAR},
       </if>
       <if test="puCreatedate != null" >
-        #{puCreatedate,jdbcType=DATE},
+        #{puCreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="puCreateid != null" >
         #{puCreateid,jdbcType=VARCHAR},
       </if>
       <if test="puUpdatedate != null" >
-        #{puUpdatedate,jdbcType=DATE},
+        #{puUpdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="puUpdateid != null" >
         #{puUpdateid,jdbcType=VARCHAR},
@@ -244,13 +244,13 @@
         PU_ICON = #{puIcon,jdbcType=VARCHAR},
       </if>
       <if test="puCreatedate != null" >
-        PU_CREATEDATE = #{puCreatedate,jdbcType=DATE},
+        PU_CREATEDATE = #{puCreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="puCreateid != null" >
         PU_CREATEID = #{puCreateid,jdbcType=VARCHAR},
       </if>
       <if test="puUpdatedate != null" >
-        PU_UPDATEDATE = #{puUpdatedate,jdbcType=DATE},
+        PU_UPDATEDATE = #{puUpdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="puUpdateid != null" >
         PU_UPDATEID = #{puUpdateid,jdbcType=VARCHAR},
@@ -313,9 +313,9 @@
       PU_NICKNAME = #{puNickname,jdbcType=VARCHAR},
       PU_SEX = #{puSex,jdbcType=VARCHAR},
       PU_ICON = #{puIcon,jdbcType=VARCHAR},
-      PU_CREATEDATE = #{puCreatedate,jdbcType=DATE},
+      PU_CREATEDATE = #{puCreatedate,jdbcType=TIMESTAMP},
       PU_CREATEID = #{puCreateid,jdbcType=VARCHAR},
-      PU_UPDATEDATE = #{puUpdatedate,jdbcType=DATE},
+      PU_UPDATEDATE = #{puUpdatedate,jdbcType=TIMESTAMP},
       PU_UPDATEID = #{puUpdateid,jdbcType=VARCHAR},
       PU_ADDRESS = #{puAddress,jdbcType=VARCHAR},
       PU_PROVINCE = #{puProvince,jdbcType=DECIMAL},

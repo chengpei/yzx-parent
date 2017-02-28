@@ -2,12 +2,14 @@ package com.whpe.services;
 
 import com.whpe.bean.SysAppUser;
 
+import java.util.LinkedHashMap;
+
 /**
  * Created by chengpei on 2017/2/26.
  */
 public interface LoginRegisterService {
 
-    boolean sendSMSCheckCode(String phoneNumber, String checkCode);
+    boolean sendSMSCheckCode(String phoneNumber, String smsType, String checkCode);
 
     int countCurrDaySMS(String phoneNumber);
 
@@ -25,4 +27,12 @@ public interface LoginRegisterService {
     SysAppUser selectBeanByCondition(SysAppUser sysAppUser);
 
     int updateByPrimaryKeySelective(SysAppUser appUser);
+
+    /**
+     * 根据短信模版类型和参数，获取短信内容
+     * @param templateType
+     * @param params
+     * @return
+     */
+    String getSmsContentByParams(String templateType, LinkedHashMap<String, String> params);
 }

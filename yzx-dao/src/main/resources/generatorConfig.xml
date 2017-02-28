@@ -44,7 +44,10 @@
 		<!--<table tableName="sys_user" enableCountByExample="false" enableSelectByExample="false"-->
 			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
 				<!--/>-->
-		<table tableName="sms_send_log" enableCountByExample="false" enableSelectByExample="false"
+		<!--<table tableName="sms_send_log" enableCountByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+				<!--/>-->
+		<table tableName="SMS_TEMPLATE" enableCountByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
 				/>
 

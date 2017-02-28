@@ -76,8 +76,8 @@
       DEF9, DEF10)
     values (#{uId,jdbcType=VARCHAR}, #{uAppId,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, 
       #{uAccount,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}, #{uUsertype,jdbcType=VARCHAR}, 
-      #{uLocked,jdbcType=VARCHAR}, #{uEnabled,jdbcType=VARCHAR}, #{uCreatedate,jdbcType=DATE}, 
-      #{uUpdateid,jdbcType=VARCHAR}, #{uUpdatedate,jdbcType=DATE}, #{uCode2,jdbcType=VARCHAR}, 
+      #{uLocked,jdbcType=VARCHAR}, #{uEnabled,jdbcType=VARCHAR}, #{uCreatedate,jdbcType=TIMESTAMP},
+      #{uUpdateid,jdbcType=VARCHAR}, #{uUpdatedate,jdbcType=TIMESTAMP}, #{uCode2,jdbcType=VARCHAR},
       #{uCode,jdbcType=VARCHAR}, #{uPhonecheck,jdbcType=DECIMAL}, #{uRemark,jdbcType=VARCHAR}, 
       #{def1,jdbcType=CHAR}, #{def2,jdbcType=CHAR}, #{def3,jdbcType=CHAR}, #{def4,jdbcType=CHAR}, 
       #{def5,jdbcType=CHAR}, #{def6,jdbcType=CHAR}, #{def7,jdbcType=CHAR}, #{def8,jdbcType=CHAR}, 
@@ -187,13 +187,13 @@
         #{uEnabled,jdbcType=VARCHAR},
       </if>
       <if test="uCreatedate != null" >
-        #{uCreatedate,jdbcType=DATE},
+        #{uCreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="uUpdateid != null" >
         #{uUpdateid,jdbcType=VARCHAR},
       </if>
       <if test="uUpdatedate != null" >
-        #{uUpdatedate,jdbcType=DATE},
+        #{uUpdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="uCode2 != null" >
         #{uCode2,jdbcType=VARCHAR},
@@ -264,13 +264,13 @@
         U_ENABLED = #{uEnabled,jdbcType=VARCHAR},
       </if>
       <if test="uCreatedate != null" >
-        U_CREATEDATE = #{uCreatedate,jdbcType=DATE},
+        U_CREATEDATE = #{uCreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="uUpdateid != null" >
         U_UPDATEID = #{uUpdateid,jdbcType=VARCHAR},
       </if>
       <if test="uUpdatedate != null" >
-        U_UPDATEDATE = #{uUpdatedate,jdbcType=DATE},
+        U_UPDATEDATE = #{uUpdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="uCode2 != null" >
         U_CODE2 = #{uCode2,jdbcType=VARCHAR},
@@ -326,9 +326,9 @@
       U_USERTYPE = #{uUsertype,jdbcType=VARCHAR},
       U_LOCKED = #{uLocked,jdbcType=VARCHAR},
       U_ENABLED = #{uEnabled,jdbcType=VARCHAR},
-      U_CREATEDATE = #{uCreatedate,jdbcType=DATE},
+      U_CREATEDATE = #{uCreatedate,jdbcType=TIMESTAMP},
       U_UPDATEID = #{uUpdateid,jdbcType=VARCHAR},
-      U_UPDATEDATE = #{uUpdatedate,jdbcType=DATE},
+      U_UPDATEDATE = #{uUpdatedate,jdbcType=TIMESTAMP},
       U_CODE2 = #{uCode2,jdbcType=VARCHAR},
       U_CODE = #{uCode,jdbcType=VARCHAR},
       U_PHONECHECK = #{uPhonecheck,jdbcType=DECIMAL},

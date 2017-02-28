@@ -1,8 +1,10 @@
 package com.whpe.services.impl;
 
 import com.whpe.bean.SmsSendLog;
+import com.whpe.bean.SmsTemplate;
 import com.whpe.bean.SysAppUser;
 import com.whpe.dao.SmsSendLogMapper;
+import com.whpe.dao.SmsTemplateMapper;
 import com.whpe.dao.SysAppUserMapper;
 import com.whpe.services.CommonService;
 import com.whpe.services.LoginRegisterService;
@@ -12,8 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by chengpei on 2017/2/26.
@@ -30,11 +31,16 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
     @Resource
     private SysAppUserMapper sysAppUserMapper;
 
+    @Resource
+    private SmsTemplateMapper smsTemplateMapper;
+
     @Override
-    public boolean sendSMSCheckCode(String phoneNumber, String checkCode) {
+    public boolean sendSMSCheckCode(String phoneNumber, String smsTemplateType, String checkCode) {
         SmsSendLog smsSendLog = new SmsSendLog();
         smsSendLog.setAcceptPhone(phoneNumber);
-        smsSendLog.setSmsContent("您的验证码为{" + checkCode + "}");
+        LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
+        params.put("checkCode", checkCode);
+        smsSendLog.setSmsContent(getSmsContentByParams(smsTemplateType, params));
         smsSendLog.setCreateTime(new Date());
         try {
             if(sendSMSService.sendSms(smsSendLog)){
@@ -99,6 +105,21 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
     @Override
     public int updateByPrimaryKeySelective(SysAppUser appUser) {
         return sysAppUserMapper.updateByPrimaryKeySelective(appUser);
+    }
+
+    @Override
+    public String getSmsContentByParams(String templateType, LinkedHashMap<String, String> params) {
+        SmsTemplate smsTemplate = smsTemplateMapper.selectByTemplateType(templateType);
+        String templateContent = smsTemplate.getTemplateContent();
+        Set<Map.Entry<String, String>> entrySet = params.entrySet();
+        Iterator<Map.Entry<String, String>> iterator = entrySet.iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String, String> next = iterator.next();
+            String key = next.getKey();
+            String value = next.getValue();
+            templateContent = templateContent.replaceAll("\\$\\{"+key+"\\}", value);
+        }
+        return templateContent;
     }
 
 }
