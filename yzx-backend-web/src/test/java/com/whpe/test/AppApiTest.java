@@ -56,7 +56,8 @@ public class AppApiTest extends SpringTestContext{
 
     @Test
     public void test3() throws IOException {
-        loginRegisterService.doRegister("13476073978", "123456");
+//        loginRegisterService.doRegister("13476073978", "123456");
+        logger.info("发送次数 === " + loginRegisterService.countCurrDaySMS("15629169373"));
     }
 
     @Test

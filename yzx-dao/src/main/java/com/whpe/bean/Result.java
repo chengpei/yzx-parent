@@ -9,6 +9,8 @@ public class Result {
 
     private boolean success;
 
+    private String flag;
+
     private String message;
 
     private Map<String, Object> data;
@@ -64,6 +66,10 @@ public class Result {
 
     public void setData(Map<String, Object> data) {
         this.data = data;
+    }
+
+    public String getFlag() {
+        return success?"0":"1";
     }
 
     @Override

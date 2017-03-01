@@ -69,7 +69,7 @@ public class LoginRegisterController extends CommonController{
             return new Result(false, "短信类型为空");
         }
         // 统计该手机号当天发送的短信次数
-        if(loginRegisterService.countCurrDaySMS(phoneNumber) > 5){
+        if(loginRegisterService.countCurrDaySMS(phoneNumber) >= 5){
             return new Result(false, "手机号获取短信次数达上限");
         }
         String checkCode = StringUtils.getRadomString(6);
