@@ -54,4 +54,17 @@
         <property name="maxUploadSize" value="10485760"/>
     </bean>
 
+    <mvc:interceptors>
+        <!-- 登录拦截 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/api/doLogin.do"/>
+            <mvc:exclude-mapping path="/api/doRegister.do"/>
+            <mvc:exclude-mapping path="/api/sendSMSCheckCode.do"/>
+            <mvc:exclude-mapping path="/api/examineCheckCode.do"/>
+            <mvc:exclude-mapping path="/api/changePassword.do"/>
+            <bean class="com.whpe.interceptor.AppCheckLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

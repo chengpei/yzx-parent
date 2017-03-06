@@ -1,6 +1,7 @@
 package com.whpe.dao;
 
 import com.whpe.bean.SysAppUser;
+import com.whpe.bean.vo.SysAppUserVO;
 
 public interface SysAppUserMapper {
     int deleteByPrimaryKey(String uId);
@@ -15,5 +16,5 @@ public interface SysAppUserMapper {
 
     int updateByPrimaryKey(SysAppUser record);
 
-    SysAppUser selectByCondition(SysAppUser sysAppUser);
+    SysAppUserVO selectByCondition(SysAppUser sysAppUser);
 }

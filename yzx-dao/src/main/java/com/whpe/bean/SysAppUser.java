@@ -34,7 +34,7 @@ public class SysAppUser {
 
     private String uRemark;
 
-    private String def1;
+    private String token;
 
     private String def2;
 
@@ -174,12 +174,12 @@ public class SysAppUser {
         this.uRemark = uRemark == null ? null : uRemark.trim();
     }
 
-    public String getDef1() {
-        return def1;
+    public String getToken() {
+        return token;
     }
 
-    public void setDef1(String def1) {
-        this.def1 = def1 == null ? null : def1.trim();
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getDef2() {

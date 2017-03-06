@@ -14,4 +14,6 @@ public interface SysPeopleMapper {
     int updateByPrimaryKeySelective(SysPeople record);
 
     int updateByPrimaryKey(SysPeople record);
+
+    SysPeople selectSysPeopleByUid(String uId);
 }

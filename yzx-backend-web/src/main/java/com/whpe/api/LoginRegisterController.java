@@ -2,6 +2,7 @@ package com.whpe.api;
 
 import com.whpe.bean.Result;
 import com.whpe.bean.SysAppUser;
+import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.controller.CommonController;
 import com.whpe.services.LoginRegisterService;
 import com.whpe.utils.MD5Utils;
@@ -22,19 +23,21 @@ public class LoginRegisterController extends CommonController{
 
     @RequestMapping(value = "/api/doLogin", method = RequestMethod.POST)
     @ResponseBody
-    public Result doLogin(String phoneNumber, String password){
+    public Result doLogin(String phoneNumber, String password, HttpSession session){
         if(StringUtils.isEmpty(phoneNumber)){
             return new Result(false, "手机号不能为空");
         }
         if(StringUtils.isEmpty(password)){
             return new Result(false, "密码不能为空");
         }
-        SysAppUser sysAppUser = loginRegisterService.doLogin(phoneNumber, password);
+        SysAppUserVO sysAppUser = loginRegisterService.doLogin(phoneNumber, password);
         if(sysAppUser == null){
             return new Result(false, "用户名或密码不正确");
         }
+        session.setAttribute("token", sysAppUser.getToken());
         Result result = new Result(true, "登陆成功");
-        result.put("token", sysAppUser.getDef1());
+        result.put("token", sysAppUser.getToken());
+        result.put("sysPeople", sysAppUser.getSysPeople());
         return result;
     }
 

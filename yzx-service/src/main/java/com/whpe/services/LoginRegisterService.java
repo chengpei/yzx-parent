@@ -1,6 +1,7 @@
 package com.whpe.services;
 
 import com.whpe.bean.SysAppUser;
+import com.whpe.bean.vo.SysAppUserVO;
 
 import java.util.LinkedHashMap;
 
@@ -16,20 +17,20 @@ public interface LoginRegisterService {
     boolean doRegister(String phoneNumber, String password);
 
     /**
-     * ÅÐ¶ÏÊÖ»úºÅÊÇ·ñÒÑ¾­×¢²á
+     * ï¿½Ð¶ï¿½ï¿½Ö»ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½×¢ï¿½ï¿½
      * @param phoneNumber
-     * @return  ·µ»Øtrue±íÊ¾ÒÑ¾­×¢²á£¬ Ã»ÓÐ×¢²á¹ý·µ»Øfalse
+     * @return  ï¿½ï¿½ï¿½ï¿½trueï¿½ï¿½Ê¾ï¿½Ñ¾ï¿½×¢ï¿½á£¬ Ã»ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½false
      */
     boolean checkPhoneExist(String phoneNumber);
 
-    SysAppUser doLogin(String phoneNumber, String password);
+    SysAppUserVO doLogin(String phoneNumber, String password);
 
-    SysAppUser selectBeanByCondition(SysAppUser sysAppUser);
+    SysAppUserVO selectBeanByCondition(SysAppUser sysAppUser);
 
     int updateByPrimaryKeySelective(SysAppUser appUser);
 
     /**
-     * ¸ù¾Ý¶ÌÐÅÄ£°æÀàÐÍºÍ²ÎÊý£¬»ñÈ¡¶ÌÐÅÄÚÈÝ
+     * ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ÍºÍ²ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param templateType
      * @param params
      * @return

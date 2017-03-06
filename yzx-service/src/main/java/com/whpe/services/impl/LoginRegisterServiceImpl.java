@@ -3,6 +3,7 @@ package com.whpe.services.impl;
 import com.whpe.bean.SmsSendLog;
 import com.whpe.bean.SmsTemplate;
 import com.whpe.bean.SysAppUser;
+import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.dao.SmsSendLogMapper;
 import com.whpe.dao.SmsTemplateMapper;
 import com.whpe.dao.SysAppUserMapper;
@@ -83,22 +84,22 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
     }
 
     @Override
-    public SysAppUser doLogin(String phoneNumber, String password) {
+    public SysAppUserVO doLogin(String phoneNumber, String password) {
         SysAppUser sysAppUser = new SysAppUser();
         sysAppUser.setuPhone(phoneNumber);
         sysAppUser.setuPassword(MD5Utils.getMD5(password).toString());
-        SysAppUser appUser = sysAppUserMapper.selectByCondition(sysAppUser);
+        SysAppUserVO appUser = sysAppUserMapper.selectByCondition(sysAppUser);
 
         // 登录成功更新令牌
         if(appUser != null){
-            appUser.setDef1(UUID.randomUUID().toString().replaceAll("-", ""));
+            appUser.setToken(UUID.randomUUID().toString().replaceAll("-", ""));
             sysAppUserMapper.updateByPrimaryKeySelective(appUser);
         }
         return appUser;
     }
 
     @Override
-    public SysAppUser selectBeanByCondition(SysAppUser sysAppUser) {
+    public SysAppUserVO selectBeanByCondition(SysAppUser sysAppUser) {
         return sysAppUserMapper.selectByCondition(sysAppUser);
     }
 
