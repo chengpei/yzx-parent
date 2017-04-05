@@ -1,6 +1,6 @@
 package com.whpe.interceptor;
 
-import com.alibaba.fastjson.JSONObject;
+import com.whpe.bean.Result;
 import com.whpe.bean.SysAppUser;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.services.LoginRegisterService;
@@ -56,16 +56,13 @@ public class AppCheckLoginInterceptor extends HandlerInterceptorAdapter {
      * @param response
      */
     private void returnWithoutLogin(HttpServletResponse response){
-        JSONObject js = new JSONObject();
-        js.put("message", "未登录");
-        js.put("success", false);
+        Result result = new Result(false, "未登录");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(501);
         response.setContentType("application/json");
         PrintWriter pWriter = null;
         try {
             pWriter = response.getWriter();
-            pWriter.write(js.toString());
+            pWriter.write(result.toString());
         } catch (IOException e) {
 
         } finally {
