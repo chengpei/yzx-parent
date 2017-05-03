@@ -38,7 +38,7 @@ public class SysPeople {
 
     private String uId;
 
-    private long bonusPoint;
+    private Long bonusPoint;
 
     public String getPuPeopleId() {
         return puPeopleId;
@@ -176,11 +176,11 @@ public class SysPeople {
         this.uId = uId;
     }
 
-    public long getBonusPoint() {
+    public Long getBonusPoint() {
         return bonusPoint;
     }
 
-    public void setBonusPoint(long bonusPoint) {
+    public void setBonusPoint(Long bonusPoint) {
         this.bonusPoint = bonusPoint;
     }
 }

@@ -1,9 +1,12 @@
 package com.whpe.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.whpe.services.AppInterfaceService;
+import com.whpe.services.impl.AppInterfaceServiceImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,18 +63,23 @@ public class AnnotationHandlerMethodExceptionResolver extends ExceptionHandlerEx
         logger.error(exception.getMessage(), exception);
 
         ResponseBody responseBodyAnn = AnnotationUtils.findAnnotation(method, ResponseBody.class);
+        RequestMapping requestMappingAnn = AnnotationUtils.findAnnotation(method, RequestMapping.class);
         // 如果是ajax请求则返回json对象Result 这里的ajax请求是返回值有@ResponseBody的方法
         // 所有的ajax请求方法最好使用@ResponseBody标示 否则这里无法识别是否是ajax请求
         if (responseBodyAnn != null) {
-            JSONObject js = new JSONObject();
-            js.put("message", exception.getMessage());
-            js.put("success", false);
+            JSONObject result = new JSONObject();
+            if("/api/interface".equals(requestMappingAnn.value()[0])){
+                AppInterfaceServiceImpl.makeRetInfo("E0001", exception.getMessage(), result);
+            }else{
+                result.put("message", exception.getMessage());
+                result.put("success", false);
+            }
             response.setCharacterEncoding("UTF-8");
-            response.setStatus(501);
+            response.setStatus(200);
             PrintWriter pWriter = null;
             try {
                 pWriter = response.getWriter();
-                pWriter.write(js.toString());
+                pWriter.write(result.toString());
             } catch (IOException e) {
 
             } finally {

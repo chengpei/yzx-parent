@@ -40,6 +40,7 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
         SmsSendLog smsSendLog = new SmsSendLog();
         smsSendLog.setAcceptPhone(phoneNumber);
         LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
+        params.put("phoneNumber", phoneNumber);
         params.put("checkCode", checkCode);
         smsSendLog.setSmsContent(getSmsContentByParams(smsTemplateType, params));
         smsSendLog.setCreateTime(new Date());
@@ -47,9 +48,12 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
             if(sendSMSService.sendSms(smsSendLog)){
                 smsSendLog.setSendStatus("2");
                 smsSendLog.setSendTime(new Date());
+                return true;
+            }else{
+                smsSendLog.setSendStatus("3");
+                return false;
             }
-            return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("短信发送失败", e);
             smsSendLog.setSendStatus("3");
             smsSendLog.setRemark(e.getMessage());
@@ -127,6 +131,9 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
     @Override
     public boolean checkSmsOneMinutes(String phoneNumber) {
         SmsSendLog smsSendLog = smsSendLogMapper.selectLastSms(phoneNumber);
+        if(smsSendLog == null){
+            return true;
+        }
         Date sendTime = smsSendLog.getSendTime();
         return System.currentTimeMillis() - sendTime.getTime() > 60000;
     }

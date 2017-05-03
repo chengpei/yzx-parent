@@ -61,11 +61,12 @@
       #{def8,jdbcType=CHAR}, #{def9,jdbcType=CHAR}, #{def10,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.SysPeople" >
+    <selectKey keyProperty="puPeopleId" resultType="java.lang.String" order="BEFORE">
+      select sys_guid() from dual
+    </selectKey>
     insert into SYS_PEOPLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="puPeopleId != null" >
         PU_PEOPLE_ID,
-      </if>
       <if test="puAppId != null" >
         PU_APP_ID,
       </if>
@@ -117,35 +118,9 @@
       <if test="bonusPoint != null" >
         BONUS_POINT,
       </if>
-      <if test="def3 != null" >
-        DEF3,
-      </if>
-      <if test="def4 != null" >
-        DEF4,
-      </if>
-      <if test="def5 != null" >
-        DEF5,
-      </if>
-      <if test="def6 != null" >
-        DEF6,
-      </if>
-      <if test="def7 != null" >
-        DEF7,
-      </if>
-      <if test="def8 != null" >
-        DEF8,
-      </if>
-      <if test="def9 != null" >
-        DEF9,
-      </if>
-      <if test="def10 != null" >
-        DEF10,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="puPeopleId != null" >
         #{puPeopleId,jdbcType=VARCHAR},
-      </if>
       <if test="puAppId != null" >
         #{puAppId,jdbcType=VARCHAR},
       </if>
@@ -196,30 +171,6 @@
       </if>
       <if test="bonusPoint != null" >
         #{bonusPoint,jdbcType=DECIMAL},
-      </if>
-      <if test="def3 != null" >
-        #{def3,jdbcType=CHAR},
-      </if>
-      <if test="def4 != null" >
-        #{def4,jdbcType=CHAR},
-      </if>
-      <if test="def5 != null" >
-        #{def5,jdbcType=CHAR},
-      </if>
-      <if test="def6 != null" >
-        #{def6,jdbcType=CHAR},
-      </if>
-      <if test="def7 != null" >
-        #{def7,jdbcType=CHAR},
-      </if>
-      <if test="def8 != null" >
-        #{def8,jdbcType=CHAR},
-      </if>
-      <if test="def9 != null" >
-        #{def9,jdbcType=CHAR},
-      </if>
-      <if test="def10 != null" >
-        #{def10,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -277,30 +228,6 @@
       <if test="bonusPoint != null" >
         BONUS_POINT = #{bonusPoint,jdbcType=DECIMAL},
       </if>
-      <if test="def3 != null" >
-        DEF3 = #{def3,jdbcType=CHAR},
-      </if>
-      <if test="def4 != null" >
-        DEF4 = #{def4,jdbcType=CHAR},
-      </if>
-      <if test="def5 != null" >
-        DEF5 = #{def5,jdbcType=CHAR},
-      </if>
-      <if test="def6 != null" >
-        DEF6 = #{def6,jdbcType=CHAR},
-      </if>
-      <if test="def7 != null" >
-        DEF7 = #{def7,jdbcType=CHAR},
-      </if>
-      <if test="def8 != null" >
-        DEF8 = #{def8,jdbcType=CHAR},
-      </if>
-      <if test="def9 != null" >
-        DEF9 = #{def9,jdbcType=CHAR},
-      </if>
-      <if test="def10 != null" >
-        DEF10 = #{def10,jdbcType=CHAR},
-      </if>
     </set>
     where PU_PEOPLE_ID = #{puPeopleId,jdbcType=VARCHAR}
   </update>
@@ -322,15 +249,61 @@
       PU_STREET = #{puStreet,jdbcType=DECIMAL},
       PU_REMARK = #{puRemark,jdbcType=VARCHAR},
       U_ID = #{uId,jdbcType=VARCHAR},
-      BONUS_POINT = #{bonusPoint,jdbcType=DECIMAL},
-      DEF3 = #{def3,jdbcType=CHAR},
-      DEF4 = #{def4,jdbcType=CHAR},
-      DEF5 = #{def5,jdbcType=CHAR},
-      DEF6 = #{def6,jdbcType=CHAR},
-      DEF7 = #{def7,jdbcType=CHAR},
-      DEF8 = #{def8,jdbcType=CHAR},
-      DEF9 = #{def9,jdbcType=CHAR},
-      DEF10 = #{def10,jdbcType=CHAR}
+      BONUS_POINT = #{bonusPoint,jdbcType=DECIMAL}
     where PU_PEOPLE_ID = #{puPeopleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateSysPeopleByUid" parameterType="com.whpe.bean.dto.SysPeopleDTO">
+    update SYS_PEOPLE
+    <set >
+      <if test="puAppId != null" >
+        PU_APP_ID = #{puAppId,jdbcType=VARCHAR},
+      </if>
+      <if test="puRealName != null" >
+        PU_REAL_NAME = #{puRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="puNickname != null" >
+        PU_NICKNAME = #{puNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="puSex != null" >
+        PU_SEX = #{puSex,jdbcType=VARCHAR},
+      </if>
+      <if test="puIcon != null" >
+        PU_ICON = #{puIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="puCreatedate != null" >
+        PU_CREATEDATE = #{puCreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="puCreateid != null" >
+        PU_CREATEID = #{puCreateid,jdbcType=VARCHAR},
+      </if>
+      <if test="puUpdatedate != null" >
+        PU_UPDATEDATE = #{puUpdatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="puUpdateid != null" >
+        PU_UPDATEID = #{puUpdateid,jdbcType=VARCHAR},
+      </if>
+      <if test="puAddress != null" >
+        PU_ADDRESS = #{puAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="puProvince != null" >
+        PU_PROVINCE = #{puProvince,jdbcType=DECIMAL},
+      </if>
+      <if test="puCity != null" >
+        PU_CITY = #{puCity,jdbcType=DECIMAL},
+      </if>
+      <if test="puDistrict != null" >
+        PU_DISTRICT = #{puDistrict,jdbcType=DECIMAL},
+      </if>
+      <if test="puStreet != null" >
+        PU_STREET = #{puStreet,jdbcType=DECIMAL},
+      </if>
+      <if test="puRemark != null" >
+        PU_REMARK = #{puRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusPoint != null" >
+        BONUS_POINT = #{bonusPoint,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where U_ID = #{uId,jdbcType=VARCHAR}
   </update>
 </mapper>

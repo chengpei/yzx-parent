@@ -18,5 +18,10 @@
         <property name="fileEncoding" value="UTF-8"/>
     </bean>
 
+    <!-- 全局异常处理 -->
+    <bean id="handlerExceptionResolver" class="com.whpe.interceptor.AnnotationHandlerMethodExceptionResolver">
+        <property name="defaultErrorView" value="/error/500"/>
+    </bean>
+
     <import resource="spring/spring-datasource.xml"/>
 </beans>

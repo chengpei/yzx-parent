@@ -32,10 +32,10 @@ public class AppApiTest extends SpringTestContext{
     private SysAppUserMapper sysAppUserMapper;
 
     @Test
-    public void sendSMSTest() throws IOException {
+    public void sendSMSTest() throws Exception {
         SmsSendLog smsSendLog = new SmsSendLog();
         smsSendLog.setAcceptPhone("13476073978");
-        smsSendLog.setSmsContent("您的验证码为{123456}");
+        smsSendLog.setSmsContent("尊敬的13476073978您本次验证码为123456");
         boolean b = sendSMSService.sendSms(smsSendLog);
         logger.info("发送结果 == " + b);
     }
@@ -69,7 +69,8 @@ public class AppApiTest extends SpringTestContext{
     @Test
     public void testSMSTemplate(){
         LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        params.put("checkCode", "231234");
+        params.put("phoneNumber", "123456");
+        params.put("checkCode", "123456");
         String smsContentByParams = loginRegisterService.getSmsContentByParams("1", params);
         logger.info("短信为 === " + smsContentByParams);
     }

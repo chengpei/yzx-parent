@@ -1,6 +1,7 @@
 package com.whpe.dao;
 
 import com.whpe.bean.SysPeople;
+import com.whpe.bean.dto.SysPeopleDTO;
 
 public interface SysPeopleMapper {
     int deleteByPrimaryKey(String puPeopleId);
@@ -16,4 +17,6 @@ public interface SysPeopleMapper {
     int updateByPrimaryKey(SysPeople record);
 
     SysPeople selectSysPeopleByUid(String uId);
+
+    int updateSysPeopleByUid(SysPeopleDTO sysPeopleDTO);
 }

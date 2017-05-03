@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.AppMycardMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.AppMycard" >
+    <result column="APP_USERID" property="appUserid" jdbcType="VARCHAR" />
+    <result column="APP_FXKH" property="appFxkh" jdbcType="VARCHAR" />
+    <result column="APP_BZ" property="appBz" jdbcType="VARCHAR" />
+    <result column="APP_CREATEDATE" property="appCreatedate" jdbcType="CHAR" />
+    <result column="APP_CREATEID" property="appCreateid" jdbcType="VARCHAR" />
+    <result column="APP_UPDATEDATE" property="appUpdatedate" jdbcType="CHAR" />
+    <result column="APP_UPDATEID" property="appUpdateid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    APP_USERID, APP_FXKH, APP_BZ, APP_CREATEDATE, APP_CREATEID, APP_UPDATEDATE, APP_UPDATEID
+  </sql>
+  <insert id="insert" parameterType="com.whpe.bean.AppMycard" >
+    insert into APP_MYCARD (APP_USERID, APP_FXKH, APP_BZ, 
+      APP_CREATEDATE, APP_CREATEID, APP_UPDATEDATE, 
+      APP_UPDATEID
+      )
+    values (#{appUserid,jdbcType=VARCHAR}, #{appFxkh,jdbcType=VARCHAR}, #{appBz,jdbcType=VARCHAR}, 
+      #{appCreatedate,jdbcType=CHAR}, #{appCreateid,jdbcType=VARCHAR}, #{appUpdatedate,jdbcType=CHAR}, 
+      #{appUpdateid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.AppMycard" >
+    insert into APP_MYCARD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appUserid != null" >
+        APP_USERID,
+      </if>
+      <if test="appFxkh != null" >
+        APP_FXKH,
+      </if>
+      <if test="appBz != null" >
+        APP_BZ,
+      </if>
+      <if test="appCreatedate != null" >
+        APP_CREATEDATE,
+      </if>
+      <if test="appCreateid != null" >
+        APP_CREATEID,
+      </if>
+      <if test="appUpdatedate != null" >
+        APP_UPDATEDATE,
+      </if>
+      <if test="appUpdateid != null" >
+        APP_UPDATEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appUserid != null" >
+        #{appUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="appFxkh != null" >
+        #{appFxkh,jdbcType=VARCHAR},
+      </if>
+      <if test="appBz != null" >
+        #{appBz,jdbcType=VARCHAR},
+      </if>
+      <if test="appCreatedate != null" >
+        #{appCreatedate,jdbcType=CHAR},
+      </if>
+      <if test="appCreateid != null" >
+        #{appCreateid,jdbcType=VARCHAR},
+      </if>
+      <if test="appUpdatedate != null" >
+        #{appUpdatedate,jdbcType=CHAR},
+      </if>
+      <if test="appUpdateid != null" >
+        #{appUpdateid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByCondition" parameterType="com.whpe.bean.AppMycard" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM APP_MYCARD
+    <where>
+      <if test="appUserid != null">
+        and APP_USERID = #{appUserid,jdbcType=VARCHAR}
+      </if>
+      <if test="appFxkh != null">
+        and APP_FXKH = #{appFxkh,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>
