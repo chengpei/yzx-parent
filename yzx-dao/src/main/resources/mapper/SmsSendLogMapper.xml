@@ -7,8 +7,8 @@
     <result column="SMS_CONTENT" property="smsContent" jdbcType="VARCHAR" />
     <result column="SEND_STATUS" property="sendStatus" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
-    <result column="SEND_TIME" property="sendTime" jdbcType="DATE" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, ACCEPT_PHONE, SMS_CONTENT, SEND_STATUS, REMARK, CREATE_TIME, SEND_TIME

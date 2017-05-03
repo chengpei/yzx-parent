@@ -8,9 +8,9 @@
     <result column="PU_NICKNAME" property="puNickname" jdbcType="VARCHAR" />
     <result column="PU_SEX" property="puSex" jdbcType="VARCHAR" />
     <result column="PU_ICON" property="puIcon" jdbcType="VARCHAR" />
-    <result column="PU_CREATEDATE" property="puCreatedate" jdbcType="DATE" />
+    <result column="PU_CREATEDATE" property="puCreatedate" jdbcType="TIMESTAMP" />
     <result column="PU_CREATEID" property="puCreateid" jdbcType="VARCHAR" />
-    <result column="PU_UPDATEDATE" property="puUpdatedate" jdbcType="DATE" />
+    <result column="PU_UPDATEDATE" property="puUpdatedate" jdbcType="TIMESTAMP" />
     <result column="PU_UPDATEID" property="puUpdateid" jdbcType="VARCHAR" />
     <result column="PU_ADDRESS" property="puAddress" jdbcType="VARCHAR" />
     <result column="PU_PROVINCE" property="puProvince" jdbcType="DECIMAL" />

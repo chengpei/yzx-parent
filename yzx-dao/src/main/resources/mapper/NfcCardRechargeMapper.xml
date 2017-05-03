@@ -9,11 +9,11 @@
     <result column="ORDERSEQ" property="orderseq" jdbcType="VARCHAR" />
     <result column="PHONENO" property="phoneno" jdbcType="VARCHAR" />
     <result column="ORDERMOUNT" property="ordermount" jdbcType="VARCHAR" />
-    <result column="ORDERTIME" property="ordertime" jdbcType="DATE" />
-    <result column="ORDERVALIDTIME" property="ordervalidtime" jdbcType="DATE" />
+    <result column="ORDERTIME" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="ORDERVALIDTIME" property="ordervalidtime" jdbcType="TIMESTAMP" />
     <result column="SUCCESS" property="success" jdbcType="VARCHAR" />
     <result column="ORDERREFOUNDID" property="orderrefoundid" jdbcType="VARCHAR" />
-    <result column="REQTIME" property="reqtime" jdbcType="DATE" />
+    <result column="REQTIME" property="reqtime" jdbcType="TIMESTAMP" />
     <result column="BACKPHONE" property="backphone" jdbcType="VARCHAR" />
     <result column="BACKIMEI" property="backimei" jdbcType="VARCHAR" />
     <result column="IMEI" property="imei" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
     <result column="ZKLX" property="zklx" jdbcType="VARCHAR" />
     <result column="YE" property="ye" jdbcType="DECIMAL" />
     <result column="TAC" property="tac" jdbcType="VARCHAR" />
-    <result column="CHSJ" property="chsj" jdbcType="DATE" />
+    <result column="CHSJ" property="chsj" jdbcType="TIMESTAMP" />
     <result column="JYLX" property="jylx" jdbcType="VARCHAR" />
     <result column="XJBZ" property="xjbz" jdbcType="VARCHAR" />
     <result column="FLAG" property="flag" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
     <result column="CCSDM" property="ccsdm" jdbcType="VARCHAR" />
     <result column="JYXH" property="jyxh" jdbcType="DECIMAL" />
     <result column="RANDOMDATA" property="randomdata" jdbcType="VARCHAR" />
-    <result column="QSSJ" property="qssj" jdbcType="DATE" />
+    <result column="QSSJ" property="qssj" jdbcType="TIMESTAMP" />
     <result column="SYSRANDOM" property="sysrandom" jdbcType="VARCHAR" />
     <result column="IF_RETURN" property="ifReturn" jdbcType="VARCHAR" />
   </resultMap>
@@ -68,14 +68,14 @@
       )
     values (#{orderno,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR}, #{gid,jdbcType=VARCHAR}, 
       #{commcode,jdbcType=VARCHAR}, #{orderseq,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
-      #{ordermount,jdbcType=VARCHAR}, #{ordertime,jdbcType=DATE}, #{ordervalidtime,jdbcType=DATE}, 
-      #{success,jdbcType=VARCHAR}, #{orderrefoundid,jdbcType=VARCHAR}, #{reqtime,jdbcType=DATE}, 
+      #{ordermount,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP}, #{ordervalidtime,jdbcType=TIMESTAMP},
+      #{success,jdbcType=VARCHAR}, #{orderrefoundid,jdbcType=VARCHAR}, #{reqtime,jdbcType=TIMESTAMP},
       #{backphone,jdbcType=VARCHAR}, #{backimei,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, 
       #{paytype,jdbcType=VARCHAR}, #{csn,jdbcType=VARCHAR}, #{mklx,jdbcType=VARCHAR}, 
-      #{zklx,jdbcType=VARCHAR}, #{ye,jdbcType=DECIMAL}, #{tac,jdbcType=VARCHAR}, #{chsj,jdbcType=DATE}, 
+      #{zklx,jdbcType=VARCHAR}, #{ye,jdbcType=DECIMAL}, #{tac,jdbcType=VARCHAR}, #{chsj,jdbcType=TIMESTAMP},
       #{jylx,jdbcType=VARCHAR}, #{xjbz,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{zcsdm,jdbcType=VARCHAR}, 
       #{ccsdm,jdbcType=VARCHAR}, #{jyxh,jdbcType=DECIMAL}, #{randomdata,jdbcType=VARCHAR}, 
-      #{qssj,jdbcType=DATE}, #{sysrandom,jdbcType=VARCHAR}, #{ifReturn,jdbcType=VARCHAR}
+      #{qssj,jdbcType=TIMESTAMP}, #{sysrandom,jdbcType=VARCHAR}, #{ifReturn,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.NfcCardRecharge" >
@@ -200,10 +200,10 @@
         #{ordermount,jdbcType=VARCHAR},
       </if>
       <if test="ordertime != null" >
-        #{ordertime,jdbcType=DATE},
+        #{ordertime,jdbcType=TIMESTAMP},
       </if>
       <if test="ordervalidtime != null" >
-        #{ordervalidtime,jdbcType=DATE},
+        #{ordervalidtime,jdbcType=TIMESTAMP},
       </if>
       <if test="success != null" >
         #{success,jdbcType=VARCHAR},
@@ -212,7 +212,7 @@
         #{orderrefoundid,jdbcType=VARCHAR},
       </if>
       <if test="reqtime != null" >
-        #{reqtime,jdbcType=DATE},
+        #{reqtime,jdbcType=TIMESTAMP},
       </if>
       <if test="backphone != null" >
         #{backphone,jdbcType=VARCHAR},
@@ -242,7 +242,7 @@
         #{tac,jdbcType=VARCHAR},
       </if>
       <if test="chsj != null" >
-        #{chsj,jdbcType=DATE},
+        #{chsj,jdbcType=TIMESTAMP},
       </if>
       <if test="jylx != null" >
         #{jylx,jdbcType=VARCHAR},
@@ -266,7 +266,7 @@
         #{randomdata,jdbcType=VARCHAR},
       </if>
       <if test="qssj != null" >
-        #{qssj,jdbcType=DATE},
+        #{qssj,jdbcType=TIMESTAMP},
       </if>
       <if test="sysrandom != null" >
         #{sysrandom,jdbcType=VARCHAR},
@@ -295,10 +295,10 @@
         ORDERMOUNT = #{ordermount,jdbcType=VARCHAR},
       </if>
       <if test="ordertime != null" >
-        ORDERTIME = #{ordertime,jdbcType=DATE},
+        ORDERTIME = #{ordertime,jdbcType=TIMESTAMP},
       </if>
       <if test="ordervalidtime != null" >
-        ORDERVALIDTIME = #{ordervalidtime,jdbcType=DATE},
+        ORDERVALIDTIME = #{ordervalidtime,jdbcType=TIMESTAMP},
       </if>
       <if test="success != null" >
         SUCCESS = #{success,jdbcType=VARCHAR},
@@ -307,7 +307,7 @@
         ORDERREFOUNDID = #{orderrefoundid,jdbcType=VARCHAR},
       </if>
       <if test="reqtime != null" >
-        REQTIME = #{reqtime,jdbcType=DATE},
+        REQTIME = #{reqtime,jdbcType=TIMESTAMP},
       </if>
       <if test="backphone != null" >
         BACKPHONE = #{backphone,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
         TAC = #{tac,jdbcType=VARCHAR},
       </if>
       <if test="chsj != null" >
-        CHSJ = #{chsj,jdbcType=DATE},
+        CHSJ = #{chsj,jdbcType=TIMESTAMP},
       </if>
       <if test="jylx != null" >
         JYLX = #{jylx,jdbcType=VARCHAR},
@@ -361,7 +361,7 @@
         RANDOMDATA = #{randomdata,jdbcType=VARCHAR},
       </if>
       <if test="qssj != null" >
-        QSSJ = #{qssj,jdbcType=DATE},
+        QSSJ = #{qssj,jdbcType=TIMESTAMP},
       </if>
       <if test="sysrandom != null" >
         SYSRANDOM = #{sysrandom,jdbcType=VARCHAR},
@@ -380,11 +380,11 @@
       ORDERSEQ = #{orderseq,jdbcType=VARCHAR},
       PHONENO = #{phoneno,jdbcType=VARCHAR},
       ORDERMOUNT = #{ordermount,jdbcType=VARCHAR},
-      ORDERTIME = #{ordertime,jdbcType=DATE},
-      ORDERVALIDTIME = #{ordervalidtime,jdbcType=DATE},
+      ORDERTIME = #{ordertime,jdbcType=TIMESTAMP},
+      ORDERVALIDTIME = #{ordervalidtime,jdbcType=TIMESTAMP},
       SUCCESS = #{success,jdbcType=VARCHAR},
       ORDERREFOUNDID = #{orderrefoundid,jdbcType=VARCHAR},
-      REQTIME = #{reqtime,jdbcType=DATE},
+      REQTIME = #{reqtime,jdbcType=TIMESTAMP},
       BACKPHONE = #{backphone,jdbcType=VARCHAR},
       BACKIMEI = #{backimei,jdbcType=VARCHAR},
       IMEI = #{imei,jdbcType=VARCHAR},
@@ -394,7 +394,7 @@
       ZKLX = #{zklx,jdbcType=VARCHAR},
       YE = #{ye,jdbcType=DECIMAL},
       TAC = #{tac,jdbcType=VARCHAR},
-      CHSJ = #{chsj,jdbcType=DATE},
+      CHSJ = #{chsj,jdbcType=TIMESTAMP},
       JYLX = #{jylx,jdbcType=VARCHAR},
       XJBZ = #{xjbz,jdbcType=VARCHAR},
       FLAG = #{flag,jdbcType=VARCHAR},
@@ -402,7 +402,7 @@
       CCSDM = #{ccsdm,jdbcType=VARCHAR},
       JYXH = #{jyxh,jdbcType=DECIMAL},
       RANDOMDATA = #{randomdata,jdbcType=VARCHAR},
-      QSSJ = #{qssj,jdbcType=DATE},
+      QSSJ = #{qssj,jdbcType=TIMESTAMP},
       SYSRANDOM = #{sysrandom,jdbcType=VARCHAR},
       IF_RETURN = #{ifReturn,jdbcType=VARCHAR}
     where ORDERNO = #{orderno,jdbcType=VARCHAR}

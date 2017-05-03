@@ -5,8 +5,8 @@
     <id column="ID" property="id" jdbcType="DECIMAL" />
     <result column="TEMPLATE_CONTENT" property="templateContent" jdbcType="VARCHAR" />
     <result column="TEMPLATE_TYPE" property="templateType" jdbcType="VARCHAR" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
-    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, TEMPLATE_CONTENT, TEMPLATE_TYPE, CREATE_TIME, UPDATE_TIME

@@ -10,9 +10,9 @@
     <result column="U_USERTYPE" property="uUsertype" jdbcType="VARCHAR" />
     <result column="U_LOCKED" property="uLocked" jdbcType="VARCHAR" />
     <result column="U_ENABLED" property="uEnabled" jdbcType="VARCHAR" />
-    <result column="U_CREATEDATE" property="uCreatedate" jdbcType="DATE" />
+    <result column="U_CREATEDATE" property="uCreatedate" jdbcType="TIMESTAMP" />
     <result column="U_UPDATEID" property="uUpdateid" jdbcType="VARCHAR" />
-    <result column="U_UPDATEDATE" property="uUpdatedate" jdbcType="DATE" />
+    <result column="U_UPDATEDATE" property="uUpdatedate" jdbcType="TIMESTAMP" />
     <result column="U_CODE2" property="uCode2" jdbcType="VARCHAR" />
     <result column="U_CODE" property="uCode" jdbcType="VARCHAR" />
     <result column="U_PHONECHECK" property="uPhonecheck" jdbcType="DECIMAL" />
