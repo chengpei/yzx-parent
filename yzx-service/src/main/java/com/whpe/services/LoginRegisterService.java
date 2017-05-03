@@ -36,4 +36,11 @@ public interface LoginRegisterService {
      * @return
      */
     String getSmsContentByParams(String templateType, LinkedHashMap<String, String> params);
+
+    /**
+     * 检查一分钟内是否已经发送过一次短信
+     * @param phoneNumber
+     * @return  大于一分钟返回 true
+     */
+    boolean checkSmsOneMinutes(String phoneNumber);
 }

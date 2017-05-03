@@ -71,6 +71,10 @@ public class LoginRegisterController extends CommonController{
         if(StringUtils.isEmpty(smsType)){
             return new Result(false, "短信类型为空");
         }
+        // 检查该手机号 上次发送短信时间是否超过一分钟
+        if(!loginRegisterService.checkSmsOneMinutes(phoneNumber)){
+            return new Result(false, "一分钟内只能发送一次短信");
+        }
         // 统计该手机号当天发送的短信次数
         if(loginRegisterService.countCurrDaySMS(phoneNumber) >= 5){
             return new Result(false, "手机号获取短信次数达上限");

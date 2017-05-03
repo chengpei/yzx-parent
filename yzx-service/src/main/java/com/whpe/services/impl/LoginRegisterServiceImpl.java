@@ -46,6 +46,7 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
         try {
             if(sendSMSService.sendSms(smsSendLog)){
                 smsSendLog.setSendStatus("2");
+                smsSendLog.setSendTime(new Date());
             }
             return true;
         } catch (IOException e) {
@@ -121,6 +122,13 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
             templateContent = templateContent.replaceAll("\\$\\{"+key+"\\}", value);
         }
         return templateContent;
+    }
+
+    @Override
+    public boolean checkSmsOneMinutes(String phoneNumber) {
+        SmsSendLog smsSendLog = smsSendLogMapper.selectLastSms(phoneNumber);
+        Date sendTime = smsSendLog.getSendTime();
+        return System.currentTimeMillis() - sendTime.getTime() > 60000;
     }
 
 }

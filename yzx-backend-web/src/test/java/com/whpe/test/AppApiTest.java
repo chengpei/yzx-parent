@@ -74,4 +74,10 @@ public class AppApiTest extends SpringTestContext{
         logger.info("短信为 === " + smsContentByParams);
     }
 
+    @Test
+    public void testCheckSmsOneMinutes(){
+        boolean b = loginRegisterService.checkSmsOneMinutes("13476073978");
+        System.out.println(b);
+    }
+
 }

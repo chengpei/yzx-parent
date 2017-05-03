@@ -16,4 +16,6 @@ public interface SmsSendLogMapper {
     int updateByPrimaryKey(SmsSendLog record);
 
     int countCurrDaySMS(String phoneNumber);
+
+    SmsSendLog selectLastSms(String phoneNumber);
 }
