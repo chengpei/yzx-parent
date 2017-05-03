@@ -47,7 +47,7 @@
 		<!--<table tableName="sms_send_log" enableCountByExample="false" enableSelectByExample="false"-->
 			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
 				<!--/>-->
-		<table tableName="app_mycard" enableCountByExample="false" enableSelectByExample="false"
+		<table tableName="NFC_CARD_RECHARGE" enableCountByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
 				/>
 

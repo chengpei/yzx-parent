@@ -3,12 +3,17 @@ package com.whpe.services.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.whpe.bean.AppMycard;
+import com.whpe.bean.NfcCardRecharge;
 import com.whpe.bean.SysPeople;
 import com.whpe.bean.dto.SysPeopleDTO;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.dao.AppMycardMapper;
+import com.whpe.dao.NfcCardRechargeMapper;
 import com.whpe.dao.SysPeopleMapper;
 import com.whpe.services.AppInterfaceService;
+import com.whpe.services.CommonService;
+import com.whpe.utils.DateUtils;
+import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,13 +25,16 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class AppInterfaceServiceImpl implements AppInterfaceService{
+public class AppInterfaceServiceImpl extends CommonService implements AppInterfaceService{
 
     @Resource
     private SysPeopleMapper sysPeopleMapper;
 
     @Resource
     private AppMycardMapper appMycardMapper;
+
+    @Resource
+    private NfcCardRechargeMapper nfcCardRechargeMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -70,6 +78,52 @@ public class AppInterfaceServiceImpl implements AppInterfaceService{
         }else {
             makeRetInfo("E0001", "绑定失败", result);
         }
+    }
+
+    @Override
+    public void commitOrder(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderNo = generateOrderNo(common.getString("txChan"));
+        String fxkh = reqContent.getString("cardNo");
+        String orderMount = reqContent.getString("orderMount");
+        if(StringUtils.isEmpty(fxkh) || StringUtils.isEmpty(orderMount)){
+            makeRetInfo("E0001", "卡号和金额不能为空", result);
+            return;
+        }
+        NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
+        nfcCardRecharge.setCardno(fxkh);
+        nfcCardRecharge.setOrderseq(orderNo);
+        nfcCardRecharge.setOrderno(orderNo);
+        nfcCardRecharge.setOrdermount(orderMount);
+        nfcCardRecharge.setPhoneno(appUser.getuPhone());
+        nfcCardRecharge.setOrdertime(new Date());
+        nfcCardRecharge.setSuccess("0");
+        nfcCardRecharge.setChsj(new Date());
+        nfcCardRecharge.setJylx("24");// 24-补登
+        if(nfcCardRechargeMapper.insertSelective(nfcCardRecharge) > 0){
+            JSONObject retContent =  new JSONObject();
+            retContent.put("orderNo", orderNo);
+            result.put("retContent", retContent);
+            makeRetInfo("S0000", "提交成功", result);
+        }else{
+            makeRetInfo("E0001", "提交失败", result);
+        }
+    }
+
+    /**
+     * 生成订单号
+     * @param txChan
+     * @return
+     */
+    private String generateOrderNo(String txChan) {
+        // 获取数据库序列 seq_orderno 下一个的值,作为订单序号
+        int orderSeq = nfcCardRechargeMapper.generateOrderNo();
+        StringBuilder orderNo = new StringBuilder(txChan);
+        orderNo.append(DateUtils.getFormatDate(new Date(), "yyyyMMddHHmmss"));
+        orderNo.append(String.format("%015d", orderSeq));
+        return orderNo.toString();
     }
 
     public static void makeRetInfo(String retCode,String retMsg , JSONObject result){

@@ -10,4 +10,6 @@ public interface AppInterfaceService {
 
     void bindCard(JSONObject requestJson, JSONObject result, HttpSession session);
 
+    void commitOrder(JSONObject requestJson, JSONObject result, HttpSession session);
+
 }

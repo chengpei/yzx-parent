@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.NfcCardRechargeMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.NfcCardRecharge" >
+    <id column="ORDERNO" property="orderno" jdbcType="VARCHAR" />
+    <id column="CARDNO" property="cardno" jdbcType="VARCHAR" />
+    <result column="GID" property="gid" jdbcType="VARCHAR" />
+    <result column="COMMCODE" property="commcode" jdbcType="VARCHAR" />
+    <result column="ORDERSEQ" property="orderseq" jdbcType="VARCHAR" />
+    <result column="PHONENO" property="phoneno" jdbcType="VARCHAR" />
+    <result column="ORDERMOUNT" property="ordermount" jdbcType="VARCHAR" />
+    <result column="ORDERTIME" property="ordertime" jdbcType="DATE" />
+    <result column="ORDERVALIDTIME" property="ordervalidtime" jdbcType="DATE" />
+    <result column="SUCCESS" property="success" jdbcType="VARCHAR" />
+    <result column="ORDERREFOUNDID" property="orderrefoundid" jdbcType="VARCHAR" />
+    <result column="REQTIME" property="reqtime" jdbcType="DATE" />
+    <result column="BACKPHONE" property="backphone" jdbcType="VARCHAR" />
+    <result column="BACKIMEI" property="backimei" jdbcType="VARCHAR" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="PAYTYPE" property="paytype" jdbcType="VARCHAR" />
+    <result column="CSN" property="csn" jdbcType="VARCHAR" />
+    <result column="MKLX" property="mklx" jdbcType="VARCHAR" />
+    <result column="ZKLX" property="zklx" jdbcType="VARCHAR" />
+    <result column="YE" property="ye" jdbcType="DECIMAL" />
+    <result column="TAC" property="tac" jdbcType="VARCHAR" />
+    <result column="CHSJ" property="chsj" jdbcType="DATE" />
+    <result column="JYLX" property="jylx" jdbcType="VARCHAR" />
+    <result column="XJBZ" property="xjbz" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="ZCSDM" property="zcsdm" jdbcType="VARCHAR" />
+    <result column="CCSDM" property="ccsdm" jdbcType="VARCHAR" />
+    <result column="JYXH" property="jyxh" jdbcType="DECIMAL" />
+    <result column="RANDOMDATA" property="randomdata" jdbcType="VARCHAR" />
+    <result column="QSSJ" property="qssj" jdbcType="DATE" />
+    <result column="SYSRANDOM" property="sysrandom" jdbcType="VARCHAR" />
+    <result column="IF_RETURN" property="ifReturn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ORDERNO, CARDNO, GID, COMMCODE, ORDERSEQ, PHONENO, ORDERMOUNT, ORDERTIME, ORDERVALIDTIME, 
+    SUCCESS, ORDERREFOUNDID, REQTIME, BACKPHONE, BACKIMEI, IMEI, PAYTYPE, CSN, MKLX, 
+    ZKLX, YE, TAC, CHSJ, JYLX, XJBZ, FLAG, ZCSDM, CCSDM, JYXH, RANDOMDATA, QSSJ, SYSRANDOM, 
+    IF_RETURN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from NFC_CARD_RECHARGE
+    where ORDERNO = #{orderno,jdbcType=VARCHAR}
+  </select>
+  <select id="generateOrderNo" resultType="java.lang.Integer">
+    SELECT SEQ_ORDERNO.nextval from dual
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from NFC_CARD_RECHARGE
+    where ORDERNO = #{orderno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.NfcCardRecharge" >
+    insert into NFC_CARD_RECHARGE (ORDERNO, CARDNO, GID, 
+      COMMCODE, ORDERSEQ, PHONENO, 
+      ORDERMOUNT, ORDERTIME, ORDERVALIDTIME, 
+      SUCCESS, ORDERREFOUNDID, REQTIME, 
+      BACKPHONE, BACKIMEI, IMEI, 
+      PAYTYPE, CSN, MKLX, 
+      ZKLX, YE, TAC, CHSJ, 
+      JYLX, XJBZ, FLAG, ZCSDM, 
+      CCSDM, JYXH, RANDOMDATA, 
+      QSSJ, SYSRANDOM, IF_RETURN
+      )
+    values (#{orderno,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR}, #{gid,jdbcType=VARCHAR}, 
+      #{commcode,jdbcType=VARCHAR}, #{orderseq,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
+      #{ordermount,jdbcType=VARCHAR}, #{ordertime,jdbcType=DATE}, #{ordervalidtime,jdbcType=DATE}, 
+      #{success,jdbcType=VARCHAR}, #{orderrefoundid,jdbcType=VARCHAR}, #{reqtime,jdbcType=DATE}, 
+      #{backphone,jdbcType=VARCHAR}, #{backimei,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, 
+      #{paytype,jdbcType=VARCHAR}, #{csn,jdbcType=VARCHAR}, #{mklx,jdbcType=VARCHAR}, 
+      #{zklx,jdbcType=VARCHAR}, #{ye,jdbcType=DECIMAL}, #{tac,jdbcType=VARCHAR}, #{chsj,jdbcType=DATE}, 
+      #{jylx,jdbcType=VARCHAR}, #{xjbz,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{zcsdm,jdbcType=VARCHAR}, 
+      #{ccsdm,jdbcType=VARCHAR}, #{jyxh,jdbcType=DECIMAL}, #{randomdata,jdbcType=VARCHAR}, 
+      #{qssj,jdbcType=DATE}, #{sysrandom,jdbcType=VARCHAR}, #{ifReturn,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.NfcCardRecharge" >
+    <selectKey keyProperty="gid" resultType="java.lang.String" order="BEFORE">
+      select sys_guid() from dual
+    </selectKey>
+    insert into NFC_CARD_RECHARGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderno != null" >
+        ORDERNO,
+      </if>
+      <if test="cardno != null" >
+        CARDNO,
+      </if>
+        GID,
+      <if test="commcode != null" >
+        COMMCODE,
+      </if>
+      <if test="orderseq != null" >
+        ORDERSEQ,
+      </if>
+      <if test="phoneno != null" >
+        PHONENO,
+      </if>
+      <if test="ordermount != null" >
+        ORDERMOUNT,
+      </if>
+      <if test="ordertime != null" >
+        ORDERTIME,
+      </if>
+      <if test="ordervalidtime != null" >
+        ORDERVALIDTIME,
+      </if>
+      <if test="success != null" >
+        SUCCESS,
+      </if>
+      <if test="orderrefoundid != null" >
+        ORDERREFOUNDID,
+      </if>
+      <if test="reqtime != null" >
+        REQTIME,
+      </if>
+      <if test="backphone != null" >
+        BACKPHONE,
+      </if>
+      <if test="backimei != null" >
+        BACKIMEI,
+      </if>
+      <if test="imei != null" >
+        IMEI,
+      </if>
+      <if test="paytype != null" >
+        PAYTYPE,
+      </if>
+      <if test="csn != null" >
+        CSN,
+      </if>
+      <if test="mklx != null" >
+        MKLX,
+      </if>
+      <if test="zklx != null" >
+        ZKLX,
+      </if>
+      <if test="ye != null" >
+        YE,
+      </if>
+      <if test="tac != null" >
+        TAC,
+      </if>
+      <if test="chsj != null" >
+        CHSJ,
+      </if>
+      <if test="jylx != null" >
+        JYLX,
+      </if>
+      <if test="xjbz != null" >
+        XJBZ,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+      <if test="zcsdm != null" >
+        ZCSDM,
+      </if>
+      <if test="ccsdm != null" >
+        CCSDM,
+      </if>
+      <if test="jyxh != null" >
+        JYXH,
+      </if>
+      <if test="randomdata != null" >
+        RANDOMDATA,
+      </if>
+      <if test="qssj != null" >
+        QSSJ,
+      </if>
+      <if test="sysrandom != null" >
+        SYSRANDOM,
+      </if>
+      <if test="ifReturn != null" >
+        IF_RETURN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderno != null" >
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+        #{gid,jdbcType=VARCHAR},
+      <if test="commcode != null" >
+        #{commcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderseq != null" >
+        #{orderseq,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="ordermount != null" >
+        #{ordermount,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=DATE},
+      </if>
+      <if test="ordervalidtime != null" >
+        #{ordervalidtime,jdbcType=DATE},
+      </if>
+      <if test="success != null" >
+        #{success,jdbcType=VARCHAR},
+      </if>
+      <if test="orderrefoundid != null" >
+        #{orderrefoundid,jdbcType=VARCHAR},
+      </if>
+      <if test="reqtime != null" >
+        #{reqtime,jdbcType=DATE},
+      </if>
+      <if test="backphone != null" >
+        #{backphone,jdbcType=VARCHAR},
+      </if>
+      <if test="backimei != null" >
+        #{backimei,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=VARCHAR},
+      </if>
+      <if test="csn != null" >
+        #{csn,jdbcType=VARCHAR},
+      </if>
+      <if test="mklx != null" >
+        #{mklx,jdbcType=VARCHAR},
+      </if>
+      <if test="zklx != null" >
+        #{zklx,jdbcType=VARCHAR},
+      </if>
+      <if test="ye != null" >
+        #{ye,jdbcType=DECIMAL},
+      </if>
+      <if test="tac != null" >
+        #{tac,jdbcType=VARCHAR},
+      </if>
+      <if test="chsj != null" >
+        #{chsj,jdbcType=DATE},
+      </if>
+      <if test="jylx != null" >
+        #{jylx,jdbcType=VARCHAR},
+      </if>
+      <if test="xjbz != null" >
+        #{xjbz,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="zcsdm != null" >
+        #{zcsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="ccsdm != null" >
+        #{ccsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="jyxh != null" >
+        #{jyxh,jdbcType=DECIMAL},
+      </if>
+      <if test="randomdata != null" >
+        #{randomdata,jdbcType=VARCHAR},
+      </if>
+      <if test="qssj != null" >
+        #{qssj,jdbcType=DATE},
+      </if>
+      <if test="sysrandom != null" >
+        #{sysrandom,jdbcType=VARCHAR},
+      </if>
+      <if test="ifReturn != null" >
+        #{ifReturn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.NfcCardRecharge" >
+    update NFC_CARD_RECHARGE
+    <set >
+      <if test="gid != null" >
+        GID = #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="commcode != null" >
+        COMMCODE = #{commcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderseq != null" >
+        ORDERSEQ = #{orderseq,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        PHONENO = #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="ordermount != null" >
+        ORDERMOUNT = #{ordermount,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null" >
+        ORDERTIME = #{ordertime,jdbcType=DATE},
+      </if>
+      <if test="ordervalidtime != null" >
+        ORDERVALIDTIME = #{ordervalidtime,jdbcType=DATE},
+      </if>
+      <if test="success != null" >
+        SUCCESS = #{success,jdbcType=VARCHAR},
+      </if>
+      <if test="orderrefoundid != null" >
+        ORDERREFOUNDID = #{orderrefoundid,jdbcType=VARCHAR},
+      </if>
+      <if test="reqtime != null" >
+        REQTIME = #{reqtime,jdbcType=DATE},
+      </if>
+      <if test="backphone != null" >
+        BACKPHONE = #{backphone,jdbcType=VARCHAR},
+      </if>
+      <if test="backimei != null" >
+        BACKIMEI = #{backimei,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="paytype != null" >
+        PAYTYPE = #{paytype,jdbcType=VARCHAR},
+      </if>
+      <if test="csn != null" >
+        CSN = #{csn,jdbcType=VARCHAR},
+      </if>
+      <if test="mklx != null" >
+        MKLX = #{mklx,jdbcType=VARCHAR},
+      </if>
+      <if test="zklx != null" >
+        ZKLX = #{zklx,jdbcType=VARCHAR},
+      </if>
+      <if test="ye != null" >
+        YE = #{ye,jdbcType=DECIMAL},
+      </if>
+      <if test="tac != null" >
+        TAC = #{tac,jdbcType=VARCHAR},
+      </if>
+      <if test="chsj != null" >
+        CHSJ = #{chsj,jdbcType=DATE},
+      </if>
+      <if test="jylx != null" >
+        JYLX = #{jylx,jdbcType=VARCHAR},
+      </if>
+      <if test="xjbz != null" >
+        XJBZ = #{xjbz,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        FLAG = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="zcsdm != null" >
+        ZCSDM = #{zcsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="ccsdm != null" >
+        CCSDM = #{ccsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="jyxh != null" >
+        JYXH = #{jyxh,jdbcType=DECIMAL},
+      </if>
+      <if test="randomdata != null" >
+        RANDOMDATA = #{randomdata,jdbcType=VARCHAR},
+      </if>
+      <if test="qssj != null" >
+        QSSJ = #{qssj,jdbcType=DATE},
+      </if>
+      <if test="sysrandom != null" >
+        SYSRANDOM = #{sysrandom,jdbcType=VARCHAR},
+      </if>
+      <if test="ifReturn != null" >
+        IF_RETURN = #{ifReturn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDERNO = #{orderno,jdbcType=VARCHAR}
+      and CARDNO = #{cardno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.NfcCardRecharge" >
+    update NFC_CARD_RECHARGE
+    set GID = #{gid,jdbcType=VARCHAR},
+      COMMCODE = #{commcode,jdbcType=VARCHAR},
+      ORDERSEQ = #{orderseq,jdbcType=VARCHAR},
+      PHONENO = #{phoneno,jdbcType=VARCHAR},
+      ORDERMOUNT = #{ordermount,jdbcType=VARCHAR},
+      ORDERTIME = #{ordertime,jdbcType=DATE},
+      ORDERVALIDTIME = #{ordervalidtime,jdbcType=DATE},
+      SUCCESS = #{success,jdbcType=VARCHAR},
+      ORDERREFOUNDID = #{orderrefoundid,jdbcType=VARCHAR},
+      REQTIME = #{reqtime,jdbcType=DATE},
+      BACKPHONE = #{backphone,jdbcType=VARCHAR},
+      BACKIMEI = #{backimei,jdbcType=VARCHAR},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      PAYTYPE = #{paytype,jdbcType=VARCHAR},
+      CSN = #{csn,jdbcType=VARCHAR},
+      MKLX = #{mklx,jdbcType=VARCHAR},
+      ZKLX = #{zklx,jdbcType=VARCHAR},
+      YE = #{ye,jdbcType=DECIMAL},
+      TAC = #{tac,jdbcType=VARCHAR},
+      CHSJ = #{chsj,jdbcType=DATE},
+      JYLX = #{jylx,jdbcType=VARCHAR},
+      XJBZ = #{xjbz,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      ZCSDM = #{zcsdm,jdbcType=VARCHAR},
+      CCSDM = #{ccsdm,jdbcType=VARCHAR},
+      JYXH = #{jyxh,jdbcType=DECIMAL},
+      RANDOMDATA = #{randomdata,jdbcType=VARCHAR},
+      QSSJ = #{qssj,jdbcType=DATE},
+      SYSRANDOM = #{sysrandom,jdbcType=VARCHAR},
+      IF_RETURN = #{ifReturn,jdbcType=VARCHAR}
+    where ORDERNO = #{orderno,jdbcType=VARCHAR}
+      and CARDNO = #{cardno,jdbcType=VARCHAR}
+  </update>
+</mapper>
