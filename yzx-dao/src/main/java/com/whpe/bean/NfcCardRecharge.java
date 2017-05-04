@@ -47,7 +47,7 @@ public class NfcCardRecharge {
 
     private String zklx;
 
-    private BigDecimal ye;
+    private Long ye;
 
     private String tac;
 
@@ -64,7 +64,7 @@ public class NfcCardRecharge {
 
     private String ccsdm;
 
-    private BigDecimal jyxh;
+    private Long jyxh;
 
     private String randomdata;
 
@@ -233,11 +233,11 @@ public class NfcCardRecharge {
         this.zklx = zklx == null ? null : zklx.trim();
     }
 
-    public BigDecimal getYe() {
+    public Long getYe() {
         return ye;
     }
 
-    public void setYe(BigDecimal ye) {
+    public void setYe(Long ye) {
         this.ye = ye;
     }
 
@@ -297,11 +297,11 @@ public class NfcCardRecharge {
         this.ccsdm = ccsdm == null ? null : ccsdm.trim();
     }
 
-    public BigDecimal getJyxh() {
+    public Long getJyxh() {
         return jyxh;
     }
 
-    public void setJyxh(BigDecimal jyxh) {
+    public void setJyxh(Long jyxh) {
         this.jyxh = jyxh;
     }
 

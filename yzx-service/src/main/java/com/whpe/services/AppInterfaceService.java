@@ -15,7 +15,11 @@ public interface AppInterfaceService {
 
     void applyPay(JSONObject requestJson, JSONObject result, HttpSession session);
 
+    void applyRecharge(JSONObject requestJson, JSONObject result, HttpSession session);
+
     boolean updateNfcCardRechargeOrder(NfcCardRecharge nfcCardRecharge);
 
     void queryOrder(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void rechargeConfirm(JSONObject requestJson, JSONObject result, HttpSession session);
 }

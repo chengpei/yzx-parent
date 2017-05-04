@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.whpe.bean.AppMycard;
+import com.whpe.bean.InitializeForLoadBean;
 import com.whpe.bean.NfcCardRecharge;
 import com.whpe.bean.SysPeople;
 import com.whpe.bean.dto.SysPeopleDTO;
@@ -15,7 +16,9 @@ import com.whpe.dao.SysPeopleMapper;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.CommonService;
 import com.whpe.services.PayService;
+import com.whpe.services.RechargeService;
 import com.whpe.utils.DateUtils;
+import com.whpe.utils.MessageAnalysisDevice;
 import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +41,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private PayService payService;
+
+    @Resource
+    private RechargeService rechargeService;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -145,6 +151,121 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("E0001", "不支持的支付方式", result);
             return;
         }
+    }
+
+    @Override
+    public void applyRecharge(JSONObject requestJson, JSONObject result, HttpSession session) {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String initializeForLoad = reqContent.getString("initializeForLoad");
+        String cardNo = reqContent.getString("cardNo");
+        String orderNo = reqContent.getString("orderNo");
+        String wlkh = reqContent.getString("wlkh");
+        if(StringUtils.isEmpty(initializeForLoad) || StringUtils.isEmpty(cardNo) || StringUtils.isEmpty(orderNo)){
+            makeRetInfo("E0001", "参数不能为空", result);
+            return;
+        }
+        InitializeForLoadBean data8050Bean = analysisInitializeForLoad(initializeForLoad);
+        NfcCardRecharge nfcCardRecharge = nfcCardRechargeMapper.selectByPrimaryKey(orderNo);
+        if(nfcCardRecharge == null){
+            makeRetInfo("E0001", "订单不存在", result);
+            return;
+        }
+        if(!cardNo.equals(nfcCardRecharge.getCardno())){
+            makeRetInfo("E0001", "补登订单不属于该卡", result);
+            return;
+        }
+        int rechargeMoney = Integer.parseInt(nfcCardRecharge.getOrdermount());
+        int oldBalanceInt = Integer.parseInt(data8050Bean.getOldBalance(), 16);
+        if(rechargeMoney + oldBalanceInt > 80000){
+            makeRetInfo("E0001", "卡余额不能超过800", result);
+            return;
+        }
+        if(nfcCardRecharge.getJyxh() != null
+                && nfcCardRecharge.getJyxh().longValue() != Long.parseLong(data8050Bean.getTradeSeq(), 16)){
+            // 订单中充值计数器不为空，并且和圈存初始化 计数器不相等，说明此次充值已经完成
+            // TODO 更新订单为充值成功状态
+
+            makeRetInfo("E0001", "请勿重复充值", result);
+            return;
+        }
+
+        // 校验mac1
+        if(!rechargeService.checkMac1(nfcCardRecharge, data8050Bean)){
+            makeRetInfo("E0001", "MAC1校验失败", result);
+            return;
+        }
+
+        // 计算mac2
+        String mac2 = rechargeService.calculateMac2(nfcCardRecharge, data8050Bean);
+        if(StringUtils.isEmpty(mac2)){
+            makeRetInfo("E0001", "MAC2计算失败", result);
+            return;
+        }
+        String creditForLoad = rechargeService.buildCreditForLoad(mac2);
+        // 更新订单信息
+        nfcCardRecharge.setCsn(wlkh);
+        nfcCardRecharge.setSuccess("1");// 充值成功
+        nfcCardRecharge.setYe(Long.parseLong(data8050Bean.getOldBalance(), 16));
+        nfcCardRecharge.setJyxh(Long.parseLong(data8050Bean.getTradeSeq(), 16));
+        nfcCardRecharge.setRandomdata(data8050Bean.getRandom());
+        nfcCardRechargeMapper.updateByPrimaryKeySelective(nfcCardRecharge);
+
+        putRetContent("creditForLoad", creditForLoad, result);
+        makeRetInfo("S0000", "申请成功", result);
+        return;
+    }
+
+    @Override
+    public void rechargeConfirm(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderNo = reqContent.getString("orderNo");
+        String success = reqContent.getString("success");
+        if(StringUtils.isEmpty(success) || StringUtils.isEmpty(orderNo)){
+            makeRetInfo("E0001", "参数不能为空", result);
+            return;
+        }
+        NfcCardRecharge nfcCardRecharge = nfcCardRechargeMapper.selectByPrimaryKey(orderNo);
+        if(nfcCardRecharge == null){
+            makeRetInfo("E0001", "订单不存在", result);
+            return;
+        }
+        nfcCardRecharge.setSuccess(success);
+        if(nfcCardRechargeMapper.updateByPrimaryKeySelective(nfcCardRecharge) > 0){
+            makeRetInfo("S0000", "确认成功", result);
+        }else{
+            makeRetInfo("E0001", "更新订单状态失败", result);
+        }
+    }
+
+    /**
+     * 解析圈存初始化的返回
+     * @param initializeForLoad
+     * @return
+     */
+    private InitializeForLoadBean analysisInitializeForLoad(String initializeForLoad) {
+        if(StringUtils.isEmpty(initializeForLoad)){
+            return null;
+        }
+        MessageAnalysisDevice messageAnalysisDevice = new MessageAnalysisDevice();
+        messageAnalysisDevice.putAnalysisLength("oldBalance", 4*2);
+        messageAnalysisDevice.putAnalysisLength("tradeSeq",   2*2);
+        messageAnalysisDevice.putAnalysisLength("keyVersion", 1*2);
+        messageAnalysisDevice.putAnalysisLength("sfFlag",     1*2);
+        messageAnalysisDevice.putAnalysisLength("random",     4*2);
+        messageAnalysisDevice.putAnalysisLength("mac1",       4*2);
+        messageAnalysisDevice.analysis(initializeForLoad);
+        InitializeForLoadBean data8050Bean = new InitializeForLoadBean();
+        data8050Bean.setOldBalance(messageAnalysisDevice.getValue("oldBalance"));
+        data8050Bean.setTradeSeq(messageAnalysisDevice.getValue("tradeSeq"));
+        data8050Bean.setKeyVersion(messageAnalysisDevice.getValue("keyVersion"));
+        data8050Bean.setSfFlag(messageAnalysisDevice.getValue("sfFlag"));
+        data8050Bean.setRandom(messageAnalysisDevice.getValue("random"));
+        data8050Bean.setMac1(messageAnalysisDevice.getValue("mac1"));
+        return data8050Bean;
     }
 
     @Override
