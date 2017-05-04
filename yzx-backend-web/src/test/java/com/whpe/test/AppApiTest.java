@@ -1,8 +1,10 @@
 package com.whpe.test;
 
+import com.whpe.bean.NfcCardRecharge;
 import com.whpe.bean.SmsSendLog;
 import com.whpe.bean.SysAppUser;
 import com.whpe.bean.SysUser;
+import com.whpe.dao.NfcCardRechargeMapper;
 import com.whpe.dao.SmsSendLogMapper;
 import com.whpe.dao.SysAppUserMapper;
 import com.whpe.dao.SysUserMapper;
@@ -30,6 +32,9 @@ public class AppApiTest extends SpringTestContext{
 
     @Resource
     private SysAppUserMapper sysAppUserMapper;
+
+    @Resource
+    private NfcCardRechargeMapper nfcCardRechargeMapper;
 
     @Test
     public void sendSMSTest() throws Exception {
@@ -77,8 +82,11 @@ public class AppApiTest extends SpringTestContext{
 
     @Test
     public void testCheckSmsOneMinutes(){
-        boolean b = loginRegisterService.checkSmsOneMinutes("13476073978");
-        System.out.println(b);
+        NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
+        nfcCardRecharge.setOrderno("Y20170503161504000000000000006");
+        nfcCardRecharge.setBackrcvresponse("01");
+        int i = nfcCardRechargeMapper.updateByPrimaryKeySelective(nfcCardRecharge);
+        System.out.println(i);
     }
 
 }

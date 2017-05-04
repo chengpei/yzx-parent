@@ -34,6 +34,9 @@ public class LoginRegisterController extends CommonController{
         if(sysAppUser == null){
             return new Result(false, "用户名或密码不正确");
         }
+        if(!"2".equals(sysAppUser.getuEnabled())){
+            return new Result(false, "帐号未启用");
+        }
         session.setAttribute("token", sysAppUser.getToken());
         Result result = new Result(true, "登陆成功");
         result.put("token", sysAppUser.getToken());

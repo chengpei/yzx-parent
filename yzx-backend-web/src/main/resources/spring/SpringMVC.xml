@@ -63,6 +63,7 @@
             <mvc:exclude-mapping path="/api/sendSMSCheckCode.do"/>
             <mvc:exclude-mapping path="/api/examineCheckCode.do"/>
             <mvc:exclude-mapping path="/api/changePassword.do"/>
+            <mvc:exclude-mapping path="/unionpay/back.do"/>
             <bean class="com.whpe.interceptor.AppCheckLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

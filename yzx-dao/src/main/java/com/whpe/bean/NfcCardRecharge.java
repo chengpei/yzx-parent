@@ -1,5 +1,7 @@
 package com.whpe.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -18,14 +20,17 @@ public class NfcCardRecharge {
 
     private String ordermount;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date ordertime;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date ordervalidtime;
 
     private String success;
 
     private String orderrefoundid;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date reqtime;
 
     private String backphone;
@@ -46,6 +51,7 @@ public class NfcCardRecharge {
 
     private String tac;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date chsj;
 
     private String jylx;
@@ -62,11 +68,18 @@ public class NfcCardRecharge {
 
     private String randomdata;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date qssj;
 
     private String sysrandom;
 
     private String ifReturn;
+
+    private String qsflag;
+
+    private Long cccount;
+
+    private String backrcvresponse;
 
     public String getOrderno() {
         return orderno;
@@ -322,5 +335,29 @@ public class NfcCardRecharge {
 
     public void setIfReturn(String ifReturn) {
         this.ifReturn = ifReturn == null ? null : ifReturn.trim();
+    }
+
+    public String getQsflag() {
+        return qsflag;
+    }
+
+    public void setQsflag(String qsflag) {
+        this.qsflag = qsflag;
+    }
+
+    public Long getCccount() {
+        return cccount;
+    }
+
+    public void setCccount(Long cccount) {
+        this.cccount = cccount;
+    }
+
+    public String getBackrcvresponse() {
+        return backrcvresponse;
+    }
+
+    public void setBackrcvresponse(String backrcvresponse) {
+        this.backrcvresponse = backrcvresponse;
     }
 }

@@ -96,7 +96,7 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
         SysAppUserVO appUser = sysAppUserMapper.selectByCondition(sysAppUser);
 
         // 登录成功更新令牌
-        if(appUser != null){
+        if(appUser != null && "2".equals(appUser.getuEnabled())){
             appUser.setToken(UUID.randomUUID().toString().replaceAll("-", ""));
             sysAppUserMapper.updateByPrimaryKeySelective(appUser);
         }

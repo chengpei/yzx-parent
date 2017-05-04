@@ -2,6 +2,8 @@ package com.whpe.dao;
 
 import com.whpe.bean.NfcCardRecharge;
 
+import java.util.List;
+
 public interface NfcCardRechargeMapper {
     int deleteByPrimaryKey(String orderNo);
 
@@ -16,4 +18,6 @@ public interface NfcCardRechargeMapper {
     int updateByPrimaryKey(NfcCardRecharge record);
 
     int generateOrderNo();
+
+    List<NfcCardRecharge> selectByCondition(NfcCardRecharge nfcCardRecharge);
 }

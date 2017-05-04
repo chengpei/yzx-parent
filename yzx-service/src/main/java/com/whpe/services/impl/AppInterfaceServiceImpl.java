@@ -1,7 +1,9 @@
 package com.whpe.services.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
 import com.whpe.bean.AppMycard;
 import com.whpe.bean.NfcCardRecharge;
 import com.whpe.bean.SysPeople;
@@ -12,6 +14,7 @@ import com.whpe.dao.NfcCardRechargeMapper;
 import com.whpe.dao.SysPeopleMapper;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.CommonService;
+import com.whpe.services.PayService;
 import com.whpe.utils.DateUtils;
 import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Service;
@@ -19,10 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AppInterfaceServiceImpl extends CommonService implements AppInterfaceService{
@@ -35,6 +35,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private NfcCardRechargeMapper nfcCardRechargeMapper;
+
+    @Resource
+    private PayService payService;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -61,9 +64,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
         JSONObject reqContent = requestJson.getJSONObject("reqContent");
         String cardNo = reqContent.getString("cardNo");
-        String bz = reqContent.getString("bz");
+        String remark = reqContent.getString("remark");
         AppMycard appMycard = new AppMycard();
-        appMycard.setAppBz(bz);
+        appMycard.setAppBz(remark);
         appMycard.setAppFxkh(cardNo);
         appMycard.setAppUserid(appUser.getuId());
         appMycard.setAppCreatedate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -92,6 +95,10 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("E0001", "卡号和金额不能为空", result);
             return;
         }
+        if(Integer.parseInt(orderMount) > 800000){
+            makeRetInfo("E0001", "订单金额不能大于800元", result);
+            return;
+        }
         NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
         nfcCardRecharge.setCardno(fxkh);
         nfcCardRecharge.setOrderseq(orderNo);
@@ -103,13 +110,76 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         nfcCardRecharge.setChsj(new Date());
         nfcCardRecharge.setJylx("24");// 24-补登
         if(nfcCardRechargeMapper.insertSelective(nfcCardRecharge) > 0){
-            JSONObject retContent =  new JSONObject();
-            retContent.put("orderNo", orderNo);
-            result.put("retContent", retContent);
+            putRetContent("orderNo", orderNo, result);
             makeRetInfo("S0000", "提交成功", result);
         }else{
             makeRetInfo("E0001", "提交失败", result);
         }
+    }
+
+    @Override
+    public void applyPay(JSONObject requestJson, JSONObject result, HttpSession session) {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderNo = reqContent.getString("orderNo");
+        String payType = reqContent.getString("payType");
+        // 根据订单号查询订单信息
+        NfcCardRecharge nfcCardRecharge = nfcCardRechargeMapper.selectByPrimaryKey(orderNo);
+        if(nfcCardRecharge == null){
+            makeRetInfo("E0001", "订单不存在", result);
+            return;
+        }
+        if("08".equals(payType)){
+            //银联支付
+            String tn = payService.getUnionPayTN(orderNo, nfcCardRecharge.getOrdermount());
+            if(StringUtils.isNotEmpty(tn)){
+                putRetContent("tn", tn, result);
+                makeRetInfo("S0000", "申请成功", result);
+                return;
+            }else {
+                makeRetInfo("E0001", "申请失败", result);
+                return;
+            }
+        }else{
+            makeRetInfo("E0001", "不支持的支付方式", result);
+            return;
+        }
+    }
+
+    @Override
+    public boolean updateNfcCardRechargeOrder(NfcCardRecharge nfcCardRecharge) {
+        return nfcCardRechargeMapper.updateByPrimaryKeySelective(nfcCardRecharge) > 0;
+    }
+
+    @Override
+    public void queryOrder(JSONObject requestJson, JSONObject result, HttpSession session) {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String pageNo = common.getString("pageNo"); // 页码
+        String pageSum = common.getString("pageSum"); // 每页记录数
+        String success = reqContent.getString("success");
+        String backrcvresponse = reqContent.getString("backrcvresponse");
+        String phone = appUser.getuPhone();
+        String cardNo = reqContent.getString("cardNo");
+        NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
+        nfcCardRecharge.setSuccess(success);
+        nfcCardRecharge.setBackrcvresponse(backrcvresponse);
+        nfcCardRecharge.setPhoneno(phone);
+        nfcCardRecharge.setCardno(cardNo);
+        if(StringUtils.isNotEmpty(pageNo)){
+            // pageNo不为空分页查询
+            PageHelper.startPage(Integer.parseInt(pageNo), Integer.parseInt(pageSum));
+        }
+        List<NfcCardRecharge> nfcCardRechargeList = nfcCardRechargeMapper.selectByCondition(nfcCardRecharge);
+        if(nfcCardRechargeList == null && nfcCardRechargeList.size() == 0){
+            makeRetInfo("S0001", "未查询到订单", result);
+            return;
+        }
+        JSONArray nfcCardRechargeArray = JSONArray.parseArray(JSON.toJSONString(nfcCardRechargeList));
+        putRetContent(nfcCardRechargeArray, result);
+        makeRetInfo("S0000", "查询成功", result);
     }
 
     /**
@@ -131,5 +201,32 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         retComMap.put("retCode", retCode);
         retComMap.put("retMsg", retMsg);
         result.put("common", JSONObject.parseObject(JSON.toJSONString(retComMap)));
+    }
+
+    public static void putRetContent(String key, String value, JSONObject result){
+        JSONObject retContent = result.getJSONObject("retContent");
+        if(retContent == null){
+            retContent = new JSONObject();
+        }
+        retContent.put(key, value);
+        result.put("retContent", retContent);
+    }
+
+    public static void putRetContent(JSONArray jsonArray, JSONObject result){
+        result.put("retContent", jsonArray);
+    }
+
+    public static void putRetContent(JSONObject jsonObject, JSONObject result){
+        JSONObject retContent = result.getJSONObject("retContent");
+        if(retContent == null){
+            retContent = jsonObject;
+        }else{
+            Iterator<Map.Entry<String, Object>> iterator = jsonObject.entrySet().iterator();
+            while (iterator.hasNext()){
+                Map.Entry<String, Object> next = iterator.next();
+                retContent.put(next.getKey(), next.getValue());
+            }
+        }
+        result.put("retContent", retContent);
     }
 }

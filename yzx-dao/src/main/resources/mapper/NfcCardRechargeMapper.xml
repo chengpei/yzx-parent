@@ -34,21 +34,41 @@
     <result column="QSSJ" property="qssj" jdbcType="TIMESTAMP" />
     <result column="SYSRANDOM" property="sysrandom" jdbcType="VARCHAR" />
     <result column="IF_RETURN" property="ifReturn" jdbcType="VARCHAR" />
+    <result column="QSFLAG" property="qsflag" jdbcType="VARCHAR" />
+    <result column="CCCOUNT" property="cccount" jdbcType="DECIMAL" />
+    <result column="BACKRCVRESPONSE" property="backrcvresponse" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ORDERNO, CARDNO, GID, COMMCODE, ORDERSEQ, PHONENO, ORDERMOUNT, ORDERTIME, ORDERVALIDTIME, 
     SUCCESS, ORDERREFOUNDID, REQTIME, BACKPHONE, BACKIMEI, IMEI, PAYTYPE, CSN, MKLX, 
     ZKLX, YE, TAC, CHSJ, JYLX, XJBZ, FLAG, ZCSDM, CCSDM, JYXH, RANDOMDATA, QSSJ, SYSRANDOM, 
-    IF_RETURN
+    IF_RETURN, QSFLAG, CCCOUNT, BACKRCVRESPONSE
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from NFC_CARD_RECHARGE
+    from v_NFC_CARD_RECHARGE
     where ORDERNO = #{orderno,jdbcType=VARCHAR}
   </select>
   <select id="generateOrderNo" resultType="java.lang.Integer">
     SELECT SEQ_ORDERNO.nextval from dual
+  </select>
+  <select id="selectByCondition" resultType="com.whpe.bean.NfcCardRecharge">
+    SELECT <include refid="Base_Column_List" /> FROM v_NFC_CARD_RECHARGE
+    <where>
+      <if test="phoneno != null">
+        AND PHONENO = #{phoneno,jdbcType=VARCHAR}
+      </if>
+      <if test="cardno != null">
+        AND CARDNO = #{cardno,jdbcType=VARCHAR}
+      </if>
+      <if test="success != null">
+        AND SUCCESS = #{success,jdbcType=VARCHAR}
+      </if>
+      <if test="backrcvresponse != null">
+        AND BACKRCVRESPONSE = #{backrcvresponse,jdbcType=VARCHAR}
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from NFC_CARD_RECHARGE
@@ -64,7 +84,8 @@
       ZKLX, YE, TAC, CHSJ, 
       JYLX, XJBZ, FLAG, ZCSDM, 
       CCSDM, JYXH, RANDOMDATA, 
-      QSSJ, SYSRANDOM, IF_RETURN
+      QSSJ, SYSRANDOM, IF_RETURN,
+      QSFLAG, CCCOUNT, BACKRCVRESPONSE
       )
     values (#{orderno,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR}, #{gid,jdbcType=VARCHAR}, 
       #{commcode,jdbcType=VARCHAR}, #{orderseq,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
@@ -75,7 +96,8 @@
       #{zklx,jdbcType=VARCHAR}, #{ye,jdbcType=DECIMAL}, #{tac,jdbcType=VARCHAR}, #{chsj,jdbcType=TIMESTAMP},
       #{jylx,jdbcType=VARCHAR}, #{xjbz,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{zcsdm,jdbcType=VARCHAR}, 
       #{ccsdm,jdbcType=VARCHAR}, #{jyxh,jdbcType=DECIMAL}, #{randomdata,jdbcType=VARCHAR}, 
-      #{qssj,jdbcType=TIMESTAMP}, #{sysrandom,jdbcType=VARCHAR}, #{ifReturn,jdbcType=VARCHAR}
+      #{qssj,jdbcType=TIMESTAMP}, #{sysrandom,jdbcType=VARCHAR}, #{ifReturn,jdbcType=VARCHAR},
+      #{qsflag,jdbcType=VARCHAR}, #{cccount,jdbcType=DECIMAL}, #{backrcvresponse,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.NfcCardRecharge" >
@@ -178,6 +200,15 @@
       <if test="ifReturn != null" >
         IF_RETURN,
       </if>
+      <if test="qsflag != null" >
+        QSFLAG,
+      </if>
+      <if test="cccount != null" >
+        CCCOUNT,
+      </if>
+      <if test="backrcvresponse != null" >
+        BACKRCVRESPONSE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="orderno != null" >
@@ -274,6 +305,15 @@
       <if test="ifReturn != null" >
         #{ifReturn,jdbcType=VARCHAR},
       </if>
+      <if test="qsflag != null" >
+        #{qsflag,jdbcType=VARCHAR},
+      </if>
+      <if test="cccount != null" >
+        #{cccount,jdbcType=DECIMAL},
+      </if>
+      <if test="backrcvresponse != null" >
+        #{backrcvresponse,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.NfcCardRecharge" >
@@ -369,9 +409,17 @@
       <if test="ifReturn != null" >
         IF_RETURN = #{ifReturn,jdbcType=VARCHAR},
       </if>
+      <if test="qsflag != null" >
+        QSFLAG = #{qsflag,jdbcType=VARCHAR},
+      </if>
+      <if test="cccount != null" >
+        CCCOUNT = #{cccount,jdbcType=DECIMAL},
+      </if>
+      <if test="backrcvresponse != null" >
+        BACKRCVRESPONSE = #{backrcvresponse,jdbcType=VARCHAR},
+      </if>
     </set>
     where ORDERNO = #{orderno,jdbcType=VARCHAR}
-      and CARDNO = #{cardno,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.whpe.bean.NfcCardRecharge" >
     update NFC_CARD_RECHARGE
@@ -404,8 +452,10 @@
       RANDOMDATA = #{randomdata,jdbcType=VARCHAR},
       QSSJ = #{qssj,jdbcType=TIMESTAMP},
       SYSRANDOM = #{sysrandom,jdbcType=VARCHAR},
-      IF_RETURN = #{ifReturn,jdbcType=VARCHAR}
+      IF_RETURN = #{ifReturn,jdbcType=VARCHAR},
+      QSFLAG = #{qsflag,jdbcType=VARCHAR},
+      CCCOUNT = #{cccount,jdbcType=DECIMAL},
+      BACKRCVRESPONSE = #{backrcvresponse,jdbcType=VARCHAR}
     where ORDERNO = #{orderno,jdbcType=VARCHAR}
-      and CARDNO = #{cardno,jdbcType=VARCHAR}
   </update>
 </mapper>
