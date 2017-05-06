@@ -49,8 +49,12 @@ public class AppCheckLoginInterceptor extends HandlerInterceptorAdapter {
         if("/api/interface".equals(requestMappingAnn.value()[0])){
             String content = request.getParameter("content");
             if(StringUtils.isEmpty(content)){
+                String temp;
+                content = "";
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
-                content = bufferedReader.readLine();
+                while((temp = bufferedReader.readLine()) != null){
+                    content += (temp+System.getProperty("line.separator"));
+                }
             }
             if (StringUtils.isNotEmpty(content)){
                 request.setAttribute("content", content);
