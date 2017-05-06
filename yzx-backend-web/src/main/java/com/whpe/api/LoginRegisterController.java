@@ -41,6 +41,7 @@ public class LoginRegisterController extends CommonController{
         Result result = new Result(true, "登陆成功");
         result.put("token", sysAppUser.getToken());
         result.put("sysPeople", sysAppUser.getSysPeople());
+        result.put("uid", sysAppUser.getuId());
         return result;
     }
 

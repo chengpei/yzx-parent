@@ -7,7 +7,9 @@ import com.unionpay.acp.sdk.SDKUtil;
 import com.whpe.bean.NfcCardRecharge;
 import com.whpe.controller.CommonController;
 import com.whpe.services.AppInterfaceService;
+import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +35,9 @@ public class AppInterfaceController extends CommonController{
     public JSONObject appInterface(String content, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         // 返回的结果对象
         JSONObject result = new JSONObject();
+        if(StringUtils.isEmpty(content)){
+            content = (String) request.getAttribute("content");
+        }
         logger.info("调用接口入参 == " + content);
         JSONObject requestJson = JSONObject.parseObject(content);
         JSONObject commonInfo = requestJson.getJSONObject("common");

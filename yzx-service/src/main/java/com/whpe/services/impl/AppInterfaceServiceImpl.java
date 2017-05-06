@@ -115,6 +115,7 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         nfcCardRecharge.setSuccess("0");
         nfcCardRecharge.setChsj(new Date());
         nfcCardRecharge.setJylx("24");// 24-补登
+        nfcCardRecharge.setImei("100000000001");
         if(nfcCardRechargeMapper.insertSelective(nfcCardRecharge) > 0){
             putRetContent("orderNo", orderNo, result);
             makeRetInfo("S0000", "提交成功", result);
@@ -185,8 +186,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         if(nfcCardRecharge.getJyxh() != null
                 && nfcCardRecharge.getJyxh().longValue() != Long.parseLong(data8050Bean.getTradeSeq(), 16)){
             // 订单中充值计数器不为空，并且和圈存初始化 计数器不相等，说明此次充值已经完成
-            // TODO 更新订单为充值成功状态
-
+            // 更新订单为充值成功状态
+            nfcCardRecharge.setSuccess("1");// 写卡成功
+            nfcCardRechargeMapper.updateByPrimaryKeySelective(nfcCardRecharge);
             makeRetInfo("E0001", "请勿重复充值", result);
             return;
         }

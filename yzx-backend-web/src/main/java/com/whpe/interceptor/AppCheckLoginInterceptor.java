@@ -1,10 +1,14 @@
 package com.whpe.interceptor;
 
+import com.alibaba.fastjson.JSONObject;
 import com.whpe.bean.Result;
 import com.whpe.bean.SysAppUser;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.services.LoginRegisterService;
-import org.springframework.util.StringUtils;
+import com.whpe.utils.StringUtils;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -12,8 +16,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 
 /**
  * 用户登录拦截器，未登录用户转向登录页面
@@ -34,6 +41,26 @@ public class AppCheckLoginInterceptor extends HandlerInterceptorAdapter {
             token = (String) session.getAttribute("token");
         }else{
             session.setAttribute("token", token);
+        }
+
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Method method = handlerMethod.getMethod();
+        RequestMapping requestMappingAnn = AnnotationUtils.findAnnotation(method, RequestMapping.class);
+        if("/api/interface".equals(requestMappingAnn.value()[0])){
+            String content = request.getParameter("content");
+            if(StringUtils.isEmpty(content)){
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                content = bufferedReader.readLine();
+            }
+            if (StringUtils.isNotEmpty(content)){
+                request.setAttribute("content", content);
+                JSONObject requestJson = JSONObject.parseObject(content);
+                JSONObject commonInfo = requestJson.getJSONObject("common");
+                String commonToken = commonInfo.getString("token");
+                if(StringUtils.isNotEmpty(commonToken) && StringUtils.isEmpty(token)){
+                    token = commonToken;
+                }
+            }
         }
 
         if(token == null){
