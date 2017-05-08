@@ -38,6 +38,7 @@ public class AppInterfaceController extends CommonController{
         if(StringUtils.isEmpty(content)){
             content = (String) request.getAttribute("content");
         }
+        session.setAttribute("javax.servlet.http.HttpServletRequest", request);
         logger.info("调用接口入参 == " + content);
         JSONObject requestJson = JSONObject.parseObject(content);
         JSONObject commonInfo = requestJson.getJSONObject("common");
@@ -86,9 +87,9 @@ public class AppInterfaceController extends CommonController{
             nfcCardRecharge.setBackrcvresponse("01");
         }
         if(appInterfaceService.updateNfcCardRechargeOrder(nfcCardRecharge)){
-            logger.info("订单状态更新成功，订单【"+orderNo+"】更新为【"+orderNo+"】");
+            logger.info("订单状态更新成功，订单【"+orderNo+"】更新为【"+nfcCardRecharge.getBackrcvresponse()+"】");
         }else{
-            logger.error("订单状态更新失败，订单【"+orderNo+"】更新为【"+orderNo+"】失败！");
+            logger.error("订单状态更新失败，订单【"+orderNo+"】更新为【"+nfcCardRecharge.getBackrcvresponse()+"】失败！");
         }
     }
 

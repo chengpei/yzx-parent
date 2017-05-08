@@ -4,14 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
-import com.whpe.bean.AppMycard;
-import com.whpe.bean.InitializeForLoadBean;
-import com.whpe.bean.NfcCardRecharge;
-import com.whpe.bean.SysPeople;
+import com.whpe.bean.*;
 import com.whpe.bean.dto.SysPeopleDTO;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.dao.AppMycardMapper;
 import com.whpe.dao.NfcCardRechargeMapper;
+import com.whpe.dao.NhrequestresultMapper;
 import com.whpe.dao.SysPeopleMapper;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.CommonService;
@@ -23,6 +21,7 @@ import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -44,6 +43,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private RechargeService rechargeService;
+
+    @Resource
+    private NhrequestresultMapper nhrequestresultMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -148,6 +150,19 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
                 makeRetInfo("E0001", "申请失败", result);
                 return;
             }
+        }else if("06".equals(payType)){
+            // 农行支付
+            if(payService.generateAbcPayHtml(orderNo, nfcCardRecharge.getOrdermount())){
+                HttpServletRequest request = (HttpServletRequest) session.getAttribute("javax.servlet.http.HttpServletRequest");
+                String url = request.getScheme() + "://" + request.getServerName() + ":"
+                        + request.getServerPort() + request.getContextPath() + "/abcPayHtml/" + orderNo + ".html";
+                putRetContent("url", url, result);
+                makeRetInfo("S0000", "申请成功", result);
+                return;
+            }else {
+                makeRetInfo("E0001", "申请失败", result);
+                return;
+            }
         }else{
             makeRetInfo("E0001", "不支持的支付方式", result);
             return;
@@ -241,6 +256,11 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         }else{
             makeRetInfo("E0001", "更新订单状态失败", result);
         }
+    }
+
+    @Override
+    public int saveAbcRequestResult(Nhrequestresult nhrequestresult) {
+        return nhrequestresultMapper.insertSelective(nhrequestresult);
     }
 
     /**

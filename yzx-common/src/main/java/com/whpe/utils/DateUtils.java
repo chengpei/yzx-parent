@@ -1,5 +1,6 @@
 package com.whpe.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,5 +14,10 @@ public class DateUtils {
     public static String getFormatDate(Date date, String format){
         sdf.applyPattern(format);
         return sdf.format(date);
+    }
+
+    public static Date getDateForString(String hostDateTime, String format) throws ParseException {
+        sdf.applyPattern(format);
+        return sdf.parse(hostDateTime);
     }
 }

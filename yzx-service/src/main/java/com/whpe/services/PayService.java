@@ -9,4 +9,12 @@ public interface PayService {
      * @return
      */
     String getUnionPayTN(String orderNo, String ordermount);
+
+    /**
+     * 根据订单号、金额，生成农行支付的URL
+     * @param orderNo
+     * @param ordermount
+     * @return
+     */
+    boolean generateAbcPayHtml(String orderNo, String ordermount);
 }

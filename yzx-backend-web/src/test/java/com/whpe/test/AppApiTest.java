@@ -1,19 +1,19 @@
 package com.whpe.test;
 
-import com.whpe.bean.NfcCardRecharge;
-import com.whpe.bean.SmsSendLog;
-import com.whpe.bean.SysAppUser;
-import com.whpe.bean.SysUser;
+import com.whpe.bean.*;
 import com.whpe.dao.NfcCardRechargeMapper;
 import com.whpe.dao.SmsSendLogMapper;
 import com.whpe.dao.SysAppUserMapper;
 import com.whpe.dao.SysUserMapper;
+import com.whpe.services.AppInterfaceService;
 import com.whpe.services.LoginRegisterService;
 import com.whpe.services.SendSMSService;
+import com.whpe.utils.DateUtils;
 import org.junit.Test;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.LinkedHashMap;
 
 /**
@@ -35,6 +35,9 @@ public class AppApiTest extends SpringTestContext{
 
     @Resource
     private NfcCardRechargeMapper nfcCardRechargeMapper;
+
+    @Resource
+    private AppInterfaceService appInterfaceService;
 
     @Test
     public void sendSMSTest() throws Exception {
@@ -87,6 +90,24 @@ public class AppApiTest extends SpringTestContext{
         nfcCardRecharge.setBackrcvresponse("01");
         int i = nfcCardRechargeMapper.updateByPrimaryKeySelective(nfcCardRecharge);
         System.out.println(i);
+    }
+
+    @Test
+    public void nhInsert() throws ParseException {
+        Nhrequestresult nhrequestresult = new Nhrequestresult();
+        nhrequestresult.setTrxtype("12");
+        nhrequestresult.setOrderno("Y20170507123456000000000000002");
+        nhrequestresult.setAmount(Double.valueOf("50.00"));
+        nhrequestresult.setBatchno("2");
+        nhrequestresult.setVoucherno("2");
+        nhrequestresult.setHostdatetime(DateUtils.getDateForString("2017-05-07 15:12:23", "yyyy-MM-dd HH:mm:ss"));
+        nhrequestresult.setMerchantremarks("12");
+        nhrequestresult.setPaytype("06");
+        nhrequestresult.setNotifytype("0");
+        nhrequestresult.setIrspref("0");
+
+        int saveAbcRequestResult = appInterfaceService.saveAbcRequestResult(nhrequestresult);
+        System.out.println(saveAbcRequestResult);
     }
 
 }
