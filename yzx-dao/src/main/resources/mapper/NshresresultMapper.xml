@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.NshresresultMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.Nshresresult" >
+    <result column="BRANCHID" property="branchid" jdbcType="VARCHAR" />
+    <result column="MERCODE" property="mercode" jdbcType="VARCHAR" />
+    <result column="ORDERNUM" property="ordernum" jdbcType="VARCHAR" />
+    <result column="ORDERAMT" property="orderamt" jdbcType="VARCHAR" />
+    <result column="CURTYPE" property="curtype" jdbcType="VARCHAR" />
+    <result column="ORDERDATE" property="orderdate" jdbcType="VARCHAR" />
+    <result column="ORDERTIME" property="ordertime" jdbcType="VARCHAR" />
+    <result column="TRANSERIALNO" property="transerialno" jdbcType="VARCHAR" />
+    <result column="TRANRESULT" property="tranresult" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="MERREMARKS" property="merremarks" jdbcType="VARCHAR" />
+    <result column="SIGNDATASTR" property="signdatastr" jdbcType="VARCHAR" />
+    <result column="SIGNDATA" property="signdata" jdbcType="VARCHAR" />
+    <result column="PAYTYPE" property="paytype" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.whpe.bean.Nshresresult" >
+    insert into NSHRESRESULT (BRANCHID, MERCODE, ORDERNUM, 
+      ORDERAMT, CURTYPE, ORDERDATE, 
+      ORDERTIME, TRANSERIALNO, TRANRESULT, 
+      comment, MERREMARKS, SIGNDATASTR, 
+      SIGNDATA, PAYTYPE)
+    values (#{branchid,jdbcType=VARCHAR}, #{mercode,jdbcType=VARCHAR}, #{ordernum,jdbcType=VARCHAR}, 
+      #{orderamt,jdbcType=VARCHAR}, #{curtype,jdbcType=VARCHAR}, #{orderdate,jdbcType=VARCHAR}, 
+      #{ordertime,jdbcType=VARCHAR}, #{transerialno,jdbcType=VARCHAR}, #{tranresult,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=VARCHAR}, #{merremarks,jdbcType=VARCHAR}, #{signdatastr,jdbcType=VARCHAR}, 
+      #{signdata,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.Nshresresult" >
+    insert into NSHRESRESULT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="branchid != null" >
+        BRANCHID,
+      </if>
+      <if test="mercode != null" >
+        MERCODE,
+      </if>
+      <if test="ordernum != null" >
+        ORDERNUM,
+      </if>
+      <if test="orderamt != null" >
+        ORDERAMT,
+      </if>
+      <if test="curtype != null" >
+        CURTYPE,
+      </if>
+      <if test="orderdate != null" >
+        ORDERDATE,
+      </if>
+      <if test="ordertime != null" >
+        ORDERTIME,
+      </if>
+      <if test="transerialno != null" >
+        TRANSERIALNO,
+      </if>
+      <if test="tranresult != null" >
+        TRANRESULT,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="merremarks != null" >
+        MERREMARKS,
+      </if>
+      <if test="signdatastr != null" >
+        SIGNDATASTR,
+      </if>
+      <if test="signdata != null" >
+        SIGNDATA,
+      </if>
+      <if test="paytype != null" >
+        PAYTYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="branchid != null" >
+        #{branchid,jdbcType=VARCHAR},
+      </if>
+      <if test="mercode != null" >
+        #{mercode,jdbcType=VARCHAR},
+      </if>
+      <if test="ordernum != null" >
+        #{ordernum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderamt != null" >
+        #{orderamt,jdbcType=VARCHAR},
+      </if>
+      <if test="curtype != null" >
+        #{curtype,jdbcType=VARCHAR},
+      </if>
+      <if test="orderdate != null" >
+        #{orderdate,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=VARCHAR},
+      </if>
+      <if test="transerialno != null" >
+        #{transerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="tranresult != null" >
+        #{tranresult,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="merremarks != null" >
+        #{merremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="signdatastr != null" >
+        #{signdatastr,jdbcType=VARCHAR},
+      </if>
+      <if test="signdata != null" >
+        #{signdata,jdbcType=VARCHAR},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

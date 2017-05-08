@@ -3,6 +3,7 @@ package com.whpe.services;
 import com.alibaba.fastjson.JSONObject;
 import com.whpe.bean.NfcCardRecharge;
 import com.whpe.bean.Nhrequestresult;
+import com.whpe.bean.Nshresresult;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,4 +26,6 @@ public interface AppInterfaceService {
     void rechargeConfirm(JSONObject requestJson, JSONObject result, HttpSession session);
 
     int saveAbcRequestResult(Nhrequestresult nhrequestresult);
+
+    int saveNshRequestResult(Nshresresult nshresresult);
 }

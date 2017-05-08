@@ -5,6 +5,10 @@ import com.abc.pay.client.MerchantConfig;
 import com.abc.pay.client.MerchantPara;
 import com.abc.pay.client.TrxException;
 import com.abc.pay.client.ebus.PaymentRequest;
+import com.koalii.bc.util.encoders.Base64;
+import com.koalii.cert.SecretStoreException;
+import com.koalii.svs.client.Svs2ClientHelper;
+import com.koalii.util.pkcs7.PKCS7Exception;
 import com.unionpay.acp.demo.DemoBase;
 import com.unionpay.acp.sdk.SDKConfig;
 import com.whpe.services.CommonService;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.security.cert.CertificateEncodingException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -32,6 +37,21 @@ public class PayServiceImpl extends CommonService implements PayService{
 
     @Value("${abcpay.backUrl}")
     private String abcBackUrl;
+
+    @Value("${nxh.merchantId}")
+    private String nxhMerchantId;
+
+    @Value("${nxh.backUrl}")
+    private String nxhBackUrl;
+
+    @Value("${nsh.pfx}")
+    private String nsh_pfx;
+
+    @Value("${nsh.psw}")
+    private String nsh_psw;
+
+    @Value("${nsh.payUrl}")
+    private String nsh_payUrl;
 
     @PostConstruct
     public void init(){
@@ -125,6 +145,121 @@ public class PayServiceImpl extends CommonService implements PayService{
             logger.error("generateAbcPayHtml 异常", e);
             return false;
         }
+    }
+
+    @Override
+    public boolean generateNxhPayHtml(String orderNo, String orderMount) {
+        Map<String, String> data = new HashMap<String, String>();
+        String notifyURL = nxhBackUrl;
+        DecimalFormat decimal = new DecimalFormat("#0.00");
+        //订单金额保留两位小数
+        double o = Integer.parseInt(orderMount)/100.00;
+
+        String curType = "CNY";
+        data.put("branchId", "5200");//成员行编号
+        data.put("merCode", nxhMerchantId);// 商户代码
+        data.put("orderFlowNo", orderNo);//订单流水号
+        data.put("cardType", "10");//支付卡类型
+        data.put("orderNum", orderNo);//订单编号
+
+        data.put("orderAmt",decimal.format(o));//订单金额
+        data.put("curType",curType);//币种
+        Date currDate = new Date();
+        data.put("orderDate", DateUtils.getFormatDate(currDate, "yyyyMMdd"));//订单时间
+        data.put("orderTime",  DateUtils.getFormatDate(currDate, "HHmmss"));//订单时间
+        data.put("goodsType", "");//商品；类别
+        data.put("goodsName", "");//成员行编号
+        data.put("recCustName", "");//收货人姓名
+        data.put("subCustName", "456");//成员行编号
+        data.put("subDustPhone", "");//成员行编号
+        data.put("notifyURL", notifyURL);//商户通知URL：
+        data.put("jumpSeconds", "5");//页面自动跳转时间
+        data.put("remarks", "");//成员行编号
+        data.put("payType", "BIP");//成员行编号
+        data.put("responseFormat", "JSON");//返回格式
+
+        String signDataSrc="" ;//签名原数据
+        String signData="" ;//签名后数据
+        String KoalB64Cert="" ;//商户证书代码
+
+        signDataSrc = nxhMerchantId + "|" + orderNo + "|"+ decimal.format(o) + "|"  + curType;
+
+        // 构造签名实例
+        try {
+            String signDataSrc1=new String(Base64.encode(signDataSrc.getBytes("GB2312")));
+            Svs2ClientHelper helper = Svs2ClientHelper.getInstance();
+            // 初始化签名证书和私钥，即.pfx(或.p12)文件名和口令（口令不能为空）
+            String pfx = nsh_pfx;
+            String psw = nsh_psw;
+
+            helper.setPfx_NXY(pfx,psw);
+
+            Svs2ClientHelper.SvsResultData result = helper.pkcs7AttachSign_NXY(signDataSrc1.getBytes());
+            signData = result.m_b64SignedData;
+
+            Svs2ClientHelper.SvsResultData r = helper.pkcs7AttachVerify_NXY(signData, signDataSrc1.getBytes());
+
+            if(r.m_errno!=0){
+                System.out.println("签名失败");
+                return false;
+            }
+            KoalB64Cert= result.m_b64SignedCert;
+        } catch (Exception e) {
+            logger.info("构造签名实例 异常", e);
+        }
+
+        data.put("signDataStr", signDataSrc);//签名原文
+        data.put("signData", signData);//签名密文
+        data.put("koalB64Cert", KoalB64Cert);//商户证书代码
+        String url = nsh_payUrl;
+        String urlhtml =  createHtml(url, data);
+
+        String webappRoot = System.getProperty("webapp.root");
+        File nxhPayHtmlFile = new File(webappRoot + File.separator + "nxhPayHtml");
+        if(!nxhPayHtmlFile.exists()){
+            nxhPayHtmlFile.mkdirs();
+        }
+        //创建文件
+        File file = new File(webappRoot + File.separator + "nxhPayHtml" + File.separator + orderNo + ".html");
+        try {
+            OutputStream out = new FileOutputStream(file);
+            byte[] dat = urlhtml.getBytes("GBK");
+            out.write(dat);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    public static String createHtml(String action, Map<String, String> hiddens) {
+        StringBuffer sf = new StringBuffer();
+        sf.append("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/></head><body>");
+        sf.append("<form id = \"pay_form\" action=\"" + action
+                + "\" method=\"post\">");
+        if (null != hiddens && 0 != hiddens.size()) {
+            Set<Map.Entry<String, String>> set = hiddens.entrySet();
+            Iterator<Map.Entry<String, String>> it = set.iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, String> ey = it.next();
+                String key = ey.getKey();
+                String value = ey.getValue();
+                sf.append("<input type=\"hidden\" name=\"" + key + "\" id=\""
+                        + key + "\" value=\"" + value + "\"/>");
+
+            }
+        }
+        sf.append("</form>");
+        sf.append("</body>");
+        sf.append("<script type=\"text/javascript\">");
+        sf.append("document.all.pay_form.submit();");
+        sf.append("</script>");
+        sf.append("</html>");
+        return sf.toString();
     }
 
     /**

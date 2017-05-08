@@ -7,10 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.whpe.bean.*;
 import com.whpe.bean.dto.SysPeopleDTO;
 import com.whpe.bean.vo.SysAppUserVO;
-import com.whpe.dao.AppMycardMapper;
-import com.whpe.dao.NfcCardRechargeMapper;
-import com.whpe.dao.NhrequestresultMapper;
-import com.whpe.dao.SysPeopleMapper;
+import com.whpe.dao.*;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.CommonService;
 import com.whpe.services.PayService;
@@ -46,6 +43,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private NhrequestresultMapper nhrequestresultMapper;
+
+    @Resource
+    private NshresresultMapper nshresresultMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -139,6 +139,10 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("E0001", "订单不存在", result);
             return;
         }
+        if("01".equals(nfcCardRecharge.getBackrcvresponse())){
+            makeRetInfo("E0001", "订单已支付过", result);
+            return;
+        }
         if("08".equals(payType)){
             //银联支付
             String tn = payService.getUnionPayTN(orderNo, nfcCardRecharge.getOrdermount());
@@ -152,10 +156,23 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             }
         }else if("06".equals(payType)){
             // 农行支付
-            if(payService.generateAbcPayHtml(orderNo, nfcCardRecharge.getOrdermount())){
+            if (payService.generateAbcPayHtml(orderNo, nfcCardRecharge.getOrdermount())){
                 HttpServletRequest request = (HttpServletRequest) session.getAttribute("javax.servlet.http.HttpServletRequest");
                 String url = request.getScheme() + "://" + request.getServerName() + ":"
                         + request.getServerPort() + request.getContextPath() + "/abcPayHtml/" + orderNo + ".html";
+                putRetContent("url", url, result);
+                makeRetInfo("S0000", "申请成功", result);
+                return;
+            }else {
+                makeRetInfo("E0001", "申请失败", result);
+                return;
+            }
+        }else if("07".equals(payType)){
+            // 农信支付
+            if(payService.generateNxhPayHtml(orderNo, nfcCardRecharge.getOrdermount())){
+                HttpServletRequest request = (HttpServletRequest) session.getAttribute("javax.servlet.http.HttpServletRequest");
+                String url = request.getScheme() + "://" + request.getServerName() + ":"
+                        + request.getServerPort() + request.getContextPath() + "/nxhPayHtml/" + orderNo + ".html";
                 putRetContent("url", url, result);
                 makeRetInfo("S0000", "申请成功", result);
                 return;
@@ -261,6 +278,11 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     @Override
     public int saveAbcRequestResult(Nhrequestresult nhrequestresult) {
         return nhrequestresultMapper.insertSelective(nhrequestresult);
+    }
+
+    @Override
+    public int saveNshRequestResult(Nshresresult nshresresult) {
+        return nshresresultMapper.insertSelective(nshresresult);
     }
 
     /**

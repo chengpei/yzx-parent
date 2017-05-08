@@ -92,6 +92,11 @@
             <artifactId>TrustPayClient</artifactId>
             <version>V3.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.koalii</groupId>
+            <artifactId>koalii_svs_client</artifactId>
+            <version>v2.2.3_jdk15</version>
+        </dependency>
     </dependencies>
 
 </project>
