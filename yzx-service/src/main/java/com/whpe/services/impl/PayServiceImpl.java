@@ -6,9 +6,7 @@ import com.abc.pay.client.MerchantPara;
 import com.abc.pay.client.TrxException;
 import com.abc.pay.client.ebus.PaymentRequest;
 import com.koalii.bc.util.encoders.Base64;
-import com.koalii.cert.SecretStoreException;
 import com.koalii.svs.client.Svs2ClientHelper;
-import com.koalii.util.pkcs7.PKCS7Exception;
 import com.unionpay.acp.demo.DemoBase;
 import com.unionpay.acp.sdk.SDKConfig;
 import com.whpe.services.CommonService;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.security.cert.CertificateEncodingException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -37,6 +34,9 @@ public class PayServiceImpl extends CommonService implements PayService{
 
     @Value("${abcpay.backUrl}")
     private String abcBackUrl;
+
+    @Value("${abcpay.merchantId}")
+    private String abcMerchantId;
 
     @Value("${nxh.merchantId}")
     private String nxhMerchantId;
@@ -200,7 +200,7 @@ public class PayServiceImpl extends CommonService implements PayService{
             Svs2ClientHelper.SvsResultData r = helper.pkcs7AttachVerify_NXY(signData, signDataSrc1.getBytes());
 
             if(r.m_errno!=0){
-                System.out.println("签名失败");
+                logger.error("签名失败");
                 return false;
             }
             KoalB64Cert= result.m_b64SignedCert;
@@ -272,7 +272,7 @@ public class PayServiceImpl extends CommonService implements PayService{
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static MerchantPara getMerchantPara(String orderNo,String paymentRequestAmount,String buyIP,String paymentType,String ResultNotifyURL, String[] returnMsg){
+    public MerchantPara getMerchantPara(String orderNo,String paymentRequestAmount,String buyIP,String paymentType,String ResultNotifyURL, String[] returnMsg){
         //1、生成订单对象
         PaymentRequest tPaymentRequest = new PaymentRequest();
         DecimalFormat decimal = new DecimalFormat("#.00");
@@ -308,7 +308,7 @@ public class PayServiceImpl extends CommonService implements PayService{
         //2、订单明细
         LinkedHashMap<String, String> orderitem = new LinkedHashMap<String, String>();
         orderitem.put("SubMerName", "宜昌公交");    //设定二级商户名称
-        orderitem.put("SubMerId", "103881739010024");    //设定二级商户代码
+        orderitem.put("SubMerId", abcMerchantId);    //设定二级商户代码
         orderitem.put("SubMerMCC", "0000");   //设定二级商户MCC码
         orderitem.put("SubMerchantRemarks", "");   //二级商户备注项
         orderitem.put("ProductID", "CZ000001");//商品代码，预留字段
@@ -365,5 +365,10 @@ public class PayServiceImpl extends CommonService implements PayService{
         }
 
         return para;
+    }
+
+    @Override
+    public String getUnionpayMerchantId() {
+        return merchantId;
     }
 }

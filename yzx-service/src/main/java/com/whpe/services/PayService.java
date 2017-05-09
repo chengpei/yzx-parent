@@ -19,4 +19,6 @@ public interface PayService {
     boolean generateAbcPayHtml(String orderNo, String ordermount);
 
     boolean generateNxhPayHtml(String orderNo, String ordermount);
+
+    String getUnionpayMerchantId();
 }

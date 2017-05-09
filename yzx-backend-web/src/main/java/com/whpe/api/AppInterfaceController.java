@@ -7,6 +7,7 @@ import com.unionpay.acp.sdk.SDKUtil;
 import com.whpe.bean.NfcCardRecharge;
 import com.whpe.controller.CommonController;
 import com.whpe.services.AppInterfaceService;
+import com.whpe.services.PayService;
 import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,9 @@ public class AppInterfaceController extends CommonController{
 
     @Resource
     private AppInterfaceService appInterfaceService;
+
+    @Resource
+    private PayService payService;
 
     @RequestMapping(value = "/api/interface", method = RequestMethod.POST)
     @ResponseBody
@@ -76,6 +80,7 @@ public class AppInterfaceController extends CommonController{
         String orderNo = valideData.get("orderId");
         NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
         nfcCardRecharge.setOrderno(orderNo);
+        nfcCardRecharge.setCommcode(payService.getUnionpayMerchantId());
         // 验证签名
         if (!SDKUtil.validate(valideData, encoding)) {
             LogUtil.writeLog("验证签名结果[失败].");

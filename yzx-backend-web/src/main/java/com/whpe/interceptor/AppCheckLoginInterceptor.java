@@ -5,6 +5,7 @@ import com.whpe.bean.Result;
 import com.whpe.bean.SysAppUser;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.services.LoginRegisterService;
+import com.whpe.services.impl.AppInterfaceServiceImpl;
 import com.whpe.utils.StringUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,13 +88,14 @@ public class AppCheckLoginInterceptor extends HandlerInterceptorAdapter {
      * @param response
      */
     private void returnWithoutLogin(HttpServletResponse response){
-        Result result = new Result(false, "未登录");
+        JSONObject result = new JSONObject();
+        AppInterfaceServiceImpl.makeRetInfo("S0002", "未登录", result);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         PrintWriter pWriter = null;
         try {
             pWriter = response.getWriter();
-            pWriter.write(result.toString());
+            pWriter.write(result.toJSONString());
         } catch (IOException e) {
 
         } finally {
