@@ -64,7 +64,7 @@
         //入库
         ReturnCode =  tResult.getReturnCode();
         WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
-        AppInterfaceService appInterfaceService = (AppInterfaceService) applicationContext.getBean("appInterfaceService");
+        AppInterfaceService appInterfaceService = (AppInterfaceService) applicationContext.getBean("appInterfaceServiceImpl");
 
         Nhrequestresult nhrequestresult = new Nhrequestresult();
         nhrequestresult.setTrxtype(TrxType);

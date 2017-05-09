@@ -371,4 +371,14 @@ public class PayServiceImpl extends CommonService implements PayService{
     public String getUnionpayMerchantId() {
         return merchantId;
     }
+
+    @Override
+    public String getNsh_pfx() {
+        return nsh_pfx;
+    }
+
+    @Override
+    public String getNsh_psw() {
+        return nsh_psw;
+    }
 }

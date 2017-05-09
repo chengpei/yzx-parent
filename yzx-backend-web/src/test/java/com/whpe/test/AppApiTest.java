@@ -94,20 +94,37 @@ public class AppApiTest extends SpringTestContext{
 
     @Test
     public void nhInsert() throws ParseException {
-        Nhrequestresult nhrequestresult = new Nhrequestresult();
-        nhrequestresult.setTrxtype("12");
-        nhrequestresult.setOrderno("Y20170507123456000000000000002");
-        nhrequestresult.setAmount(Double.valueOf("50.00"));
-        nhrequestresult.setBatchno("2");
-        nhrequestresult.setVoucherno("2");
-        nhrequestresult.setHostdatetime(DateUtils.getDateForString("2017-05-07 15:12:23", "yyyy-MM-dd HH:mm:ss"));
-        nhrequestresult.setMerchantremarks("12");
-        nhrequestresult.setPaytype("06");
-        nhrequestresult.setNotifytype("0");
-        nhrequestresult.setIrspref("0");
+//        Nhrequestresult nhrequestresult = new Nhrequestresult();
+//        nhrequestresult.setTrxtype("12");
+//        nhrequestresult.setOrderno("Y20170507123456000000000000002");
+//        nhrequestresult.setAmount(Double.valueOf("50.00"));
+//        nhrequestresult.setBatchno("2");
+//        nhrequestresult.setVoucherno("2");
+//        nhrequestresult.setHostdatetime(DateUtils.getDateForString("2017-05-07 15:12:23", "yyyy-MM-dd HH:mm:ss"));
+//        nhrequestresult.setMerchantremarks("12");
+//        nhrequestresult.setPaytype("06");
+//        nhrequestresult.setNotifytype("0");
+//        nhrequestresult.setIrspref("0");
+//
+//        int saveAbcRequestResult = appInterfaceService.saveAbcRequestResult(nhrequestresult);
+//        System.out.println(saveAbcRequestResult);
 
-        int saveAbcRequestResult = appInterfaceService.saveAbcRequestResult(nhrequestresult);
-        System.out.println(saveAbcRequestResult);
+        Nshresresult nshresresult = new Nshresresult();
+        nshresresult.setBranchid("1");
+        nshresresult.setMercode("1");
+        nshresresult.setOrdernum("1");
+        nshresresult.setOrderamt("1");
+        nshresresult.setCurtype("1");
+        nshresresult.setOrderdate("1");
+        nshresresult.setOrdertime("1");
+        nshresresult.setTranserialno("1");
+        nshresresult.setTranresult("1");
+        nshresresult.setComment("1");
+        nshresresult.setMerremarks("1");
+        nshresresult.setSigndata("1");
+        nshresresult.setPaytype("1");
+
+        int saveNshRequestResult = appInterfaceService.saveNshRequestResult(nshresresult);
     }
 
 }

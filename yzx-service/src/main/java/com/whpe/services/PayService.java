@@ -21,4 +21,8 @@ public interface PayService {
     boolean generateNxhPayHtml(String orderNo, String ordermount);
 
     String getUnionpayMerchantId();
+
+    String getNsh_pfx();
+
+    String getNsh_psw();
 }

@@ -21,7 +21,7 @@
     insert into NSHRESRESULT (BRANCHID, MERCODE, ORDERNUM, 
       ORDERAMT, CURTYPE, ORDERDATE, 
       ORDERTIME, TRANSERIALNO, TRANRESULT, 
-      comment, MERREMARKS, SIGNDATASTR, 
+      "comment", MERREMARKS, SIGNDATASTR,
       SIGNDATA, PAYTYPE)
     values (#{branchid,jdbcType=VARCHAR}, #{mercode,jdbcType=VARCHAR}, #{ordernum,jdbcType=VARCHAR}, 
       #{orderamt,jdbcType=VARCHAR}, #{curtype,jdbcType=VARCHAR}, #{orderdate,jdbcType=VARCHAR}, 
@@ -60,7 +60,7 @@
         TRANRESULT,
       </if>
       <if test="comment != null" >
-        comment,
+        "comment",
       </if>
       <if test="merremarks != null" >
         MERREMARKS,
