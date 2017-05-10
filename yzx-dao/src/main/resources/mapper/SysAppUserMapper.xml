@@ -350,4 +350,9 @@
       DEF10 = #{def10,jdbcType=CHAR}
     where U_ID = #{uId,jdbcType=VARCHAR}
   </update>
+  <update id="updateCode2ByPhone">
+    update SYS_APP_USER
+    set U_CODE2 = #{uCode2,jdbcType=VARCHAR}
+    where  U_PHONE = #{uPhone,jdbcType=VARCHAR}
+  </update>
 </mapper>

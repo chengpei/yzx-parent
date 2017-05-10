@@ -43,4 +43,6 @@ public interface LoginRegisterService {
      * @return  大于一分钟返回 true
      */
     boolean checkSmsOneMinutes(String phoneNumber);
+
+    boolean updateCode2ByPhone(SysAppUser sysAppUser);
 }

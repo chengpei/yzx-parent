@@ -137,4 +137,9 @@ public class LoginRegisterServiceImpl extends CommonService implements LoginRegi
         return System.currentTimeMillis() - sendTime.getTime() > 60000;
     }
 
+    @Override
+    public boolean updateCode2ByPhone(SysAppUser sysAppUser) {
+        return sysAppUserMapper.updateCode2ByPhone(sysAppUser) > 0;
+    }
+
 }

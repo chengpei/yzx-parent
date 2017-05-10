@@ -17,4 +17,6 @@ public interface SysAppUserMapper {
     int updateByPrimaryKey(SysAppUser record);
 
     SysAppUserVO selectByCondition(SysAppUser sysAppUser);
+
+    int updateCode2ByPhone(SysAppUser sysAppUser);
 }

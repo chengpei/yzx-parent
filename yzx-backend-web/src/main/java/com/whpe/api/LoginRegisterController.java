@@ -88,6 +88,12 @@ public class LoginRegisterController extends CommonController{
         if(loginRegisterService.sendSMSCheckCode(phoneNumber, smsType, checkCode)){
             // session中存放手机号对应的验证码
             session.setAttribute(phoneNumber, checkCode);
+
+            // 用户表中也存储验证码
+            SysAppUser sysAppUser = new SysAppUser();
+            sysAppUser.setuCode2(checkCode);
+            sysAppUser.setuPhone(phoneNumber);
+            loginRegisterService.updateCode2ByPhone(sysAppUser);
             return new Result(true, "发送成功");
         }else {
             return new Result(false, "发送失败");
@@ -129,6 +135,13 @@ public class LoginRegisterController extends CommonController{
             return new Result(false, "验证码不能为空");
         }
         String rightCheckCode = (String) session.getAttribute(phoneNumber);
+        if(StringUtils.isEmpty(rightCheckCode)){
+            SysAppUser sysAppUser = new SysAppUser();
+            sysAppUser.setuPhone(phoneNumber);
+            SysAppUserVO sysAppUserVO = loginRegisterService.selectBeanByCondition(sysAppUser);
+            rightCheckCode = sysAppUserVO.getuCode2();
+        }
+        logger.info("发送的验证码：" + checkCode + "，正确验证码为" + rightCheckCode);
         if(StringUtils.isEmpty(rightCheckCode)){
             return new Result(false, "验证码已经失效");
         }
