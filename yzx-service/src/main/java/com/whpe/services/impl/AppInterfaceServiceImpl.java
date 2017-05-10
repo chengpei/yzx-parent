@@ -12,6 +12,7 @@ import com.whpe.services.AppInterfaceService;
 import com.whpe.services.CommonService;
 import com.whpe.services.PayService;
 import com.whpe.services.RechargeService;
+import com.whpe.utils.DateUtils;
 import com.whpe.utils.MessageAnalysisDevice;
 import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Service;
@@ -123,6 +124,14 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         }else{
             makeRetInfo("E0001", "提交失败", result);
         }
+    }
+
+    @Override
+    public void generateOrderNo(JSONObject requestJson, JSONObject result, HttpSession session){
+        JSONObject common = requestJson.getJSONObject("common");
+        String orderNo = generateOrderNo(common.getString("txChan"));
+        putRetContent("orderNo", orderNo, result);
+        makeRetInfo("S0000", "提交成功", result);
     }
 
     @Override
@@ -355,9 +364,10 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         // 获取数据库序列 seq_orderno 下一个的值,作为订单序号
         int orderSeq = nfcCardRechargeMapper.generateOrderNo();
         StringBuilder orderNo = new StringBuilder(txChan);
-//        orderNo.append(DateUtils.getFormatDate(new Date(), "yyyyMMddHHmmss"));
-        orderNo.append("10000000000100");
-        orderNo.append(String.format("%015d", orderSeq));
+        // Y10000000000100020170510123456
+        orderNo.append("100000000001000");
+        orderNo.append(DateUtils.getFormatDate(new Date(), "yyyyMMdd"));
+        orderNo.append(String.format("%06d", orderSeq));
         return orderNo.toString();
     }
 

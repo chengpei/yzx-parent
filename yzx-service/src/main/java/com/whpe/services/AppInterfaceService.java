@@ -28,4 +28,6 @@ public interface AppInterfaceService {
     int saveAbcRequestResult(Nhrequestresult nhrequestresult);
 
     int saveNshRequestResult(Nshresresult nshresresult);
+
+    void generateOrderNo(JSONObject requestJson, JSONObject result, HttpSession session);
 }

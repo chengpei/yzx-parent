@@ -58,7 +58,11 @@ public class SendSMSServiceImpl extends CommonService implements SendSMSService{
         for(int i=0;i<params.length;i++){
             String param = params[i];
             String[] keyValue = param.split("=");
-            resultMap.put(keyValue[0], keyValue[1]);
+            if(keyValue.length == 1){
+                resultMap.put(keyValue[0], "");
+            }else{
+                resultMap.put(keyValue[0], keyValue[1]);
+            }
         }
         return resultMap;
     }
@@ -81,5 +85,4 @@ public class SendSMSServiceImpl extends CommonService implements SendSMSService{
         params.put("f", "1");
         return params;
     }
-
 }

@@ -18,7 +18,7 @@
     <result column="PAYTYPE" property="paytype" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="insert" parameterType="com.whpe.bean.Nshresresult" >
-    insert into NSHRESRESULT (BRANCHID, MERCODE, ORDERNUM, 
+    insert into gjic.NSHRESRESULT (BRANCHID, MERCODE, ORDERNUM,
       ORDERAMT, CURTYPE, ORDERDATE, 
       ORDERTIME, TRANSERIALNO, TRANRESULT, 
       "comment", MERREMARKS, SIGNDATASTR,
@@ -30,7 +30,7 @@
       #{signdata,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.Nshresresult" >
-    insert into NSHRESRESULT
+    insert into gjic.NSHRESRESULT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="branchid != null" >
         BRANCHID,

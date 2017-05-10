@@ -21,7 +21,7 @@
   </select>
   <select id="countCurrDaySMS" resultType="java.lang.Integer" parameterType="java.lang.String">
     SELECT COUNT(1) from SMS_SEND_LOG where ACCEPT_PHONE=#{acceptPhone,jdbcType=VARCHAR}
-    and trunc(sysdate)=trunc(CREATE_TIME)
+    and trunc(sysdate)=trunc(CREATE_TIME) and SEND_STATUS='2'
   </select>
   <select id="selectLastSms" parameterType="java.lang.String" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from (

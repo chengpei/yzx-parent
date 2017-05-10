@@ -14,7 +14,6 @@ import com.whpe.utils.MD5Utils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.*;
 
 /**

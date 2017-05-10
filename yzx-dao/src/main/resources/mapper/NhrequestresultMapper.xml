@@ -20,7 +20,7 @@
       IRSPREF, RETURNCODE, ERRORMESSAGE
   </sql>
   <insert id="insert" parameterType="com.whpe.bean.Nhrequestresult" >
-    insert into NHREQUESTRESULT (TRXTYPE, ORDERNO, AMOUNT, 
+    insert into gjic.NHREQUESTRESULT (TRXTYPE, ORDERNO, AMOUNT,
       BATCHNO, VOUCHERNO, HOSTDATETIME, 
       MERCHANTREMARKS, PAYTYPE, NOTIFYTYPE, 
       IRSPREF, RETURNCODE, ERRORMESSAGE
@@ -32,7 +32,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.Nhrequestresult" >
-    insert into NHREQUESTRESULT
+    insert into gjic.NHREQUESTRESULT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="trxtype != null" >
         TRXTYPE,

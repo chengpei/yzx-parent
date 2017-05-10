@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.NfcOrderReturnMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.NfcOrderReturn" >
+    <result column="UPTRANSEQ" property="uptranseq" jdbcType="VARCHAR" />
+    <result column="TRANDATE" property="trandate" jdbcType="DATE" />
+    <result column="RETNCODE" property="retncode" jdbcType="VARCHAR" />
+    <result column="RETNINFO" property="retninfo" jdbcType="VARCHAR" />
+    <result column="ORDERREQTRANSEQ" property="orderreqtranseq" jdbcType="VARCHAR" />
+    <result column="ORDERSEQ" property="orderseq" jdbcType="VARCHAR" />
+    <result column="ORDERAMOUNT" property="orderamount" jdbcType="VARCHAR" />
+    <result column="PRODUCTAMOUNT" property="productamount" jdbcType="VARCHAR" />
+    <result column="ATTACHAMOUNT" property="attachamount" jdbcType="VARCHAR" />
+    <result column="CURTYPE" property="curtype" jdbcType="VARCHAR" />
+    <result column="ENCODETYPE" property="encodetype" jdbcType="VARCHAR" />
+    <result column="ATTACH" property="attach" jdbcType="VARCHAR" />
+    <result column="SIGN" property="sign" jdbcType="VARCHAR" />
+    <result column="MERCHANTID" property="merchantid" jdbcType="VARCHAR" />
+    <result column="BANKID" property="bankid" jdbcType="VARCHAR" />
+    <result column="PRODUCTNO" property="productno" jdbcType="VARCHAR" />
+    <result column="BANKACCID" property="bankaccid" jdbcType="VARCHAR" />
+    <result column="ORDERVALIDITYFLAG" property="ordervalidityflag" jdbcType="VARCHAR" />
+    <result column="SIGNZTBH" property="signztbh" jdbcType="VARCHAR" />
+    <result column="ORDERREFOUNDID" property="orderrefoundid" jdbcType="VARCHAR" />
+    <result column="REQTIME" property="reqtime" jdbcType="DATE" />
+    <result column="BACKPHONE" property="backphone" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.whpe.bean.NfcOrderReturn" >
+    insert into gjic.NFC_ORDER_RETURN (UPTRANSEQ, TRANDATE, RETNCODE,
+      RETNINFO, ORDERREQTRANSEQ, ORDERSEQ, 
+      ORDERAMOUNT, PRODUCTAMOUNT, ATTACHAMOUNT, 
+      CURTYPE, ENCODETYPE, ATTACH, 
+      SIGN, MERCHANTID, BANKID, 
+      PRODUCTNO, BANKACCID, ORDERVALIDITYFLAG, 
+      SIGNZTBH, ORDERREFOUNDID, REQTIME, 
+      BACKPHONE)
+    values (#{uptranseq,jdbcType=VARCHAR}, #{trandate,jdbcType=DATE}, #{retncode,jdbcType=VARCHAR}, 
+      #{retninfo,jdbcType=VARCHAR}, #{orderreqtranseq,jdbcType=VARCHAR}, #{orderseq,jdbcType=VARCHAR}, 
+      #{orderamount,jdbcType=VARCHAR}, #{productamount,jdbcType=VARCHAR}, #{attachamount,jdbcType=VARCHAR}, 
+      #{curtype,jdbcType=VARCHAR}, #{encodetype,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, 
+      #{sign,jdbcType=VARCHAR}, #{merchantid,jdbcType=VARCHAR}, #{bankid,jdbcType=VARCHAR}, 
+      #{productno,jdbcType=VARCHAR}, #{bankaccid,jdbcType=VARCHAR}, #{ordervalidityflag,jdbcType=VARCHAR}, 
+      #{signztbh,jdbcType=VARCHAR}, #{orderrefoundid,jdbcType=VARCHAR}, #{reqtime,jdbcType=DATE}, 
+      #{backphone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.NfcOrderReturn" >
+    insert into gjic.NFC_ORDER_RETURN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uptranseq != null" >
+        UPTRANSEQ,
+      </if>
+      <if test="trandate != null" >
+        TRANDATE,
+      </if>
+      <if test="retncode != null" >
+        RETNCODE,
+      </if>
+      <if test="retninfo != null" >
+        RETNINFO,
+      </if>
+      <if test="orderreqtranseq != null" >
+        ORDERREQTRANSEQ,
+      </if>
+      <if test="orderseq != null" >
+        ORDERSEQ,
+      </if>
+      <if test="orderamount != null" >
+        ORDERAMOUNT,
+      </if>
+      <if test="productamount != null" >
+        PRODUCTAMOUNT,
+      </if>
+      <if test="attachamount != null" >
+        ATTACHAMOUNT,
+      </if>
+      <if test="curtype != null" >
+        CURTYPE,
+      </if>
+      <if test="encodetype != null" >
+        ENCODETYPE,
+      </if>
+      <if test="attach != null" >
+        ATTACH,
+      </if>
+      <if test="sign != null" >
+        SIGN,
+      </if>
+      <if test="merchantid != null" >
+        MERCHANTID,
+      </if>
+      <if test="bankid != null" >
+        BANKID,
+      </if>
+      <if test="productno != null" >
+        PRODUCTNO,
+      </if>
+      <if test="bankaccid != null" >
+        BANKACCID,
+      </if>
+      <if test="ordervalidityflag != null" >
+        ORDERVALIDITYFLAG,
+      </if>
+      <if test="signztbh != null" >
+        SIGNZTBH,
+      </if>
+      <if test="orderrefoundid != null" >
+        ORDERREFOUNDID,
+      </if>
+      <if test="reqtime != null" >
+        REQTIME,
+      </if>
+      <if test="backphone != null" >
+        BACKPHONE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uptranseq != null" >
+        #{uptranseq,jdbcType=VARCHAR},
+      </if>
+      <if test="trandate != null" >
+        #{trandate,jdbcType=DATE},
+      </if>
+      <if test="retncode != null" >
+        #{retncode,jdbcType=VARCHAR},
+      </if>
+      <if test="retninfo != null" >
+        #{retninfo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderreqtranseq != null" >
+        #{orderreqtranseq,jdbcType=VARCHAR},
+      </if>
+      <if test="orderseq != null" >
+        #{orderseq,jdbcType=VARCHAR},
+      </if>
+      <if test="orderamount != null" >
+        #{orderamount,jdbcType=VARCHAR},
+      </if>
+      <if test="productamount != null" >
+        #{productamount,jdbcType=VARCHAR},
+      </if>
+      <if test="attachamount != null" >
+        #{attachamount,jdbcType=VARCHAR},
+      </if>
+      <if test="curtype != null" >
+        #{curtype,jdbcType=VARCHAR},
+      </if>
+      <if test="encodetype != null" >
+        #{encodetype,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantid != null" >
+        #{merchantid,jdbcType=VARCHAR},
+      </if>
+      <if test="bankid != null" >
+        #{bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="productno != null" >
+        #{productno,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccid != null" >
+        #{bankaccid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordervalidityflag != null" >
+        #{ordervalidityflag,jdbcType=VARCHAR},
+      </if>
+      <if test="signztbh != null" >
+        #{signztbh,jdbcType=VARCHAR},
+      </if>
+      <if test="orderrefoundid != null" >
+        #{orderrefoundid,jdbcType=VARCHAR},
+      </if>
+      <if test="reqtime != null" >
+        #{reqtime,jdbcType=DATE},
+      </if>
+      <if test="backphone != null" >
+        #{backphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

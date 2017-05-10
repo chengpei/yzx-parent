@@ -47,14 +47,14 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from v_NFC_CARD_RECHARGE
+    from gjic.v_NFC_CARD_RECHARGE
     where ORDERNO = #{orderno,jdbcType=VARCHAR}
   </select>
   <select id="generateOrderNo" resultType="java.lang.Integer">
     SELECT SEQ_ORDERNO.nextval from dual
   </select>
   <select id="selectByCondition" resultType="com.whpe.bean.NfcCardRecharge">
-    SELECT <include refid="Base_Column_List" /> FROM v_NFC_CARD_RECHARGE
+    SELECT <include refid="Base_Column_List" /> FROM gjic.v_NFC_CARD_RECHARGE
     <where>
       <if test="phoneno != null">
         AND PHONENO = #{phoneno,jdbcType=VARCHAR}
@@ -71,11 +71,11 @@
     </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from NFC_CARD_RECHARGE
+    delete from gjic.NFC_CARD_RECHARGE
     where ORDERNO = #{orderno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.whpe.bean.NfcCardRecharge" >
-    insert into NFC_CARD_RECHARGE (ORDERNO, CARDNO, GID, 
+    insert into gjic.NFC_CARD_RECHARGE (ORDERNO, CARDNO, GID,
       COMMCODE, ORDERSEQ, PHONENO, 
       ORDERMOUNT, ORDERTIME, ORDERVALIDTIME, 
       SUCCESS, ORDERREFOUNDID, REQTIME, 
@@ -104,7 +104,7 @@
     <selectKey keyProperty="gid" resultType="java.lang.String" order="BEFORE">
       select sys_guid() from dual
     </selectKey>
-    insert into NFC_CARD_RECHARGE
+    insert into gjic.NFC_CARD_RECHARGE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orderno != null" >
         ORDERNO,
@@ -317,7 +317,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.NfcCardRecharge" >
-    update NFC_CARD_RECHARGE
+    update gjic.NFC_CARD_RECHARGE
     <set >
       <if test="gid != null" >
         GID = #{gid,jdbcType=VARCHAR},
@@ -422,7 +422,7 @@
     where ORDERNO = #{orderno,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.whpe.bean.NfcCardRecharge" >
-    update NFC_CARD_RECHARGE
+    update gjic.NFC_CARD_RECHARGE
     set GID = #{gid,jdbcType=VARCHAR},
       COMMCODE = #{commcode,jdbcType=VARCHAR},
       ORDERSEQ = #{orderseq,jdbcType=VARCHAR},
