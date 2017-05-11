@@ -11,8 +11,8 @@
 			<property name="suppressAllComments" value="true"/>
 		</commentGenerator>
 		    		
-		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@//192.168.17.1:1521/ycbus"
-				userId="gjic" password="syqwhpe" />
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@192.186.0.1:1521:ycbusly1"
+				userId="lyic" password="syqwhpe" />
 		
 		<javaTypeResolver>
 		          <property name="forceBigDecimals" value="false" />
@@ -44,7 +44,7 @@
 		<!--<table tableName="sys_user" enableCountByExample="false" enableSelectByExample="false"-->
 			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
 				<!--/>-->
-		<table tableName="card_info" enableCountByExample="false" enableSelectByExample="false"
+		<table tableName="t_yh_info" enableCountByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
 				/>
 		<!--<table tableName="yh_ic_kz" enableCountByExample="false" enableSelectByExample="false"-->

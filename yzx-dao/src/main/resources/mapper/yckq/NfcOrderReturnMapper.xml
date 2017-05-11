@@ -3,7 +3,7 @@
 <mapper namespace="com.whpe.dao.yckq.NfcOrderReturnMapper" >
   <resultMap id="BaseResultMap" type="com.whpe.bean.NfcOrderReturn" >
     <result column="UPTRANSEQ" property="uptranseq" jdbcType="VARCHAR" />
-    <result column="TRANDATE" property="trandate" jdbcType="DATE" />
+    <result column="TRANDATE" property="trandate" jdbcType="TIMESTAMP" />
     <result column="RETNCODE" property="retncode" jdbcType="VARCHAR" />
     <result column="RETNINFO" property="retninfo" jdbcType="VARCHAR" />
     <result column="ORDERREQTRANSEQ" property="orderreqtranseq" jdbcType="VARCHAR" />
@@ -22,7 +22,7 @@
     <result column="ORDERVALIDITYFLAG" property="ordervalidityflag" jdbcType="VARCHAR" />
     <result column="SIGNZTBH" property="signztbh" jdbcType="VARCHAR" />
     <result column="ORDERREFOUNDID" property="orderrefoundid" jdbcType="VARCHAR" />
-    <result column="REQTIME" property="reqtime" jdbcType="DATE" />
+    <result column="REQTIME" property="reqtime" jdbcType="TIMESTAMP" />
     <result column="BACKPHONE" property="backphone" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="insert" parameterType="com.whpe.bean.NfcOrderReturn" >
@@ -34,13 +34,13 @@
       PRODUCTNO, BANKACCID, ORDERVALIDITYFLAG, 
       SIGNZTBH, ORDERREFOUNDID, REQTIME, 
       BACKPHONE)
-    values (#{uptranseq,jdbcType=VARCHAR}, #{trandate,jdbcType=DATE}, #{retncode,jdbcType=VARCHAR}, 
+    values (#{uptranseq,jdbcType=VARCHAR}, #{trandate,jdbcType=TIMESTAMP}, #{retncode,jdbcType=VARCHAR},
       #{retninfo,jdbcType=VARCHAR}, #{orderreqtranseq,jdbcType=VARCHAR}, #{orderseq,jdbcType=VARCHAR}, 
       #{orderamount,jdbcType=VARCHAR}, #{productamount,jdbcType=VARCHAR}, #{attachamount,jdbcType=VARCHAR}, 
       #{curtype,jdbcType=VARCHAR}, #{encodetype,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, 
       #{sign,jdbcType=VARCHAR}, #{merchantid,jdbcType=VARCHAR}, #{bankid,jdbcType=VARCHAR}, 
       #{productno,jdbcType=VARCHAR}, #{bankaccid,jdbcType=VARCHAR}, #{ordervalidityflag,jdbcType=VARCHAR}, 
-      #{signztbh,jdbcType=VARCHAR}, #{orderrefoundid,jdbcType=VARCHAR}, #{reqtime,jdbcType=DATE}, 
+      #{signztbh,jdbcType=VARCHAR}, #{orderrefoundid,jdbcType=VARCHAR}, #{reqtime,jdbcType=TIMESTAMP},
       #{backphone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.NfcOrderReturn" >
@@ -118,7 +118,7 @@
         #{uptranseq,jdbcType=VARCHAR},
       </if>
       <if test="trandate != null" >
-        #{trandate,jdbcType=DATE},
+        #{trandate,jdbcType=TIMESTAMP},
       </if>
       <if test="retncode != null" >
         #{retncode,jdbcType=VARCHAR},
@@ -175,7 +175,7 @@
         #{orderrefoundid,jdbcType=VARCHAR},
       </if>
       <if test="reqtime != null" >
-        #{reqtime,jdbcType=DATE},
+        #{reqtime,jdbcType=TIMESTAMP},
       </if>
       <if test="backphone != null" >
         #{backphone,jdbcType=VARCHAR},

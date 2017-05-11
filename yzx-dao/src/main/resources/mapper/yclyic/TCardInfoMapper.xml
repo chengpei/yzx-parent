@@ -1,78 +1,80 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.whpe.dao.ycbus.CardInfoMapper">
-  <resultMap id="BaseResultMap" type="com.whpe.bean.CardInfo">
-    <id column="FXKH" jdbcType="VARCHAR" property="fxkh" />
-    <result column="CSDM" jdbcType="VARCHAR" property="csdm" />
-    <result column="HYDM" jdbcType="VARCHAR" property="hydm" />
-    <result column="KLX" jdbcType="VARCHAR" property="klx" />
-    <result column="MKLX" jdbcType="VARCHAR" property="mklx" />
-    <result column="ZKLX" jdbcType="VARCHAR" property="zklx" />
-    <result column="CSN" jdbcType="VARCHAR" property="csn" />
-    <result column="KZHZT" jdbcType="VARCHAR" property="kzhzt" />
-    <result column="SKSJ" jdbcType="TIMESTAMP" property="sksj" />
-    <result column="YJ" jdbcType="DECIMAL" property="yj" />
-    <result column="CZSJ" jdbcType="TIMESTAMP" property="czsj" />
-    <result column="CZJE" jdbcType="DECIMAL" property="czje" />
-    <result column="SYSJ" jdbcType="TIMESTAMP" property="sysj" />
-    <result column="YE" jdbcType="DECIMAL" property="ye" />
-    <result column="SYCS" jdbcType="DECIMAL" property="sycs" />
-    <result column="TKSJ" jdbcType="TIMESTAMP" property="tksj" />
-    <result column="TKYJ" jdbcType="DECIMAL" property="tkyj" />
-    <result column="TKJE" jdbcType="DECIMAL" property="tkje" />
-    <result column="TKCS" jdbcType="DECIMAL" property="tkcs" />
-    <result column="GSSJ" jdbcType="TIMESTAMP" property="gssj" />
-    <result column="GSRYBH" jdbcType="DECIMAL" property="gsrybh" />
-    <result column="JGSJ" jdbcType="TIMESTAMP" property="jgsj" />
-    <result column="JGRYBH" jdbcType="DECIMAL" property="jgrybh" />
-    <result column="GSCQ" jdbcType="VARCHAR" property="gscq" />
-    <result column="CHANGEFXKH" jdbcType="VARCHAR" property="changefxkh" />
-    <result column="CHANGESJ" jdbcType="TIMESTAMP" property="changesj" />
-    <result column="CHANGERYBH" jdbcType="DECIMAL" property="changerybh" />
-    <result column="HMDBZ" jdbcType="VARCHAR" property="hmdbz" />
-    <result column="CARDCNT" jdbcType="DECIMAL" property="cardcnt" />
-    <result column="POSSEQ" jdbcType="DECIMAL" property="posseq" />
-    <result column="RYBH" jdbcType="DECIMAL" property="rybh" />
-    <result column="XM" jdbcType="VARCHAR" property="xm" />
-    <result column="XB" jdbcType="VARCHAR" property="xb" />
-    <result column="ZJLX" jdbcType="VARCHAR" property="zjlx" />
-    <result column="ZJBH" jdbcType="VARCHAR" property="zjbh" />
-    <result column="CSHRQ" jdbcType="TIMESTAMP" property="cshrq" />
-    <result column="QYRQ" jdbcType="TIMESTAMP" property="qyrq" />
-    <result column="YXRQ" jdbcType="TIMESTAMP" property="yxrq" />
-    <result column="NSRQ" jdbcType="TIMESTAMP" property="nsrq" />
-    <result column="NSRYBH" jdbcType="DECIMAL" property="nsrybh" />
-    <result column="ISNS" jdbcType="VARCHAR" property="isns" />
-    <result column="KZHXFJESUM" jdbcType="DECIMAL" property="kzhxfjesum" />
-    <result column="KZHCZJESUM" jdbcType="DECIMAL" property="kzhczjesum" />
-    <result column="FKRYBH" jdbcType="DECIMAL" property="fkrybh" />
-    <result column="FKXM" jdbcType="VARCHAR" property="fkxm" />
-    <result column="SAMKH" jdbcType="VARCHAR" property="samkh" />
-    <result column="YKBZ" jdbcType="VARCHAR" property="ykbz" />
-    <result column="JY" jdbcType="VARCHAR" property="jy" />
-    <result column="BZ" jdbcType="VARCHAR" property="bz" />
-    <result column="PIN" jdbcType="VARCHAR" property="pin" />
-    <result column="QBYE" jdbcType="DECIMAL" property="qbye" />
-    <result column="SYJF" jdbcType="DECIMAL" property="syjf" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yclyic.TCardInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.TCardInfo" >
+    <id column="FXKH" property="fxkh" jdbcType="VARCHAR" />
+    <result column="CSDM" property="csdm" jdbcType="VARCHAR" />
+    <result column="HYDM" property="hydm" jdbcType="VARCHAR" />
+    <result column="KLX" property="klx" jdbcType="VARCHAR" />
+    <result column="MKLX" property="mklx" jdbcType="VARCHAR" />
+    <result column="ZKLX" property="zklx" jdbcType="VARCHAR" />
+    <result column="CSN" property="csn" jdbcType="VARCHAR" />
+    <result column="KZHZT" property="kzhzt" jdbcType="VARCHAR" />
+    <result column="SKSJ" property="sksj" jdbcType="TIMESTAMP" />
+    <result column="YJ" property="yj" jdbcType="DECIMAL" />
+    <result column="CZSJ" property="czsj" jdbcType="TIMESTAMP" />
+    <result column="CZJE" property="czje" jdbcType="DECIMAL" />
+    <result column="SYSJ" property="sysj" jdbcType="TIMESTAMP" />
+    <result column="YE" property="ye" jdbcType="DECIMAL" />
+    <result column="SYCS" property="sycs" jdbcType="DECIMAL" />
+    <result column="TKSJ" property="tksj" jdbcType="TIMESTAMP" />
+    <result column="TKYJ" property="tkyj" jdbcType="DECIMAL" />
+    <result column="TKJE" property="tkje" jdbcType="DECIMAL" />
+    <result column="TKCS" property="tkcs" jdbcType="DECIMAL" />
+    <result column="GSSJ" property="gssj" jdbcType="TIMESTAMP" />
+    <result column="GSRYBH" property="gsrybh" jdbcType="DECIMAL" />
+    <result column="JGSJ" property="jgsj" jdbcType="TIMESTAMP" />
+    <result column="JGRYBH" property="jgrybh" jdbcType="DECIMAL" />
+    <result column="GSCQ" property="gscq" jdbcType="VARCHAR" />
+    <result column="CHANGEFXKH" property="changefxkh" jdbcType="VARCHAR" />
+    <result column="CHANGESJ" property="changesj" jdbcType="TIMESTAMP" />
+    <result column="CHANGERYBH" property="changerybh" jdbcType="DECIMAL" />
+    <result column="HMDBZ" property="hmdbz" jdbcType="VARCHAR" />
+    <result column="CARDCNT" property="cardcnt" jdbcType="DECIMAL" />
+    <result column="POSSEQ" property="posseq" jdbcType="DECIMAL" />
+    <result column="RYBH" property="rybh" jdbcType="DECIMAL" />
+    <result column="XM" property="xm" jdbcType="VARCHAR" />
+    <result column="XB" property="xb" jdbcType="VARCHAR" />
+    <result column="ZJLX" property="zjlx" jdbcType="VARCHAR" />
+    <result column="ZJBH" property="zjbh" jdbcType="VARCHAR" />
+    <result column="CSHRQ" property="cshrq" jdbcType="TIMESTAMP" />
+    <result column="QYRQ" property="qyrq" jdbcType="TIMESTAMP" />
+    <result column="YXRQ" property="yxrq" jdbcType="TIMESTAMP" />
+    <result column="NSRQ" property="nsrq" jdbcType="TIMESTAMP" />
+    <result column="NSRYBH" property="nsrybh" jdbcType="DECIMAL" />
+    <result column="ISNS" property="isns" jdbcType="VARCHAR" />
+    <result column="KZHXFJESUM" property="kzhxfjesum" jdbcType="DECIMAL" />
+    <result column="KZHCZJESUM" property="kzhczjesum" jdbcType="DECIMAL" />
+    <result column="FKRYBH" property="fkrybh" jdbcType="DECIMAL" />
+    <result column="FKXM" property="fkxm" jdbcType="VARCHAR" />
+    <result column="SAMKH" property="samkh" jdbcType="VARCHAR" />
+    <result column="YKBZ" property="ykbz" jdbcType="VARCHAR" />
+    <result column="JY" property="jy" jdbcType="VARCHAR" />
+    <result column="SQBZ" property="sqbz" jdbcType="VARCHAR" />
+    <result column="BZ" property="bz" jdbcType="VARCHAR" />
+    <result column="PIN" property="pin" jdbcType="VARCHAR" />
+    <result column="ZCFLAG" property="zcflag" jdbcType="VARCHAR" />
+    <result column="ZCRYBH" property="zcrybh" jdbcType="DECIMAL" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     FXKH, CSDM, HYDM, KLX, MKLX, ZKLX, CSN, KZHZT, SKSJ, YJ, CZSJ, CZJE, SYSJ, YE, SYCS, 
     TKSJ, TKYJ, TKJE, TKCS, GSSJ, GSRYBH, JGSJ, JGRYBH, GSCQ, CHANGEFXKH, CHANGESJ, CHANGERYBH, 
     HMDBZ, CARDCNT, POSSEQ, RYBH, XM, XB, ZJLX, ZJBH, CSHRQ, QYRQ, YXRQ, NSRQ, NSRYBH, 
-    ISNS, KZHXFJESUM, KZHCZJESUM, FKRYBH, FKXM, SAMKH, YKBZ, JY, BZ, PIN, QBYE, SYJF
+    ISNS, KZHXFJESUM, KZHCZJESUM, FKRYBH, FKXM, SAMKH, YKBZ, JY, SQBZ, BZ, PIN, ZCFLAG, 
+    ZCRYBH
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from gjic.CARD_INFO
+    from T_CARD_INFO
     where FXKH = #{fxkh,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from gjic.CARD_INFO
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CARD_INFO
     where FXKH = #{fxkh,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.whpe.bean.CardInfo">
-    insert into gjic.CARD_INFO (FXKH, CSDM, HYDM,
+  <insert id="insert" parameterType="com.whpe.bean.TCardInfo" >
+    insert into T_CARD_INFO (FXKH, CSDM, HYDM, 
       KLX, MKLX, ZKLX, CSN, 
       KZHZT, SKSJ, YJ, CZSJ, 
       CZJE, SYSJ, YE, SYCS, 
@@ -85,8 +87,8 @@
       YXRQ, NSRQ, NSRYBH, ISNS, 
       KZHXFJESUM, KZHCZJESUM, FKRYBH, 
       FKXM, SAMKH, YKBZ, 
-      JY, BZ, PIN, QBYE, 
-      SYJF)
+      JY, SQBZ, BZ, PIN, 
+      ZCFLAG, ZCRYBH)
     values (#{fxkh,jdbcType=VARCHAR}, #{csdm,jdbcType=VARCHAR}, #{hydm,jdbcType=VARCHAR}, 
       #{klx,jdbcType=VARCHAR}, #{mklx,jdbcType=VARCHAR}, #{zklx,jdbcType=VARCHAR}, #{csn,jdbcType=VARCHAR}, 
       #{kzhzt,jdbcType=VARCHAR}, #{sksj,jdbcType=TIMESTAMP}, #{yj,jdbcType=DECIMAL}, #{czsj,jdbcType=TIMESTAMP},
@@ -100,489 +102,498 @@
       #{yxrq,jdbcType=TIMESTAMP}, #{nsrq,jdbcType=TIMESTAMP}, #{nsrybh,jdbcType=DECIMAL}, #{isns,jdbcType=VARCHAR},
       #{kzhxfjesum,jdbcType=DECIMAL}, #{kzhczjesum,jdbcType=DECIMAL}, #{fkrybh,jdbcType=DECIMAL}, 
       #{fkxm,jdbcType=VARCHAR}, #{samkh,jdbcType=VARCHAR}, #{ykbz,jdbcType=VARCHAR}, 
-      #{jy,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{pin,jdbcType=VARCHAR}, #{qbye,jdbcType=DECIMAL}, 
-      #{syjf,jdbcType=DECIMAL})
+      #{jy,jdbcType=VARCHAR}, #{sqbz,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{pin,jdbcType=VARCHAR}, 
+      #{zcflag,jdbcType=VARCHAR}, #{zcrybh,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.whpe.bean.CardInfo">
-    insert into gjic.CARD_INFO
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="fxkh != null">
+  <insert id="insertSelective" parameterType="com.whpe.bean.TCardInfo" >
+    insert into T_CARD_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fxkh != null" >
         FXKH,
       </if>
-      <if test="csdm != null">
+      <if test="csdm != null" >
         CSDM,
       </if>
-      <if test="hydm != null">
+      <if test="hydm != null" >
         HYDM,
       </if>
-      <if test="klx != null">
+      <if test="klx != null" >
         KLX,
       </if>
-      <if test="mklx != null">
+      <if test="mklx != null" >
         MKLX,
       </if>
-      <if test="zklx != null">
+      <if test="zklx != null" >
         ZKLX,
       </if>
-      <if test="csn != null">
+      <if test="csn != null" >
         CSN,
       </if>
-      <if test="kzhzt != null">
+      <if test="kzhzt != null" >
         KZHZT,
       </if>
-      <if test="sksj != null">
+      <if test="sksj != null" >
         SKSJ,
       </if>
-      <if test="yj != null">
+      <if test="yj != null" >
         YJ,
       </if>
-      <if test="czsj != null">
+      <if test="czsj != null" >
         CZSJ,
       </if>
-      <if test="czje != null">
+      <if test="czje != null" >
         CZJE,
       </if>
-      <if test="sysj != null">
+      <if test="sysj != null" >
         SYSJ,
       </if>
-      <if test="ye != null">
+      <if test="ye != null" >
         YE,
       </if>
-      <if test="sycs != null">
+      <if test="sycs != null" >
         SYCS,
       </if>
-      <if test="tksj != null">
+      <if test="tksj != null" >
         TKSJ,
       </if>
-      <if test="tkyj != null">
+      <if test="tkyj != null" >
         TKYJ,
       </if>
-      <if test="tkje != null">
+      <if test="tkje != null" >
         TKJE,
       </if>
-      <if test="tkcs != null">
+      <if test="tkcs != null" >
         TKCS,
       </if>
-      <if test="gssj != null">
+      <if test="gssj != null" >
         GSSJ,
       </if>
-      <if test="gsrybh != null">
+      <if test="gsrybh != null" >
         GSRYBH,
       </if>
-      <if test="jgsj != null">
+      <if test="jgsj != null" >
         JGSJ,
       </if>
-      <if test="jgrybh != null">
+      <if test="jgrybh != null" >
         JGRYBH,
       </if>
-      <if test="gscq != null">
+      <if test="gscq != null" >
         GSCQ,
       </if>
-      <if test="changefxkh != null">
+      <if test="changefxkh != null" >
         CHANGEFXKH,
       </if>
-      <if test="changesj != null">
+      <if test="changesj != null" >
         CHANGESJ,
       </if>
-      <if test="changerybh != null">
+      <if test="changerybh != null" >
         CHANGERYBH,
       </if>
-      <if test="hmdbz != null">
+      <if test="hmdbz != null" >
         HMDBZ,
       </if>
-      <if test="cardcnt != null">
+      <if test="cardcnt != null" >
         CARDCNT,
       </if>
-      <if test="posseq != null">
+      <if test="posseq != null" >
         POSSEQ,
       </if>
-      <if test="rybh != null">
+      <if test="rybh != null" >
         RYBH,
       </if>
-      <if test="xm != null">
+      <if test="xm != null" >
         XM,
       </if>
-      <if test="xb != null">
+      <if test="xb != null" >
         XB,
       </if>
-      <if test="zjlx != null">
+      <if test="zjlx != null" >
         ZJLX,
       </if>
-      <if test="zjbh != null">
+      <if test="zjbh != null" >
         ZJBH,
       </if>
-      <if test="cshrq != null">
+      <if test="cshrq != null" >
         CSHRQ,
       </if>
-      <if test="qyrq != null">
+      <if test="qyrq != null" >
         QYRQ,
       </if>
-      <if test="yxrq != null">
+      <if test="yxrq != null" >
         YXRQ,
       </if>
-      <if test="nsrq != null">
+      <if test="nsrq != null" >
         NSRQ,
       </if>
-      <if test="nsrybh != null">
+      <if test="nsrybh != null" >
         NSRYBH,
       </if>
-      <if test="isns != null">
+      <if test="isns != null" >
         ISNS,
       </if>
-      <if test="kzhxfjesum != null">
+      <if test="kzhxfjesum != null" >
         KZHXFJESUM,
       </if>
-      <if test="kzhczjesum != null">
+      <if test="kzhczjesum != null" >
         KZHCZJESUM,
       </if>
-      <if test="fkrybh != null">
+      <if test="fkrybh != null" >
         FKRYBH,
       </if>
-      <if test="fkxm != null">
+      <if test="fkxm != null" >
         FKXM,
       </if>
-      <if test="samkh != null">
+      <if test="samkh != null" >
         SAMKH,
       </if>
-      <if test="ykbz != null">
+      <if test="ykbz != null" >
         YKBZ,
       </if>
-      <if test="jy != null">
+      <if test="jy != null" >
         JY,
       </if>
-      <if test="bz != null">
+      <if test="sqbz != null" >
+        SQBZ,
+      </if>
+      <if test="bz != null" >
         BZ,
       </if>
-      <if test="pin != null">
+      <if test="pin != null" >
         PIN,
       </if>
-      <if test="qbye != null">
-        QBYE,
+      <if test="zcflag != null" >
+        ZCFLAG,
       </if>
-      <if test="syjf != null">
-        SYJF,
+      <if test="zcrybh != null" >
+        ZCRYBH,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="fxkh != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fxkh != null" >
         #{fxkh,jdbcType=VARCHAR},
       </if>
-      <if test="csdm != null">
+      <if test="csdm != null" >
         #{csdm,jdbcType=VARCHAR},
       </if>
-      <if test="hydm != null">
+      <if test="hydm != null" >
         #{hydm,jdbcType=VARCHAR},
       </if>
-      <if test="klx != null">
+      <if test="klx != null" >
         #{klx,jdbcType=VARCHAR},
       </if>
-      <if test="mklx != null">
+      <if test="mklx != null" >
         #{mklx,jdbcType=VARCHAR},
       </if>
-      <if test="zklx != null">
+      <if test="zklx != null" >
         #{zklx,jdbcType=VARCHAR},
       </if>
-      <if test="csn != null">
+      <if test="csn != null" >
         #{csn,jdbcType=VARCHAR},
       </if>
-      <if test="kzhzt != null">
+      <if test="kzhzt != null" >
         #{kzhzt,jdbcType=VARCHAR},
       </if>
-      <if test="sksj != null">
+      <if test="sksj != null" >
         #{sksj,jdbcType=TIMESTAMP},
       </if>
-      <if test="yj != null">
+      <if test="yj != null" >
         #{yj,jdbcType=DECIMAL},
       </if>
-      <if test="czsj != null">
+      <if test="czsj != null" >
         #{czsj,jdbcType=TIMESTAMP},
       </if>
-      <if test="czje != null">
+      <if test="czje != null" >
         #{czje,jdbcType=DECIMAL},
       </if>
-      <if test="sysj != null">
+      <if test="sysj != null" >
         #{sysj,jdbcType=TIMESTAMP},
       </if>
-      <if test="ye != null">
+      <if test="ye != null" >
         #{ye,jdbcType=DECIMAL},
       </if>
-      <if test="sycs != null">
+      <if test="sycs != null" >
         #{sycs,jdbcType=DECIMAL},
       </if>
-      <if test="tksj != null">
+      <if test="tksj != null" >
         #{tksj,jdbcType=TIMESTAMP},
       </if>
-      <if test="tkyj != null">
+      <if test="tkyj != null" >
         #{tkyj,jdbcType=DECIMAL},
       </if>
-      <if test="tkje != null">
+      <if test="tkje != null" >
         #{tkje,jdbcType=DECIMAL},
       </if>
-      <if test="tkcs != null">
+      <if test="tkcs != null" >
         #{tkcs,jdbcType=DECIMAL},
       </if>
-      <if test="gssj != null">
+      <if test="gssj != null" >
         #{gssj,jdbcType=TIMESTAMP},
       </if>
-      <if test="gsrybh != null">
+      <if test="gsrybh != null" >
         #{gsrybh,jdbcType=DECIMAL},
       </if>
-      <if test="jgsj != null">
+      <if test="jgsj != null" >
         #{jgsj,jdbcType=TIMESTAMP},
       </if>
-      <if test="jgrybh != null">
+      <if test="jgrybh != null" >
         #{jgrybh,jdbcType=DECIMAL},
       </if>
-      <if test="gscq != null">
+      <if test="gscq != null" >
         #{gscq,jdbcType=VARCHAR},
       </if>
-      <if test="changefxkh != null">
+      <if test="changefxkh != null" >
         #{changefxkh,jdbcType=VARCHAR},
       </if>
-      <if test="changesj != null">
+      <if test="changesj != null" >
         #{changesj,jdbcType=TIMESTAMP},
       </if>
-      <if test="changerybh != null">
+      <if test="changerybh != null" >
         #{changerybh,jdbcType=DECIMAL},
       </if>
-      <if test="hmdbz != null">
+      <if test="hmdbz != null" >
         #{hmdbz,jdbcType=VARCHAR},
       </if>
-      <if test="cardcnt != null">
+      <if test="cardcnt != null" >
         #{cardcnt,jdbcType=DECIMAL},
       </if>
-      <if test="posseq != null">
+      <if test="posseq != null" >
         #{posseq,jdbcType=DECIMAL},
       </if>
-      <if test="rybh != null">
+      <if test="rybh != null" >
         #{rybh,jdbcType=DECIMAL},
       </if>
-      <if test="xm != null">
+      <if test="xm != null" >
         #{xm,jdbcType=VARCHAR},
       </if>
-      <if test="xb != null">
+      <if test="xb != null" >
         #{xb,jdbcType=VARCHAR},
       </if>
-      <if test="zjlx != null">
+      <if test="zjlx != null" >
         #{zjlx,jdbcType=VARCHAR},
       </if>
-      <if test="zjbh != null">
+      <if test="zjbh != null" >
         #{zjbh,jdbcType=VARCHAR},
       </if>
-      <if test="cshrq != null">
+      <if test="cshrq != null" >
         #{cshrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="qyrq != null">
+      <if test="qyrq != null" >
         #{qyrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="yxrq != null">
+      <if test="yxrq != null" >
         #{yxrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="nsrq != null">
+      <if test="nsrq != null" >
         #{nsrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="nsrybh != null">
+      <if test="nsrybh != null" >
         #{nsrybh,jdbcType=DECIMAL},
       </if>
-      <if test="isns != null">
+      <if test="isns != null" >
         #{isns,jdbcType=VARCHAR},
       </if>
-      <if test="kzhxfjesum != null">
+      <if test="kzhxfjesum != null" >
         #{kzhxfjesum,jdbcType=DECIMAL},
       </if>
-      <if test="kzhczjesum != null">
+      <if test="kzhczjesum != null" >
         #{kzhczjesum,jdbcType=DECIMAL},
       </if>
-      <if test="fkrybh != null">
+      <if test="fkrybh != null" >
         #{fkrybh,jdbcType=DECIMAL},
       </if>
-      <if test="fkxm != null">
+      <if test="fkxm != null" >
         #{fkxm,jdbcType=VARCHAR},
       </if>
-      <if test="samkh != null">
+      <if test="samkh != null" >
         #{samkh,jdbcType=VARCHAR},
       </if>
-      <if test="ykbz != null">
+      <if test="ykbz != null" >
         #{ykbz,jdbcType=VARCHAR},
       </if>
-      <if test="jy != null">
+      <if test="jy != null" >
         #{jy,jdbcType=VARCHAR},
       </if>
-      <if test="bz != null">
+      <if test="sqbz != null" >
+        #{sqbz,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
         #{bz,jdbcType=VARCHAR},
       </if>
-      <if test="pin != null">
+      <if test="pin != null" >
         #{pin,jdbcType=VARCHAR},
       </if>
-      <if test="qbye != null">
-        #{qbye,jdbcType=DECIMAL},
+      <if test="zcflag != null" >
+        #{zcflag,jdbcType=VARCHAR},
       </if>
-      <if test="syjf != null">
-        #{syjf,jdbcType=DECIMAL},
+      <if test="zcrybh != null" >
+        #{zcrybh,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.CardInfo">
-    update gjic.CARD_INFO
-    <set>
-      <if test="csdm != null">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.TCardInfo" >
+    update T_CARD_INFO
+    <set >
+      <if test="csdm != null" >
         CSDM = #{csdm,jdbcType=VARCHAR},
       </if>
-      <if test="hydm != null">
+      <if test="hydm != null" >
         HYDM = #{hydm,jdbcType=VARCHAR},
       </if>
-      <if test="klx != null">
+      <if test="klx != null" >
         KLX = #{klx,jdbcType=VARCHAR},
       </if>
-      <if test="mklx != null">
+      <if test="mklx != null" >
         MKLX = #{mklx,jdbcType=VARCHAR},
       </if>
-      <if test="zklx != null">
+      <if test="zklx != null" >
         ZKLX = #{zklx,jdbcType=VARCHAR},
       </if>
-      <if test="csn != null">
+      <if test="csn != null" >
         CSN = #{csn,jdbcType=VARCHAR},
       </if>
-      <if test="kzhzt != null">
+      <if test="kzhzt != null" >
         KZHZT = #{kzhzt,jdbcType=VARCHAR},
       </if>
-      <if test="sksj != null">
+      <if test="sksj != null" >
         SKSJ = #{sksj,jdbcType=TIMESTAMP},
       </if>
-      <if test="yj != null">
+      <if test="yj != null" >
         YJ = #{yj,jdbcType=DECIMAL},
       </if>
-      <if test="czsj != null">
+      <if test="czsj != null" >
         CZSJ = #{czsj,jdbcType=TIMESTAMP},
       </if>
-      <if test="czje != null">
+      <if test="czje != null" >
         CZJE = #{czje,jdbcType=DECIMAL},
       </if>
-      <if test="sysj != null">
+      <if test="sysj != null" >
         SYSJ = #{sysj,jdbcType=TIMESTAMP},
       </if>
-      <if test="ye != null">
+      <if test="ye != null" >
         YE = #{ye,jdbcType=DECIMAL},
       </if>
-      <if test="sycs != null">
+      <if test="sycs != null" >
         SYCS = #{sycs,jdbcType=DECIMAL},
       </if>
-      <if test="tksj != null">
+      <if test="tksj != null" >
         TKSJ = #{tksj,jdbcType=TIMESTAMP},
       </if>
-      <if test="tkyj != null">
+      <if test="tkyj != null" >
         TKYJ = #{tkyj,jdbcType=DECIMAL},
       </if>
-      <if test="tkje != null">
+      <if test="tkje != null" >
         TKJE = #{tkje,jdbcType=DECIMAL},
       </if>
-      <if test="tkcs != null">
+      <if test="tkcs != null" >
         TKCS = #{tkcs,jdbcType=DECIMAL},
       </if>
-      <if test="gssj != null">
+      <if test="gssj != null" >
         GSSJ = #{gssj,jdbcType=TIMESTAMP},
       </if>
-      <if test="gsrybh != null">
+      <if test="gsrybh != null" >
         GSRYBH = #{gsrybh,jdbcType=DECIMAL},
       </if>
-      <if test="jgsj != null">
+      <if test="jgsj != null" >
         JGSJ = #{jgsj,jdbcType=TIMESTAMP},
       </if>
-      <if test="jgrybh != null">
+      <if test="jgrybh != null" >
         JGRYBH = #{jgrybh,jdbcType=DECIMAL},
       </if>
-      <if test="gscq != null">
+      <if test="gscq != null" >
         GSCQ = #{gscq,jdbcType=VARCHAR},
       </if>
-      <if test="changefxkh != null">
+      <if test="changefxkh != null" >
         CHANGEFXKH = #{changefxkh,jdbcType=VARCHAR},
       </if>
-      <if test="changesj != null">
+      <if test="changesj != null" >
         CHANGESJ = #{changesj,jdbcType=TIMESTAMP},
       </if>
-      <if test="changerybh != null">
+      <if test="changerybh != null" >
         CHANGERYBH = #{changerybh,jdbcType=DECIMAL},
       </if>
-      <if test="hmdbz != null">
+      <if test="hmdbz != null" >
         HMDBZ = #{hmdbz,jdbcType=VARCHAR},
       </if>
-      <if test="cardcnt != null">
+      <if test="cardcnt != null" >
         CARDCNT = #{cardcnt,jdbcType=DECIMAL},
       </if>
-      <if test="posseq != null">
+      <if test="posseq != null" >
         POSSEQ = #{posseq,jdbcType=DECIMAL},
       </if>
-      <if test="rybh != null">
+      <if test="rybh != null" >
         RYBH = #{rybh,jdbcType=DECIMAL},
       </if>
-      <if test="xm != null">
+      <if test="xm != null" >
         XM = #{xm,jdbcType=VARCHAR},
       </if>
-      <if test="xb != null">
+      <if test="xb != null" >
         XB = #{xb,jdbcType=VARCHAR},
       </if>
-      <if test="zjlx != null">
+      <if test="zjlx != null" >
         ZJLX = #{zjlx,jdbcType=VARCHAR},
       </if>
-      <if test="zjbh != null">
+      <if test="zjbh != null" >
         ZJBH = #{zjbh,jdbcType=VARCHAR},
       </if>
-      <if test="cshrq != null">
+      <if test="cshrq != null" >
         CSHRQ = #{cshrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="qyrq != null">
+      <if test="qyrq != null" >
         QYRQ = #{qyrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="yxrq != null">
+      <if test="yxrq != null" >
         YXRQ = #{yxrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="nsrq != null">
+      <if test="nsrq != null" >
         NSRQ = #{nsrq,jdbcType=TIMESTAMP},
       </if>
-      <if test="nsrybh != null">
+      <if test="nsrybh != null" >
         NSRYBH = #{nsrybh,jdbcType=DECIMAL},
       </if>
-      <if test="isns != null">
+      <if test="isns != null" >
         ISNS = #{isns,jdbcType=VARCHAR},
       </if>
-      <if test="kzhxfjesum != null">
+      <if test="kzhxfjesum != null" >
         KZHXFJESUM = #{kzhxfjesum,jdbcType=DECIMAL},
       </if>
-      <if test="kzhczjesum != null">
+      <if test="kzhczjesum != null" >
         KZHCZJESUM = #{kzhczjesum,jdbcType=DECIMAL},
       </if>
-      <if test="fkrybh != null">
+      <if test="fkrybh != null" >
         FKRYBH = #{fkrybh,jdbcType=DECIMAL},
       </if>
-      <if test="fkxm != null">
+      <if test="fkxm != null" >
         FKXM = #{fkxm,jdbcType=VARCHAR},
       </if>
-      <if test="samkh != null">
+      <if test="samkh != null" >
         SAMKH = #{samkh,jdbcType=VARCHAR},
       </if>
-      <if test="ykbz != null">
+      <if test="ykbz != null" >
         YKBZ = #{ykbz,jdbcType=VARCHAR},
       </if>
-      <if test="jy != null">
+      <if test="jy != null" >
         JY = #{jy,jdbcType=VARCHAR},
       </if>
-      <if test="bz != null">
+      <if test="sqbz != null" >
+        SQBZ = #{sqbz,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
         BZ = #{bz,jdbcType=VARCHAR},
       </if>
-      <if test="pin != null">
+      <if test="pin != null" >
         PIN = #{pin,jdbcType=VARCHAR},
       </if>
-      <if test="qbye != null">
-        QBYE = #{qbye,jdbcType=DECIMAL},
+      <if test="zcflag != null" >
+        ZCFLAG = #{zcflag,jdbcType=VARCHAR},
       </if>
-      <if test="syjf != null">
-        SYJF = #{syjf,jdbcType=DECIMAL},
+      <if test="zcrybh != null" >
+        ZCRYBH = #{zcrybh,jdbcType=DECIMAL},
       </if>
     </set>
     where FXKH = #{fxkh,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.CardInfo">
-    update gjic.CARD_INFO
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.TCardInfo" >
+    update T_CARD_INFO
     set CSDM = #{csdm,jdbcType=VARCHAR},
       HYDM = #{hydm,jdbcType=VARCHAR},
       KLX = #{klx,jdbcType=VARCHAR},
@@ -630,10 +641,11 @@
       SAMKH = #{samkh,jdbcType=VARCHAR},
       YKBZ = #{ykbz,jdbcType=VARCHAR},
       JY = #{jy,jdbcType=VARCHAR},
+      SQBZ = #{sqbz,jdbcType=VARCHAR},
       BZ = #{bz,jdbcType=VARCHAR},
       PIN = #{pin,jdbcType=VARCHAR},
-      QBYE = #{qbye,jdbcType=DECIMAL},
-      SYJF = #{syjf,jdbcType=DECIMAL}
+      ZCFLAG = #{zcflag,jdbcType=VARCHAR},
+      ZCRYBH = #{zcrybh,jdbcType=DECIMAL}
     where FXKH = #{fxkh,jdbcType=VARCHAR}
   </update>
 </mapper>

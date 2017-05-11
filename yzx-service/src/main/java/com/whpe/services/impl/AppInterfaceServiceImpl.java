@@ -11,6 +11,8 @@ import com.whpe.dao.ycbus.CardInfoMapper;
 import com.whpe.dao.ycbus.TSmcardYhInfoMapper;
 import com.whpe.dao.ycbus.YhIcKzMapper;
 import com.whpe.dao.yckq.*;
+import com.whpe.dao.yclyic.TCardInfoMapper;
+import com.whpe.dao.yclyic.TYhInfoMapper;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.CommonService;
 import com.whpe.services.PayService;
@@ -58,6 +60,12 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private YhIcKzMapper yhIcKzMapper;
+
+    @Resource
+    private TCardInfoMapper tCardInfoMapper;
+
+    @Resource
+    private TYhInfoMapper tYhInfoMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -395,6 +403,30 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
                 retContent.add(obj);
             }
             putRetContent(retContent, result);
+            makeRetInfo("S0000", "查询成功", result);
+        }else {
+            makeRetInfo("S0001", "未查询到数据", result);
+            return;
+        }
+    }
+
+    @Override
+    public void queryTourYearCardByCardNo(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String cardNo = reqContent.getString("cardNo");
+        if(StringUtils.isEmpty(cardNo)){
+            makeRetInfo("E0001", "卡号不能为空", result);
+            return;
+        }
+        TCardInfo tCardInfo = tCardInfoMapper.selectByPrimaryKey(cardNo);
+        if(tCardInfo != null && tCardInfo.getQyrq() != null){
+            TYhInfo tYhInfo = tYhInfoMapper.selectByCardNo(cardNo);
+            putRetContent("createCardTime", DateUtils.getFormatDate(tCardInfo.getQyrq(), "yyyy-MM-dd HH:mm:ss"), result);
+            putRetContent("validTime", DateUtils.getFormatDate(tCardInfo.getYxrq(), "yyyy-MM-dd HH:mm:ss"), result);
+            if(tYhInfo != null){
+                putRetContent("name", tYhInfo.getName(), result);
+            }
             makeRetInfo("S0000", "查询成功", result);
         }else {
             makeRetInfo("S0001", "未查询到数据", result);

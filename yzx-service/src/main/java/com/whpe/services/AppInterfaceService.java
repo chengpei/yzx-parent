@@ -32,4 +32,6 @@ public interface AppInterfaceService {
     void generateOrderNo(JSONObject requestJson, JSONObject result, HttpSession session);
 
     void queryCitzenCardNoByID(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void queryTourYearCardByCardNo(JSONObject requestJson, JSONObject result, HttpSession session);
 }

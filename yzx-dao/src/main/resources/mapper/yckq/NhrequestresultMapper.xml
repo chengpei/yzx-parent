@@ -7,7 +7,7 @@
     <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
     <result column="BATCHNO" property="batchno" jdbcType="VARCHAR" />
     <result column="VOUCHERNO" property="voucherno" jdbcType="VARCHAR" />
-    <result column="HOSTDATETIME" property="hostdatetime" jdbcType="DATE" />
+    <result column="HOSTDATETIME" property="hostdatetime" jdbcType="TIMESTAMP" />
     <result column="MERCHANTREMARKS" property="merchantremarks" jdbcType="VARCHAR" />
     <result column="PAYTYPE" property="paytype" jdbcType="VARCHAR" />
     <result column="NOTIFYTYPE" property="notifytype" jdbcType="VARCHAR" />
@@ -26,7 +26,7 @@
       IRSPREF, RETURNCODE, ERRORMESSAGE
       )
     values (#{trxtype,jdbcType=VARCHAR}, #{orderno,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
-      #{batchno,jdbcType=VARCHAR}, #{voucherno,jdbcType=VARCHAR}, #{hostdatetime,jdbcType=DATE}, 
+      #{batchno,jdbcType=VARCHAR}, #{voucherno,jdbcType=VARCHAR}, #{hostdatetime,jdbcType=TIMESTAMP},
       #{merchantremarks,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR}, #{notifytype,jdbcType=VARCHAR}, 
       #{irspref,jdbcType=VARCHAR}, #{returncode,jdbcType=VARCHAR}, #{errormessage,jdbcType=VARCHAR}
       )
@@ -88,7 +88,7 @@
         #{voucherno,jdbcType=VARCHAR},
       </if>
       <if test="hostdatetime != null" >
-        #{hostdatetime,jdbcType=DATE},
+        #{hostdatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="merchantremarks != null" >
         #{merchantremarks,jdbcType=VARCHAR},

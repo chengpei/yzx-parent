@@ -12,11 +12,17 @@ public class DateUtils {
     private static SimpleDateFormat sdf = new SimpleDateFormat();
 
     public static String getFormatDate(Date date, String format){
+        if (date == null){
+            return null;
+        }
         sdf.applyPattern(format);
         return sdf.format(date);
     }
 
     public static Date getDateForString(String hostDateTime, String format) throws ParseException {
+        if (StringUtils.isEmpty(hostDateTime)){
+            return null;
+        }
         sdf.applyPattern(format);
         return sdf.parse(hostDateTime);
     }

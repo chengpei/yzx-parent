@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yclyic.TYhInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.TYhInfo" >
+    <id column="RYBH" property="rybh" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="LB" property="lb" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="FXKH" property="fxkh" jdbcType="VARCHAR" />
+    <result column="ZJLX" property="zjlx" jdbcType="VARCHAR" />
+    <result column="ZJBH" property="zjbh" jdbcType="VARCHAR" />
+    <result column="XB" property="xb" jdbcType="VARCHAR" />
+    <result column="JF" property="jf" jdbcType="DECIMAL" />
+    <result column="KYJF" property="kyjf" jdbcType="VARCHAR" />
+    <result column="DWMC" property="dwmc" jdbcType="VARCHAR" />
+    <result column="SZXX" property="szxx" jdbcType="VARCHAR" />
+    <result column="SZSQ" property="szsq" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="LXDH" property="lxdh" jdbcType="VARCHAR" />
+    <result column="GWBH" property="gwbh" jdbcType="VARCHAR" />
+    <result column="RYZT" property="ryzt" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="GPHONE" property="gphone" jdbcType="VARCHAR" />
+    <result column="BZ" property="bz" jdbcType="VARCHAR" />
+    <result column="ADDTIME" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="ADDCZYBH" property="addczybh" jdbcType="VARCHAR" />
+    <result column="UPTIME" property="uptime" jdbcType="TIMESTAMP" />
+    <result column="UPCZYBH" property="upczybh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RYBH, NAME, LB, PASSWORD, FXKH, ZJLX, ZJBH, XB, JF, KYJF, DWMC, SZXX, SZSQ, ADDRESS, 
+    LXDH, GWBH, RYZT, PHONE, GPHONE, BZ, ADDTIME, ADDCZYBH, UPTIME, UPCZYBH
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_YH_INFO
+    where RYBH = #{rybh,jdbcType=DECIMAL}
+  </select>
+  <select id="selectByCardNo" resultType="com.whpe.bean.TYhInfo" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from T_YH_INFO
+    where FXKH = #{fxkh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_YH_INFO
+    where RYBH = #{rybh,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.TYhInfo" >
+    insert into T_YH_INFO (RYBH, NAME, LB, 
+      PASSWORD, FXKH, ZJLX, 
+      ZJBH, XB, JF, KYJF, 
+      DWMC, SZXX, SZSQ, ADDRESS, 
+      LXDH, GWBH, RYZT, PHONE, 
+      GPHONE, BZ, ADDTIME, ADDCZYBH, 
+      UPTIME, UPCZYBH)
+    values (#{rybh,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{lb,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{fxkh,jdbcType=VARCHAR}, #{zjlx,jdbcType=VARCHAR}, 
+      #{zjbh,jdbcType=VARCHAR}, #{xb,jdbcType=VARCHAR}, #{jf,jdbcType=DECIMAL}, #{kyjf,jdbcType=VARCHAR}, 
+      #{dwmc,jdbcType=VARCHAR}, #{szxx,jdbcType=VARCHAR}, #{szsq,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{lxdh,jdbcType=VARCHAR}, #{gwbh,jdbcType=VARCHAR}, #{ryzt,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{gphone,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{addczybh,jdbcType=VARCHAR},
+      #{uptime,jdbcType=TIMESTAMP}, #{upczybh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.TYhInfo" >
+    insert into T_YH_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rybh != null" >
+        RYBH,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="lb != null" >
+        LB,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="fxkh != null" >
+        FXKH,
+      </if>
+      <if test="zjlx != null" >
+        ZJLX,
+      </if>
+      <if test="zjbh != null" >
+        ZJBH,
+      </if>
+      <if test="xb != null" >
+        XB,
+      </if>
+      <if test="jf != null" >
+        JF,
+      </if>
+      <if test="kyjf != null" >
+        KYJF,
+      </if>
+      <if test="dwmc != null" >
+        DWMC,
+      </if>
+      <if test="szxx != null" >
+        SZXX,
+      </if>
+      <if test="szsq != null" >
+        SZSQ,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="lxdh != null" >
+        LXDH,
+      </if>
+      <if test="gwbh != null" >
+        GWBH,
+      </if>
+      <if test="ryzt != null" >
+        RYZT,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="gphone != null" >
+        GPHONE,
+      </if>
+      <if test="bz != null" >
+        BZ,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+      <if test="addczybh != null" >
+        ADDCZYBH,
+      </if>
+      <if test="uptime != null" >
+        UPTIME,
+      </if>
+      <if test="upczybh != null" >
+        UPCZYBH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rybh != null" >
+        #{rybh,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="lb != null" >
+        #{lb,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="fxkh != null" >
+        #{fxkh,jdbcType=VARCHAR},
+      </if>
+      <if test="zjlx != null" >
+        #{zjlx,jdbcType=VARCHAR},
+      </if>
+      <if test="zjbh != null" >
+        #{zjbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xb != null" >
+        #{xb,jdbcType=VARCHAR},
+      </if>
+      <if test="jf != null" >
+        #{jf,jdbcType=DECIMAL},
+      </if>
+      <if test="kyjf != null" >
+        #{kyjf,jdbcType=VARCHAR},
+      </if>
+      <if test="dwmc != null" >
+        #{dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="szxx != null" >
+        #{szxx,jdbcType=VARCHAR},
+      </if>
+      <if test="szsq != null" >
+        #{szsq,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lxdh != null" >
+        #{lxdh,jdbcType=VARCHAR},
+      </if>
+      <if test="gwbh != null" >
+        #{gwbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ryzt != null" >
+        #{ryzt,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gphone != null" >
+        #{gphone,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addczybh != null" >
+        #{addczybh,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        #{uptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upczybh != null" >
+        #{upczybh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.TYhInfo" >
+    update T_YH_INFO
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="lb != null" >
+        LB = #{lb,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="fxkh != null" >
+        FXKH = #{fxkh,jdbcType=VARCHAR},
+      </if>
+      <if test="zjlx != null" >
+        ZJLX = #{zjlx,jdbcType=VARCHAR},
+      </if>
+      <if test="zjbh != null" >
+        ZJBH = #{zjbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xb != null" >
+        XB = #{xb,jdbcType=VARCHAR},
+      </if>
+      <if test="jf != null" >
+        JF = #{jf,jdbcType=DECIMAL},
+      </if>
+      <if test="kyjf != null" >
+        KYJF = #{kyjf,jdbcType=VARCHAR},
+      </if>
+      <if test="dwmc != null" >
+        DWMC = #{dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="szxx != null" >
+        SZXX = #{szxx,jdbcType=VARCHAR},
+      </if>
+      <if test="szsq != null" >
+        SZSQ = #{szsq,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lxdh != null" >
+        LXDH = #{lxdh,jdbcType=VARCHAR},
+      </if>
+      <if test="gwbh != null" >
+        GWBH = #{gwbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ryzt != null" >
+        RYZT = #{ryzt,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gphone != null" >
+        GPHONE = #{gphone,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        BZ = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addczybh != null" >
+        ADDCZYBH = #{addczybh,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        UPTIME = #{uptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upczybh != null" >
+        UPCZYBH = #{upczybh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RYBH = #{rybh,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.TYhInfo" >
+    update T_YH_INFO
+    set NAME = #{name,jdbcType=VARCHAR},
+      LB = #{lb,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      FXKH = #{fxkh,jdbcType=VARCHAR},
+      ZJLX = #{zjlx,jdbcType=VARCHAR},
+      ZJBH = #{zjbh,jdbcType=VARCHAR},
+      XB = #{xb,jdbcType=VARCHAR},
+      JF = #{jf,jdbcType=DECIMAL},
+      KYJF = #{kyjf,jdbcType=VARCHAR},
+      DWMC = #{dwmc,jdbcType=VARCHAR},
+      SZXX = #{szxx,jdbcType=VARCHAR},
+      SZSQ = #{szsq,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      LXDH = #{lxdh,jdbcType=VARCHAR},
+      GWBH = #{gwbh,jdbcType=VARCHAR},
+      RYZT = #{ryzt,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      GPHONE = #{gphone,jdbcType=VARCHAR},
+      BZ = #{bz,jdbcType=VARCHAR},
+      ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      ADDCZYBH = #{addczybh,jdbcType=VARCHAR},
+      UPTIME = #{uptime,jdbcType=TIMESTAMP},
+      UPCZYBH = #{upczybh,jdbcType=VARCHAR}
+    where RYBH = #{rybh,jdbcType=DECIMAL}
+  </update>
+</mapper>

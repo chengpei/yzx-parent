@@ -5,7 +5,7 @@
     <id column="ICCID" property="iccid" jdbcType="VARCHAR" />
     <result column="FXKH" property="fxkh" jdbcType="VARCHAR" />
     <result column="WLKH" property="wlkh" jdbcType="VARCHAR" />
-    <result column="ADDTIME" property="addtime" jdbcType="DATE" />
+    <result column="ADDTIME" property="addtime" jdbcType="TIMESTAMP" />
     <result column="WLKH_2" property="wlkh2" jdbcType="VARCHAR" />
     <result column="STR09" property="str09" jdbcType="VARCHAR" />
     <result column="U_FLAG" property="uFlag" jdbcType="VARCHAR" />
@@ -28,7 +28,7 @@
       ADDTIME, WLKH_2, STR09, 
       U_FLAG)
     values (#{iccid,jdbcType=VARCHAR}, #{fxkh,jdbcType=VARCHAR}, #{wlkh,jdbcType=VARCHAR}, 
-      #{addtime,jdbcType=DATE}, #{wlkh2,jdbcType=VARCHAR}, #{str09,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{wlkh2,jdbcType=VARCHAR}, #{str09,jdbcType=VARCHAR},
       #{uFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.TSimIc" >
@@ -67,7 +67,7 @@
         #{wlkh,jdbcType=VARCHAR},
       </if>
       <if test="addtime != null" >
-        #{addtime,jdbcType=DATE},
+        #{addtime,jdbcType=TIMESTAMP},
       </if>
       <if test="wlkh2 != null" >
         #{wlkh2,jdbcType=VARCHAR},
@@ -90,7 +90,7 @@
         WLKH = #{wlkh,jdbcType=VARCHAR},
       </if>
       <if test="addtime != null" >
-        ADDTIME = #{addtime,jdbcType=DATE},
+        ADDTIME = #{addtime,jdbcType=TIMESTAMP},
       </if>
       <if test="wlkh2 != null" >
         WLKH_2 = #{wlkh2,jdbcType=VARCHAR},
@@ -108,7 +108,7 @@
     update gjic.T_SIM_IC
     set FXKH = #{fxkh,jdbcType=VARCHAR},
       WLKH = #{wlkh,jdbcType=VARCHAR},
-      ADDTIME = #{addtime,jdbcType=DATE},
+      ADDTIME = #{addtime,jdbcType=TIMESTAMP},
       WLKH_2 = #{wlkh2,jdbcType=VARCHAR},
       STR09 = #{str09,jdbcType=VARCHAR},
       U_FLAG = #{uFlag,jdbcType=VARCHAR}

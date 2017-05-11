@@ -10,7 +10,7 @@
     <result column="SCHOOLNAME" property="schoolname" jdbcType="VARCHAR" />
     <result column="GRADENAME" property="gradename" jdbcType="VARCHAR" />
     <result column="JKKGJ" property="jkkgj" jdbcType="VARCHAR" />
-    <result column="ADDTIME" property="addtime" jdbcType="DATE" />
+    <result column="ADDTIME" property="addtime" jdbcType="TIMESTAMP" />
     <result column="FWM" property="fwm" jdbcType="VARCHAR" />
     <result column="FXKH" property="fxkh" jdbcType="VARCHAR" />
   </resultMap>
@@ -24,7 +24,7 @@
       FWM, FXKH)
     values (#{klx,jdbcType=VARCHAR}, #{sfzhm,jdbcType=VARCHAR}, #{xm,jdbcType=VARCHAR}, 
       #{zt,jdbcType=VARCHAR}, #{smkno,jdbcType=VARCHAR}, #{schoolname,jdbcType=VARCHAR}, 
-      #{gradename,jdbcType=VARCHAR}, #{jkkgj,jdbcType=VARCHAR}, #{addtime,jdbcType=DATE}, 
+      #{gradename,jdbcType=VARCHAR}, #{jkkgj,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP},
       #{fwm,jdbcType=VARCHAR}, #{fxkh,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.TSmcardYhInfo" >
@@ -90,7 +90,7 @@
         #{jkkgj,jdbcType=VARCHAR},
       </if>
       <if test="addtime != null" >
-        #{addtime,jdbcType=DATE},
+        #{addtime,jdbcType=TIMESTAMP},
       </if>
       <if test="fwm != null" >
         #{fwm,jdbcType=VARCHAR},
