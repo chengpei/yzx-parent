@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.ycbus.YhIcKzMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.YhIcKz" >
+    <id column="KZBH" property="kzbh" jdbcType="VARCHAR" />
+    <id column="MKLX" property="mklx" jdbcType="VARCHAR" />
+    <result column="KMC" property="kmc" jdbcType="VARCHAR" />
+    <result column="JE" property="je" jdbcType="DECIMAL" />
+    <result column="SYCS" property="sycs" jdbcType="DECIMAL" />
+    <result column="KZZK" property="kzzk" jdbcType="CHAR" />
+    <result column="YPKL" property="ypkl" jdbcType="CHAR" />
+    <result column="USEMONTH" property="usemonth" jdbcType="DECIMAL" />
+    <result column="JSDJ" property="jsdj" jdbcType="DECIMAL" />
+    <result column="NSSJ" property="nssj" jdbcType="DECIMAL" />
+    <result column="ZZSJ" property="zzsj" jdbcType="DECIMAL" />
+    <result column="ISQB" property="isqb" jdbcType="VARCHAR" />
+    <result column="ISCS" property="iscs" jdbcType="VARCHAR" />
+    <result column="YJ" property="yj" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    KZBH, MKLX, KMC, JE, SYCS, KZZK, YPKL, USEMONTH, JSDJ, NSSJ, ZZSJ, ISQB, ISCS, YJ
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.whpe.bean.YhIcKzKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from gjic.YH_IC_KZ
+    where KZBH = #{kzbh,jdbcType=VARCHAR}
+      and MKLX = #{mklx,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.whpe.bean.YhIcKzKey" >
+    delete from gjic.YH_IC_KZ
+    where KZBH = #{kzbh,jdbcType=VARCHAR}
+      and MKLX = #{mklx,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.YhIcKz" >
+    insert into gjic.YH_IC_KZ (KZBH, MKLX, KMC,
+      JE, SYCS, KZZK, YPKL, 
+      USEMONTH, JSDJ, NSSJ, 
+      ZZSJ, ISQB, ISCS, YJ
+      )
+    values (#{kzbh,jdbcType=VARCHAR}, #{mklx,jdbcType=VARCHAR}, #{kmc,jdbcType=VARCHAR}, 
+      #{je,jdbcType=DECIMAL}, #{sycs,jdbcType=DECIMAL}, #{kzzk,jdbcType=CHAR}, #{ypkl,jdbcType=CHAR}, 
+      #{usemonth,jdbcType=DECIMAL}, #{jsdj,jdbcType=DECIMAL}, #{nssj,jdbcType=DECIMAL}, 
+      #{zzsj,jdbcType=DECIMAL}, #{isqb,jdbcType=VARCHAR}, #{iscs,jdbcType=VARCHAR}, #{yj,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.YhIcKz" >
+    insert into gjic.YH_IC_KZ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="kzbh != null" >
+        KZBH,
+      </if>
+      <if test="mklx != null" >
+        MKLX,
+      </if>
+      <if test="kmc != null" >
+        KMC,
+      </if>
+      <if test="je != null" >
+        JE,
+      </if>
+      <if test="sycs != null" >
+        SYCS,
+      </if>
+      <if test="kzzk != null" >
+        KZZK,
+      </if>
+      <if test="ypkl != null" >
+        YPKL,
+      </if>
+      <if test="usemonth != null" >
+        USEMONTH,
+      </if>
+      <if test="jsdj != null" >
+        JSDJ,
+      </if>
+      <if test="nssj != null" >
+        NSSJ,
+      </if>
+      <if test="zzsj != null" >
+        ZZSJ,
+      </if>
+      <if test="isqb != null" >
+        ISQB,
+      </if>
+      <if test="iscs != null" >
+        ISCS,
+      </if>
+      <if test="yj != null" >
+        YJ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="kzbh != null" >
+        #{kzbh,jdbcType=VARCHAR},
+      </if>
+      <if test="mklx != null" >
+        #{mklx,jdbcType=VARCHAR},
+      </if>
+      <if test="kmc != null" >
+        #{kmc,jdbcType=VARCHAR},
+      </if>
+      <if test="je != null" >
+        #{je,jdbcType=DECIMAL},
+      </if>
+      <if test="sycs != null" >
+        #{sycs,jdbcType=DECIMAL},
+      </if>
+      <if test="kzzk != null" >
+        #{kzzk,jdbcType=CHAR},
+      </if>
+      <if test="ypkl != null" >
+        #{ypkl,jdbcType=CHAR},
+      </if>
+      <if test="usemonth != null" >
+        #{usemonth,jdbcType=DECIMAL},
+      </if>
+      <if test="jsdj != null" >
+        #{jsdj,jdbcType=DECIMAL},
+      </if>
+      <if test="nssj != null" >
+        #{nssj,jdbcType=DECIMAL},
+      </if>
+      <if test="zzsj != null" >
+        #{zzsj,jdbcType=DECIMAL},
+      </if>
+      <if test="isqb != null" >
+        #{isqb,jdbcType=VARCHAR},
+      </if>
+      <if test="iscs != null" >
+        #{iscs,jdbcType=VARCHAR},
+      </if>
+      <if test="yj != null" >
+        #{yj,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.YhIcKz" >
+    update gjic.YH_IC_KZ
+    <set >
+      <if test="kmc != null" >
+        KMC = #{kmc,jdbcType=VARCHAR},
+      </if>
+      <if test="je != null" >
+        JE = #{je,jdbcType=DECIMAL},
+      </if>
+      <if test="sycs != null" >
+        SYCS = #{sycs,jdbcType=DECIMAL},
+      </if>
+      <if test="kzzk != null" >
+        KZZK = #{kzzk,jdbcType=CHAR},
+      </if>
+      <if test="ypkl != null" >
+        YPKL = #{ypkl,jdbcType=CHAR},
+      </if>
+      <if test="usemonth != null" >
+        USEMONTH = #{usemonth,jdbcType=DECIMAL},
+      </if>
+      <if test="jsdj != null" >
+        JSDJ = #{jsdj,jdbcType=DECIMAL},
+      </if>
+      <if test="nssj != null" >
+        NSSJ = #{nssj,jdbcType=DECIMAL},
+      </if>
+      <if test="zzsj != null" >
+        ZZSJ = #{zzsj,jdbcType=DECIMAL},
+      </if>
+      <if test="isqb != null" >
+        ISQB = #{isqb,jdbcType=VARCHAR},
+      </if>
+      <if test="iscs != null" >
+        ISCS = #{iscs,jdbcType=VARCHAR},
+      </if>
+      <if test="yj != null" >
+        YJ = #{yj,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where KZBH = #{kzbh,jdbcType=VARCHAR}
+      and MKLX = #{mklx,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.YhIcKz" >
+    update gjic.YH_IC_KZ
+    set KMC = #{kmc,jdbcType=VARCHAR},
+      JE = #{je,jdbcType=DECIMAL},
+      SYCS = #{sycs,jdbcType=DECIMAL},
+      KZZK = #{kzzk,jdbcType=CHAR},
+      YPKL = #{ypkl,jdbcType=CHAR},
+      USEMONTH = #{usemonth,jdbcType=DECIMAL},
+      JSDJ = #{jsdj,jdbcType=DECIMAL},
+      NSSJ = #{nssj,jdbcType=DECIMAL},
+      ZZSJ = #{zzsj,jdbcType=DECIMAL},
+      ISQB = #{isqb,jdbcType=VARCHAR},
+      ISCS = #{iscs,jdbcType=VARCHAR},
+      YJ = #{yj,jdbcType=DECIMAL}
+    where KZBH = #{kzbh,jdbcType=VARCHAR}
+      and MKLX = #{mklx,jdbcType=VARCHAR}
+  </update>
+</mapper>

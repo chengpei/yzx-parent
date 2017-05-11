@@ -1,4 +1,4 @@
-package com.whpe.dao;
+package com.whpe.dao.yckq;
 
 import com.whpe.bean.SysUser;
 

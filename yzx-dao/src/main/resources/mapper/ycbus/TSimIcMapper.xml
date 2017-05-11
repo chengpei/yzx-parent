@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.ycbus.TSimIcMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.TSimIc" >
+    <id column="ICCID" property="iccid" jdbcType="VARCHAR" />
+    <result column="FXKH" property="fxkh" jdbcType="VARCHAR" />
+    <result column="WLKH" property="wlkh" jdbcType="VARCHAR" />
+    <result column="ADDTIME" property="addtime" jdbcType="DATE" />
+    <result column="WLKH_2" property="wlkh2" jdbcType="VARCHAR" />
+    <result column="STR09" property="str09" jdbcType="VARCHAR" />
+    <result column="U_FLAG" property="uFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ICCID, FXKH, WLKH, ADDTIME, WLKH_2, STR09, U_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from gjic.T_SIM_IC
+    where ICCID = #{iccid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from gjic.T_SIM_IC
+    where ICCID = #{iccid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.TSimIc" >
+    insert into gjic.T_SIM_IC (ICCID, FXKH, WLKH,
+      ADDTIME, WLKH_2, STR09, 
+      U_FLAG)
+    values (#{iccid,jdbcType=VARCHAR}, #{fxkh,jdbcType=VARCHAR}, #{wlkh,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=DATE}, #{wlkh2,jdbcType=VARCHAR}, #{str09,jdbcType=VARCHAR}, 
+      #{uFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.TSimIc" >
+    insert into gjic.T_SIM_IC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iccid != null" >
+        ICCID,
+      </if>
+      <if test="fxkh != null" >
+        FXKH,
+      </if>
+      <if test="wlkh != null" >
+        WLKH,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+      <if test="wlkh2 != null" >
+        WLKH_2,
+      </if>
+      <if test="str09 != null" >
+        STR09,
+      </if>
+      <if test="uFlag != null" >
+        U_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iccid != null" >
+        #{iccid,jdbcType=VARCHAR},
+      </if>
+      <if test="fxkh != null" >
+        #{fxkh,jdbcType=VARCHAR},
+      </if>
+      <if test="wlkh != null" >
+        #{wlkh,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=DATE},
+      </if>
+      <if test="wlkh2 != null" >
+        #{wlkh2,jdbcType=VARCHAR},
+      </if>
+      <if test="str09 != null" >
+        #{str09,jdbcType=VARCHAR},
+      </if>
+      <if test="uFlag != null" >
+        #{uFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.TSimIc" >
+    update gjic.T_SIM_IC
+    <set >
+      <if test="fxkh != null" >
+        FXKH = #{fxkh,jdbcType=VARCHAR},
+      </if>
+      <if test="wlkh != null" >
+        WLKH = #{wlkh,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        ADDTIME = #{addtime,jdbcType=DATE},
+      </if>
+      <if test="wlkh2 != null" >
+        WLKH_2 = #{wlkh2,jdbcType=VARCHAR},
+      </if>
+      <if test="str09 != null" >
+        STR09 = #{str09,jdbcType=VARCHAR},
+      </if>
+      <if test="uFlag != null" >
+        U_FLAG = #{uFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ICCID = #{iccid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.TSimIc" >
+    update gjic.T_SIM_IC
+    set FXKH = #{fxkh,jdbcType=VARCHAR},
+      WLKH = #{wlkh,jdbcType=VARCHAR},
+      ADDTIME = #{addtime,jdbcType=DATE},
+      WLKH_2 = #{wlkh2,jdbcType=VARCHAR},
+      STR09 = #{str09,jdbcType=VARCHAR},
+      U_FLAG = #{uFlag,jdbcType=VARCHAR}
+    where ICCID = #{iccid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -19,8 +19,8 @@
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>10.2.0.1.0</version>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -42,6 +42,34 @@
             <artifactId>pagehelper</artifactId>
             <version>5.0.0</version>
         </dependency>
+
+        <!-- JTA事物 -->
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-api</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jta</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>atomikos-util</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jdbc</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+        <!-- JTA事物 -->
     </dependencies>
 
     <build>

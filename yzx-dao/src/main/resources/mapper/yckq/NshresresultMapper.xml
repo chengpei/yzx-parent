@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.whpe.dao.NshresresultMapper" >
+<mapper namespace="com.whpe.dao.yckq.NshresresultMapper" >
   <resultMap id="BaseResultMap" type="com.whpe.bean.Nshresresult" >
     <result column="BRANCHID" property="branchid" jdbcType="VARCHAR" />
     <result column="MERCODE" property="mercode" jdbcType="VARCHAR" />

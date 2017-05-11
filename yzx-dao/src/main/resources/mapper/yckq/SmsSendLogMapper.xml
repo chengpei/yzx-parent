@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.whpe.dao.SmsSendLogMapper" >
+<mapper namespace="com.whpe.dao.yckq.SmsSendLogMapper" >
   <resultMap id="BaseResultMap" type="com.whpe.bean.SmsSendLog" >
     <id column="ID" property="id" jdbcType="DECIMAL" />
     <result column="ACCEPT_PHONE" property="acceptPhone" jdbcType="VARCHAR" />

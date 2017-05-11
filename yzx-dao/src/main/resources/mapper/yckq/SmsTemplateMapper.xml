@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.whpe.dao.SmsTemplateMapper" >
+<mapper namespace="com.whpe.dao.yckq.SmsTemplateMapper" >
   <resultMap id="BaseResultMap" type="com.whpe.bean.SmsTemplate" >
     <id column="ID" property="id" jdbcType="DECIMAL" />
     <result column="TEMPLATE_CONTENT" property="templateContent" jdbcType="VARCHAR" />

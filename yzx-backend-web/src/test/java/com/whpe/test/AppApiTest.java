@@ -1,14 +1,12 @@
 package com.whpe.test;
 
 import com.whpe.bean.*;
-import com.whpe.dao.NfcCardRechargeMapper;
-import com.whpe.dao.SmsSendLogMapper;
-import com.whpe.dao.SysAppUserMapper;
-import com.whpe.dao.SysUserMapper;
+import com.whpe.dao.yckq.NfcCardRechargeMapper;
+import com.whpe.dao.yckq.SmsSendLogMapper;
+import com.whpe.dao.yckq.SysAppUserMapper;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.LoginRegisterService;
 import com.whpe.services.SendSMSService;
-import com.whpe.utils.DateUtils;
 import org.junit.Test;
 
 import javax.annotation.Resource;

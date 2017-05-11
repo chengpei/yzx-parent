@@ -3,8 +3,8 @@ package com.whpe.services.impl;
 import com.whpe.bean.SysAppUser;
 import com.whpe.bean.dto.SysPeopleDTO;
 import com.whpe.bean.vo.SysAppUserVO;
-import com.whpe.dao.SysAppUserMapper;
-import com.whpe.dao.SysPeopleMapper;
+import com.whpe.dao.yckq.SysAppUserMapper;
+import com.whpe.dao.yckq.SysPeopleMapper;
 import com.whpe.services.UserService;
 import org.springframework.stereotype.Service;
 

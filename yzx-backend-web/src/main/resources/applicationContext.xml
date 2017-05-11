@@ -23,5 +23,8 @@
         <property name="defaultErrorView" value="/error/500"/>
     </bean>
 
-    <import resource="spring/spring-datasource.xml"/>
+    <import resource="classpath:datasources/datasource-yckq.xml"/>
+    <import resource="classpath:datasources/datasource-ycbus.xml"/>
+    <import resource="classpath:datasources/transaction.xml"/>
+
 </beans>

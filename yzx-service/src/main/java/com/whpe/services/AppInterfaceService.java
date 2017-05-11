@@ -30,4 +30,6 @@ public interface AppInterfaceService {
     int saveNshRequestResult(Nshresresult nshresresult);
 
     void generateOrderNo(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void queryCitzenCardNoByID(JSONObject requestJson, JSONObject result, HttpSession session);
 }

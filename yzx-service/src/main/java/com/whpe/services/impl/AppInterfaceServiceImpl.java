@@ -7,7 +7,10 @@ import com.github.pagehelper.PageHelper;
 import com.whpe.bean.*;
 import com.whpe.bean.dto.SysPeopleDTO;
 import com.whpe.bean.vo.SysAppUserVO;
-import com.whpe.dao.*;
+import com.whpe.dao.ycbus.CardInfoMapper;
+import com.whpe.dao.ycbus.TSmcardYhInfoMapper;
+import com.whpe.dao.ycbus.YhIcKzMapper;
+import com.whpe.dao.yckq.*;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.CommonService;
 import com.whpe.services.PayService;
@@ -46,6 +49,15 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private NshresresultMapper nshresresultMapper;
+
+    @Resource
+    private TSmcardYhInfoMapper tSmcardYhInfoMapper;
+
+    @Resource
+    private CardInfoMapper cardInfoMapper;
+
+    @Resource
+    private YhIcKzMapper yhIcKzMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -353,6 +365,41 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         JSONArray nfcCardRechargeArray = JSONArray.parseArray(JSON.toJSONString(nfcCardRechargeList));
         putRetContent(nfcCardRechargeArray, result);
         makeRetInfo("S0000", "查询成功", result);
+    }
+
+    @Override
+    public void queryCitzenCardNoByID(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String sfzhm = reqContent.getString("ID");
+        if(StringUtils.isEmpty(sfzhm)){
+            makeRetInfo("E0001", "身份证号不能为空", result);
+            return;
+        }
+        TSmcardYhInfo param = new TSmcardYhInfo();
+        param.setSfzhm(sfzhm);
+        List<TSmcardYhInfo> tSmcardYhInfoList = tSmcardYhInfoMapper.selectByCondition(param);
+        if(tSmcardYhInfoList != null && tSmcardYhInfoList.size() > 0){
+            JSONArray retContent = new JSONArray();
+            for (TSmcardYhInfo tSmcardYhInfo : tSmcardYhInfoList){
+                CardInfo cardInfo = cardInfoMapper.selectByPrimaryKey(tSmcardYhInfo.getFxkh());
+                YhIcKzKey yhIcKzKey = new YhIcKzKey();
+                yhIcKzKey.setMklx(cardInfo.getMklx());
+                yhIcKzKey.setKzbh(cardInfo.getZklx());
+                YhIcKz yhIcKz = yhIcKzMapper.selectByPrimaryKey(yhIcKzKey);
+                JSONObject obj = new JSONObject();
+                obj.put("citzenCardNo", cardInfo.getFxkh());
+                obj.put("cardTypeName", yhIcKz.getKmc());
+                obj.put("cardStatus", cardInfo.getKzhzt());
+                obj.put("name", tSmcardYhInfo.getXm());
+                retContent.add(obj);
+            }
+            putRetContent(retContent, result);
+            makeRetInfo("S0000", "查询成功", result);
+        }else {
+            makeRetInfo("S0001", "未查询到数据", result);
+            return;
+        }
     }
 
     /**

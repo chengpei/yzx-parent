@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.whpe.dao.SysAppUserMapper" >
-  <resultMap id="BaseResultMap" type="com.whpe.bean.vo.SysAppUserVO" >
+<mapper namespace="com.whpe.dao.yckq.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.SysUser" >
     <id column="U_ID" property="uId" jdbcType="VARCHAR" />
     <result column="U_APP_ID" property="uAppId" jdbcType="VARCHAR" />
     <result column="U_PHONE" property="uPhone" jdbcType="VARCHAR" />
@@ -17,7 +17,7 @@
     <result column="U_CODE" property="uCode" jdbcType="VARCHAR" />
     <result column="U_PHONECHECK" property="uPhonecheck" jdbcType="DECIMAL" />
     <result column="U_REMARK" property="uRemark" jdbcType="VARCHAR" />
-    <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+    <result column="DEF1" property="def1" jdbcType="CHAR" />
     <result column="DEF2" property="def2" jdbcType="CHAR" />
     <result column="DEF3" property="def3" jdbcType="CHAR" />
     <result column="DEF4" property="def4" jdbcType="CHAR" />
@@ -27,56 +27,29 @@
     <result column="DEF8" property="def8" jdbcType="CHAR" />
     <result column="DEF9" property="def9" jdbcType="CHAR" />
     <result column="DEF10" property="def10" jdbcType="CHAR" />
-
-    <association property="sysPeople" column="U_ID" select="com.whpe.dao.SysPeopleMapper.selectSysPeopleByUid" />
   </resultMap>
   <sql id="Base_Column_List" >
     U_ID, U_APP_ID, U_PHONE, U_ACCOUNT, U_PASSWORD, U_USERTYPE, U_LOCKED, U_ENABLED, 
     U_CREATEDATE, U_UPDATEID, U_UPDATEDATE, U_CODE2, U_CODE, U_PHONECHECK, U_REMARK, 
-    TOKEN, DEF2, DEF3, DEF4, DEF5, DEF6, DEF7, DEF8, DEF9, DEF10
+    DEF1, DEF2, DEF3, DEF4, DEF5, DEF6, DEF7, DEF8, DEF9, DEF10
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from SYS_APP_USER
+    from SYS_USER
     where U_ID = #{uId,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.whpe.bean.SysAppUser">
-    select
-    <include refid="Base_Column_List" />
-    from SYS_APP_USER
-    <where>
-      <if test="uId != null">
-        and U_ID = #{uId,jdbcType=VARCHAR}
-      </if>
-      <if test="uPhone != null">
-        and U_PHONE = #{uPhone,jdbcType=VARCHAR}
-      </if>
-      <if test="uEnabled != null">
-        and U_ENABLED = #{uEnabled,jdbcType=VARCHAR}
-      </if>
-      <if test="uPassword != null">
-        and U_PASSWORD = #{uPassword,jdbcType=VARCHAR}
-      </if>
-      <if test="token != null">
-        and TOKEN = #{token,jdbcType=VARCHAR}
-      </if>
-    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from SYS_APP_USER
+    delete from SYS_USER
     where U_ID = #{uId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.whpe.bean.SysAppUser" >
-    <selectKey keyProperty="uId" resultType="java.lang.String" order="BEFORE">
-      select sys_guid() from dual
-    </selectKey>
-    insert into SYS_APP_USER (U_ID, U_APP_ID, U_PHONE, 
+  <insert id="insert" parameterType="com.whpe.bean.SysUser" >
+    insert into SYS_USER (U_ID, U_APP_ID, U_PHONE, 
       U_ACCOUNT, U_PASSWORD, U_USERTYPE, 
       U_LOCKED, U_ENABLED, U_CREATEDATE, 
       U_UPDATEID, U_UPDATEDATE, U_CODE2, 
       U_CODE, U_PHONECHECK, U_REMARK, 
-      TOKEN, DEF2, DEF3, DEF4, 
+      DEF1, DEF2, DEF3, DEF4, 
       DEF5, DEF6, DEF7, DEF8, 
       DEF9, DEF10)
     values (#{uId,jdbcType=VARCHAR}, #{uAppId,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, 
@@ -84,17 +57,16 @@
       #{uLocked,jdbcType=VARCHAR}, #{uEnabled,jdbcType=VARCHAR}, #{uCreatedate,jdbcType=TIMESTAMP},
       #{uUpdateid,jdbcType=VARCHAR}, #{uUpdatedate,jdbcType=TIMESTAMP}, #{uCode2,jdbcType=VARCHAR},
       #{uCode,jdbcType=VARCHAR}, #{uPhonecheck,jdbcType=DECIMAL}, #{uRemark,jdbcType=VARCHAR}, 
-      #{token,jdbcType=VARCHAR}, #{def2,jdbcType=CHAR}, #{def3,jdbcType=CHAR}, #{def4,jdbcType=CHAR}, 
+      #{def1,jdbcType=CHAR}, #{def2,jdbcType=CHAR}, #{def3,jdbcType=CHAR}, #{def4,jdbcType=CHAR}, 
       #{def5,jdbcType=CHAR}, #{def6,jdbcType=CHAR}, #{def7,jdbcType=CHAR}, #{def8,jdbcType=CHAR}, 
       #{def9,jdbcType=CHAR}, #{def10,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.whpe.bean.SysAppUser" >
-    <selectKey keyProperty="uId" resultType="java.lang.String" order="BEFORE">
-      select sys_guid() from dual
-    </selectKey>
-    insert into SYS_APP_USER
+  <insert id="insertSelective" parameterType="com.whpe.bean.SysUser" >
+    insert into SYS_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
         U_ID,
+      </if>
       <if test="uAppId != null" >
         U_APP_ID,
       </if>
@@ -137,8 +109,8 @@
       <if test="uRemark != null" >
         U_REMARK,
       </if>
-      <if test="token != null" >
-        TOKEN,
+      <if test="def1 != null" >
+        DEF1,
       </if>
       <if test="def2 != null" >
         DEF2,
@@ -169,7 +141,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{uId,jdbcType=VARCHAR},
+      <if test="uId != null" >
+        #{uId,jdbcType=VARCHAR},
+      </if>
       <if test="uAppId != null" >
         #{uAppId,jdbcType=VARCHAR},
       </if>
@@ -212,8 +186,8 @@
       <if test="uRemark != null" >
         #{uRemark,jdbcType=VARCHAR},
       </if>
-      <if test="token != null" >
-        #{token,jdbcType=VARCHAR},
+      <if test="def1 != null" >
+        #{def1,jdbcType=CHAR},
       </if>
       <if test="def2 != null" >
         #{def2,jdbcType=CHAR},
@@ -244,8 +218,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.SysAppUser" >
-    update SYS_APP_USER
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.SysUser" >
+    update SYS_USER
     <set >
       <if test="uAppId != null" >
         U_APP_ID = #{uAppId,jdbcType=VARCHAR},
@@ -289,8 +263,8 @@
       <if test="uRemark != null" >
         U_REMARK = #{uRemark,jdbcType=VARCHAR},
       </if>
-      <if test="token != null" >
-        TOKEN = #{token,jdbcType=VARCHAR},
+      <if test="def1 != null" >
+        DEF1 = #{def1,jdbcType=CHAR},
       </if>
       <if test="def2 != null" >
         DEF2 = #{def2,jdbcType=CHAR},
@@ -322,8 +296,8 @@
     </set>
     where U_ID = #{uId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.SysAppUser" >
-    update SYS_APP_USER
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.SysUser" >
+    update SYS_USER
     set U_APP_ID = #{uAppId,jdbcType=VARCHAR},
       U_PHONE = #{uPhone,jdbcType=VARCHAR},
       U_ACCOUNT = #{uAccount,jdbcType=VARCHAR},
@@ -338,7 +312,7 @@
       U_CODE = #{uCode,jdbcType=VARCHAR},
       U_PHONECHECK = #{uPhonecheck,jdbcType=DECIMAL},
       U_REMARK = #{uRemark,jdbcType=VARCHAR},
-      TOKEN = #{token,jdbcType=VARCHAR},
+      DEF1 = #{def1,jdbcType=CHAR},
       DEF2 = #{def2,jdbcType=CHAR},
       DEF3 = #{def3,jdbcType=CHAR},
       DEF4 = #{def4,jdbcType=CHAR},
@@ -349,10 +323,5 @@
       DEF9 = #{def9,jdbcType=CHAR},
       DEF10 = #{def10,jdbcType=CHAR}
     where U_ID = #{uId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateCode2ByPhone">
-    update SYS_APP_USER
-    set U_CODE2 = #{uCode2,jdbcType=VARCHAR}
-    where  U_PHONE = #{uPhone,jdbcType=VARCHAR}
   </update>
 </mapper>

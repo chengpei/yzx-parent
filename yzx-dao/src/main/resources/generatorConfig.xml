@@ -11,10 +11,10 @@
 			<property name="suppressAllComments" value="true"/>
 		</commentGenerator>
 		    		
-		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@192.186.3.10:1521:orcl"
-			userId="yzx" password="YZX4430" />
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@//192.168.17.1:1521/ycbus"
+				userId="gjic" password="syqwhpe" />
 		
-		<javaTypeResolver >
+		<javaTypeResolver>
 		          <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 		      
@@ -44,12 +44,12 @@
 		<!--<table tableName="sys_user" enableCountByExample="false" enableSelectByExample="false"-->
 			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
 				<!--/>-->
-		<!--<table tableName="sms_send_log" enableCountByExample="false" enableSelectByExample="false"-->
-			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
-				<!--/>-->
-		<table tableName="NFC_ORDER_RETURN" enableCountByExample="false" enableSelectByExample="false"
+		<table tableName="card_info" enableCountByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
 				/>
+		<!--<table tableName="yh_ic_kz" enableCountByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+				<!--/>-->
 
 	</context>
     

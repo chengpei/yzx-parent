@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.ycbus.TSmcardYhInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.TSmcardYhInfo" >
+    <result column="KLX" property="klx" jdbcType="VARCHAR" />
+    <result column="SFZHM" property="sfzhm" jdbcType="VARCHAR" />
+    <result column="XM" property="xm" jdbcType="VARCHAR" />
+    <result column="ZT" property="zt" jdbcType="VARCHAR" />
+    <result column="SMKNO" property="smkno" jdbcType="VARCHAR" />
+    <result column="SCHOOLNAME" property="schoolname" jdbcType="VARCHAR" />
+    <result column="GRADENAME" property="gradename" jdbcType="VARCHAR" />
+    <result column="JKKGJ" property="jkkgj" jdbcType="VARCHAR" />
+    <result column="ADDTIME" property="addtime" jdbcType="DATE" />
+    <result column="FWM" property="fwm" jdbcType="VARCHAR" />
+    <result column="FXKH" property="fxkh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    KLX, SFZHM, XM, ZT, SMKNO, SCHOOLNAME, GRADENAME, JKKGJ, ADDTIME, FWM, FXKH
+  </sql>
+  <insert id="insert" parameterType="com.whpe.bean.TSmcardYhInfo" >
+    insert into gjic.T_SMCARD_YH_INFO (KLX, SFZHM, XM,
+      ZT, SMKNO, SCHOOLNAME, 
+      GRADENAME, JKKGJ, ADDTIME, 
+      FWM, FXKH)
+    values (#{klx,jdbcType=VARCHAR}, #{sfzhm,jdbcType=VARCHAR}, #{xm,jdbcType=VARCHAR}, 
+      #{zt,jdbcType=VARCHAR}, #{smkno,jdbcType=VARCHAR}, #{schoolname,jdbcType=VARCHAR}, 
+      #{gradename,jdbcType=VARCHAR}, #{jkkgj,jdbcType=VARCHAR}, #{addtime,jdbcType=DATE}, 
+      #{fwm,jdbcType=VARCHAR}, #{fxkh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.TSmcardYhInfo" >
+    insert into gjic.T_SMCARD_YH_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="klx != null" >
+        KLX,
+      </if>
+      <if test="sfzhm != null" >
+        SFZHM,
+      </if>
+      <if test="xm != null" >
+        XM,
+      </if>
+      <if test="zt != null" >
+        ZT,
+      </if>
+      <if test="smkno != null" >
+        SMKNO,
+      </if>
+      <if test="schoolname != null" >
+        SCHOOLNAME,
+      </if>
+      <if test="gradename != null" >
+        GRADENAME,
+      </if>
+      <if test="jkkgj != null" >
+        JKKGJ,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+      <if test="fwm != null" >
+        FWM,
+      </if>
+      <if test="fxkh != null" >
+        FXKH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="klx != null" >
+        #{klx,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzhm != null" >
+        #{sfzhm,jdbcType=VARCHAR},
+      </if>
+      <if test="xm != null" >
+        #{xm,jdbcType=VARCHAR},
+      </if>
+      <if test="zt != null" >
+        #{zt,jdbcType=VARCHAR},
+      </if>
+      <if test="smkno != null" >
+        #{smkno,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolname != null" >
+        #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="gradename != null" >
+        #{gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="jkkgj != null" >
+        #{jkkgj,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=DATE},
+      </if>
+      <if test="fwm != null" >
+        #{fwm,jdbcType=VARCHAR},
+      </if>
+      <if test="fxkh != null" >
+        #{fxkh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.whpe.bean.TSmcardYhInfo">
+    SELECT <include refid="Base_Column_List" /> FROM gjic.T_SMCARD_YH_INFO
+    <where>
+      <if test="sfzhm != null">
+        AND SFZHM = #{sfzhm,jdbcType=VARCHAR}
+      </if>
+      <if test="xm != null">
+        AND SFZHM like #{xm,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>
