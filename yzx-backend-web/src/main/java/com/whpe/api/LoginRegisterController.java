@@ -75,6 +75,10 @@ public class LoginRegisterController extends CommonController{
         if(StringUtils.isEmpty(smsType)){
             return new Result(false, "短信类型为空");
         }
+        // 短信类型注册，判断手机号是否已经注册
+        if("1".equals(smsType) && loginRegisterService.checkPhoneExist(phoneNumber)){
+            return new Result(false, "该手机号已经注册过");
+        }
         // 检查该手机号 上次发送短信时间是否超过一分钟
         if(!loginRegisterService.checkSmsOneMinutes(phoneNumber)){
             return new Result(false, "一分钟内只能发送一次短信");
