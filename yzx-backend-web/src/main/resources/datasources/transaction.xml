@@ -62,7 +62,7 @@
     </tx:advice>
     <!-- 以下两种方式都可以配置多个事务 start -->
     <aop:config proxy-target-class="true">
-        <aop:pointcut id="servicePointcut" expression="execution(* com.whpe.service.*.*(..))"/>
+        <aop:pointcut id="servicePointcut" expression="execution(* com.whpe.services.*.*(..))"/>
 
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut"/>
     </aop:config>

@@ -79,6 +79,15 @@ public class LoginRegisterController extends CommonController{
         if("1".equals(smsType) && loginRegisterService.checkPhoneExist(phoneNumber)){
             return new Result(false, "该手机号已经注册过");
         }
+        // 找回密码类型，判断手机号是否注册过
+        if("2".equals(smsType)){
+            SysAppUser user = new SysAppUser();
+            user.setuPhone(phoneNumber);
+            SysAppUserVO sysAppUserVO = loginRegisterService.selectBeanByCondition(user);
+            if(sysAppUserVO == null){
+                return new Result(false, "该手机号未注册");
+            }
+        }
         // 检查该手机号 上次发送短信时间是否超过一分钟
         if(!loginRegisterService.checkSmsOneMinutes(phoneNumber)){
             return new Result(false, "一分钟内只能发送一次短信");
