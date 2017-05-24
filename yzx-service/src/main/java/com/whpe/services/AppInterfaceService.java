@@ -13,6 +13,8 @@ public interface AppInterfaceService {
 
     void bindCard(JSONObject requestJson, JSONObject result, HttpSession session);
 
+    void queryMyCard(JSONObject requestJson, JSONObject result, HttpSession session);
+
     void commitOrder(JSONObject requestJson, JSONObject result, HttpSession session);
 
     void applyPay(JSONObject requestJson, JSONObject result, HttpSession session);
@@ -34,4 +36,6 @@ public interface AppInterfaceService {
     void queryCitzenCardNoByID(JSONObject requestJson, JSONObject result, HttpSession session);
 
     void queryTourYearCardByCardNo(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void feedback(JSONObject requestJson, JSONObject result, HttpSession session);
 }

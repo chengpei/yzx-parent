@@ -98,16 +98,48 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         appMycard.setAppFxkh(cardNo);
         appMycard.setAppUserid(appUser.getuId());
         appMycard.setAppCreatedate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        // 查询要绑定的卡号是否存在
+        CardInfo cardInfo = cardInfoMapper.selectByPrimaryKey(cardNo);
+        if(cardInfo == null){
+            makeRetInfo("E0001", "该卡号不存在", result);
+            return;
+        }
+
         // 判断是否已经绑定过该卡
         List<AppMycard> mycardList = appMycardMapper.selectByCondition(appMycard);
         if(mycardList != null && mycardList.size() > 0){
             makeRetInfo("E0001", "已经绑定过该卡", result);
             return;
         }
+        // 判断绑定的卡是否超过十张
+        AppMycard param = new AppMycard();
+        param.setAppUserid(appUser.getuId());
+        List<AppMycard> mycards = appMycardMapper.selectByCondition(param);
+        if(mycards != null && mycards.size() > 9){
+            makeRetInfo("E0001", "绑定卡数量超过上线", result);
+            return;
+        }
         if(appMycardMapper.insertSelective(appMycard) > 0){
             makeRetInfo("S0000", "绑定成功", result);
         }else {
             makeRetInfo("E0001", "绑定失败", result);
+        }
+    }
+
+    @Override
+    public void queryMyCard(JSONObject requestJson, JSONObject result, HttpSession session){
+        // 查询绑定的卡
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        AppMycard param = new AppMycard();
+        param.setAppUserid(appUser.getuId());
+        List<AppMycard> mycardList = appMycardMapper.selectByCondition(param);
+        if(mycardList != null && mycardList.size() > 0){
+            JSONArray retContent = JSONArray.parseArray(JSON.toJSONString(mycardList));
+            putRetContent(retContent, result);
+            makeRetInfo("S0000", "查询成功", result);
+        }else{
+            makeRetInfo("S0001", "未查询到数据", result);
+            return;
         }
     }
 
@@ -432,6 +464,20 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("S0001", "未查询到数据", result);
             return;
         }
+    }
+
+    /**
+     * 意见反馈
+     * @param requestJson
+     * @param result
+     * @param session
+     */
+    @Override
+    public void feedback(JSONObject requestJson, JSONObject result, HttpSession session) {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        makeRetInfo("E0001", "开发中...", result);
+        return;
     }
 
     /**

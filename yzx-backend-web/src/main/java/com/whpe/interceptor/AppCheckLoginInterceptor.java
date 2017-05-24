@@ -52,7 +52,7 @@ public class AppCheckLoginInterceptor extends HandlerInterceptorAdapter {
             if(StringUtils.isEmpty(content)){
                 String temp;
                 content = "";
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
                 while((temp = bufferedReader.readLine()) != null){
                     content += (temp+System.getProperty("line.separator"));
                 }
