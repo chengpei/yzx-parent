@@ -8,9 +8,9 @@ import com.whpe.bean.NfcCardRecharge;
 import com.whpe.controller.CommonController;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.PayService;
+import com.whpe.services.impl.AppInterfaceServiceImpl;
 import com.whpe.utils.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,8 +48,13 @@ public class AppInterfaceController extends CommonController{
         JSONObject commonInfo = requestJson.getJSONObject("common");
         String method = commonInfo.getString("txCode");
         Class clz = appInterfaceService.getClass();
-        Method thd = clz.getMethod(method, requestJson.getClass(), result.getClass(), HttpSession.class);
-        thd.invoke(appInterfaceService, new Object[] { requestJson, result, session });
+        try {
+            Method thd = clz.getMethod(method, requestJson.getClass(), result.getClass(), HttpSession.class);
+            thd.invoke(appInterfaceService, new Object[] { requestJson, result, session });
+        }catch (NoSuchMethodException e){
+            logger.error("接口不存在", e);
+            AppInterfaceServiceImpl.makeRetInfo("E0001", "接口【"+method+"】不存在", result);
+        }
         logger.info("调用接口返回 == " + result.toJSONString());
         return result;
     }
