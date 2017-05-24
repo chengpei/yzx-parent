@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yckq.FeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.Feedback" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="PROBLEM_TYPE" property="problemType" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="PHONE_MODEL" property="phoneModel" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PHONE, PROBLEM_TYPE, CONTENT, PHONE_MODEL, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from FEEDBACK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from FEEDBACK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.Feedback" >
+    <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+      select sys_guid() from dual
+    </selectKey>
+    insert into FEEDBACK (ID, PHONE, PROBLEM_TYPE, 
+      CONTENT, PHONE_MODEL, CREATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{problemType,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{phoneModel,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.Feedback" >
+    <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+      select sys_guid() from dual
+    </selectKey>
+    insert into FEEDBACK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ID,
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="problemType != null" >
+        PROBLEM_TYPE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="phoneModel != null" >
+        PHONE_MODEL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{id,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="problemType != null" >
+        #{problemType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneModel != null" >
+        #{phoneModel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.Feedback" >
+    update FEEDBACK
+    <set >
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="problemType != null" >
+        PROBLEM_TYPE = #{problemType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneModel != null" >
+        PHONE_MODEL = #{phoneModel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.Feedback" >
+    update FEEDBACK
+    set PHONE = #{phone,jdbcType=VARCHAR},
+      PROBLEM_TYPE = #{problemType,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      PHONE_MODEL = #{phoneModel,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

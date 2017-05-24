@@ -67,6 +67,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     @Resource
     private TYhInfoMapper tYhInfoMapper;
 
+    @Resource
+    private FeedbackMapper feedbackMapper;
+
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
         SysPeopleDTO sysPeopleDTO = requestJson.getObject("reqContent", SysPeopleDTO.class);
@@ -476,8 +479,20 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     public void feedback(JSONObject requestJson, JSONObject result, HttpSession session) {
         SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
         JSONObject reqContent = requestJson.getJSONObject("reqContent");
-        makeRetInfo("E0001", "开发中...", result);
-        return;
+        Feedback feedback = JSON.parseObject(reqContent.toJSONString(), Feedback.class);
+        if(StringUtils.isEmpty(feedback.getContent()) && StringUtils.isEmpty(feedback.getPhoneModel())){
+            makeRetInfo("E0001", "参数不能为空", result);
+            return;
+        }
+        feedback.setPhone(appUser.getuPhone());
+        feedback.setCreateTime(new Date());
+        if(feedbackMapper.insertSelective(feedback) > 0){
+            makeRetInfo("S0000", "反馈成功", result);
+            return;
+        }else {
+            makeRetInfo("E0001", "反馈失败", result);
+            return;
+        }
     }
 
     /**
