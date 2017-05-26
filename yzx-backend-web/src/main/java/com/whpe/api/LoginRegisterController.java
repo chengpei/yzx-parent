@@ -116,7 +116,7 @@ public class LoginRegisterController extends CommonController{
         if(StringUtils.isEmpty(newPassword)){
             return new Result(false, "新密码不能为空");
         }
-
+        logger.info("修改密码，phoneNumber = " + phoneNumber + ",newPassword = " + newPassword);
         // 检查用户是否存在
         SysAppUser sysAppUser = new SysAppUser();
         sysAppUser.setuPhone(phoneNumber);

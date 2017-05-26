@@ -1,7 +1,6 @@
 package com.whpe.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.whpe.services.AppInterfaceService;
 import com.whpe.services.impl.AppInterfaceServiceImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -75,6 +74,7 @@ public class AnnotationHandlerMethodExceptionResolver extends ExceptionHandlerEx
                 result.put("success", false);
             }
             response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
             response.setStatus(200);
             PrintWriter pWriter = null;
             try {
