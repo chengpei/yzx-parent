@@ -43,9 +43,8 @@ public class RechargeServiceImpl extends CommonService implements RechargeServic
         strMessage = String.format("%04X", strMessage.length()) + StringUtils.strToHex(strMessage, false);
         byte[] result = sendByteMessageToJMJ(StringUtils.hexString2Bytes(strMessage, false));
         if(result[10]!='5'||result[11]!='3'||result[12]!='0'||result[13]!='0'){
-            new RuntimeException("mac1验证失败！"
+            throw new RuntimeException("mac1验证失败！"
                     + StringUtils.hexToStr(StringUtils.bytes2HexString(result, false)).substring(10));
-            return false;
         }
         return true;
     }
@@ -68,7 +67,7 @@ public class RechargeServiceImpl extends CommonService implements RechargeServic
 
         byte[] result = sendByteMessageToJMJ(StringUtils.hexString2Bytes(strMessage, false));
         if(result[2+8]!='5' && result[3+8]!='1' && result[4+8]!='0'&& result[5+8]!='0'){
-            new RuntimeException("mac2生成失败！"
+            throw new RuntimeException("mac2生成失败！"
                     + StringUtils.hexToStr(StringUtils.bytes2HexString(result, false)).substring(10));
         }
         String mac2 = StringUtils.hexToStr(StringUtils.bytes2HexString(result, false).substring(12 + 8 + 8));
@@ -104,7 +103,7 @@ public class RechargeServiceImpl extends CommonService implements RechargeServic
         strMessage = String.format("%04X", strMessage.length()) + StringUtils.strToHex(strMessage, false);
         byte[] result = sendByteMessageToJMJ(StringUtils.hexString2Bytes(strMessage, false));
         if(result[2+8]!='5' && result[3+8]!='1' && result[4+8]!='0'&& result[5+8]!='0'){
-            new RuntimeException("mac计算失败！"
+            throw new RuntimeException("mac计算失败！"
                     + StringUtils.hexToStr(StringUtils.bytes2HexString(result, false)).substring(10));
         }
         String mac = StringUtils.hexToStr(StringUtils.bytes2HexString(result, false).substring(12 + 8 + 8));
