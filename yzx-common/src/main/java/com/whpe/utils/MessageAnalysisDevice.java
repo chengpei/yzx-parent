@@ -82,4 +82,8 @@ public class MessageAnalysisDevice {
         analysisLengthMap.clear();
         analysisResultMap.clear();
     }
+
+    public Map<String, String> getAnalysisResultMap() {
+        return analysisResultMap;
+    }
 }

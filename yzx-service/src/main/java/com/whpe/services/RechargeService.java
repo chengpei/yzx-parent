@@ -9,4 +9,6 @@ public interface RechargeService {
     String calculateMac2(NfcCardRecharge nfcCardRecharge, InitializeForLoadBean data8050Bean);
 
     String buildCreditForLoad(String mac2);
+
+    String calculateYearCardRenewMac(String cardNo, String newEffectiveDate, String random);
 }

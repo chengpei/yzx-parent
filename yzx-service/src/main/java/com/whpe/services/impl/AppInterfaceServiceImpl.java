@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -154,8 +155,13 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         String orderNo = generateOrderNo(common.getString("txChan"));
         String fxkh = reqContent.getString("cardNo");
         String orderMount = reqContent.getString("orderMount");
+        String tradeType = reqContent.getString("tradeType");
         if(StringUtils.isEmpty(fxkh) || StringUtils.isEmpty(orderMount)){
             makeRetInfo("E0001", "卡号和金额不能为空", result);
+            return;
+        }
+        if(StringUtils.isEmpty(tradeType)){
+            makeRetInfo("E0001", "交易类型", result);
             return;
         }
         if(Integer.parseInt(orderMount) > 800000){
@@ -173,6 +179,7 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         nfcCardRecharge.setChsj(new Date());
         nfcCardRecharge.setJylx("24");// 24-补登
         nfcCardRecharge.setImei("100000000001");
+        nfcCardRecharge.setJylx(tradeType);
         if(nfcCardRechargeMapper.insertSelective(nfcCardRecharge) > 0){
             putRetContent("orderNo", orderNo, result);
             makeRetInfo("S0000", "提交成功", result);
@@ -339,6 +346,41 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     }
 
     @Override
+    public void applyYearCardRenew(JSONObject requestJson, JSONObject result, HttpSession session) throws ParseException {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderNo = reqContent.getString("orderNo");
+        String file_1004_15 = reqContent.getString("file_1004_15");
+        String random = reqContent.getString("random");
+        NfcCardRecharge nfcCardRecharge = nfcCardRechargeMapper.selectByPrimaryKey(orderNo);
+        if(nfcCardRecharge == null){
+            makeRetInfo("E0001", "订单不存在", result);
+            return;
+        }
+        Map<String, String> file15 = analysisFile15(file_1004_15);
+        String cardNo = file15.get("cardNo");
+        if(!cardNo.equals(nfcCardRecharge.getCardno())){
+            makeRetInfo("E0001", "补登订单不属于该卡", result);
+            return;
+        }
+
+        // 计算新的有效日期
+        String effectiveDate = file15.get("effectiveDate");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(DateUtils.getDateForString(effectiveDate, "yyyyMMdd"));
+        cal.add(Calendar.YEAR, 1);
+        String newEffectiveDate = DateUtils.getFormatDate(cal.getTime(), "yyyyMMdd");
+
+        String mac = rechargeService.calculateYearCardRenewMac(cardNo, newEffectiveDate, random);
+        String apdu = "04D6951808" + newEffectiveDate + mac;
+
+        putRetContent("apdu", apdu, result);
+        makeRetInfo("S0000", "申请成功", result);
+        return;
+    }
+
+    @Override
     public int saveAbcRequestResult(Nhrequestresult nhrequestresult) {
         return nhrequestresultMapper.insertSelective(nhrequestresult);
     }
@@ -373,6 +415,37 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         data8050Bean.setRandom(messageAnalysisDevice.getValue("random"));
         data8050Bean.setMac1(messageAnalysisDevice.getValue("mac1"));
         return data8050Bean;
+    }
+
+    /**
+     * 解析15文件
+     * @param file15
+     * @return
+     */
+    public Map<String, String> analysisFile15(String file15){
+        if(StringUtils.isEmpty(file15)){
+            return null;
+        }
+        MessageAnalysisDevice messageAnalysisDevice = new MessageAnalysisDevice();
+        messageAnalysisDevice.putAnalysisLength("code",     2*2);
+        messageAnalysisDevice.putAnalysisLength("cityCode", 2*2);
+        messageAnalysisDevice.putAnalysisLength("hydm",     2*2);
+        messageAnalysisDevice.putAnalysisLength("reserved1",1*2);
+        messageAnalysisDevice.putAnalysisLength("reserved2",1*2);
+        messageAnalysisDevice.putAnalysisLength("enabled",  1*2);
+        messageAnalysisDevice.putAnalysisLength("appVersion",1*2);
+        messageAnalysisDevice.putAnalysisLength("reserved3", 2*2);
+        messageAnalysisDevice.putAnalysisLength("cardNo",   8*2);
+        messageAnalysisDevice.putAnalysisLength("openDate", 4*2);
+        messageAnalysisDevice.putAnalysisLength("effectiveDate", 4*2);
+        messageAnalysisDevice.putAnalysisLength("reserved4", 2*2);
+        messageAnalysisDevice.putAnalysisLength("upperLimit",3*2);
+        messageAnalysisDevice.putAnalysisLength("nsrq",      3*2);
+        messageAnalysisDevice.putAnalysisLength("skrq",      4*2);
+        messageAnalysisDevice.putAnalysisLength("lastCzrq",  4*2);
+        messageAnalysisDevice.putAnalysisLength("keyVersion",1*2);
+        messageAnalysisDevice.analysis(file15);
+        return messageAnalysisDevice.getAnalysisResultMap();
     }
 
     @Override

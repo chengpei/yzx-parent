@@ -6,6 +6,7 @@ import com.whpe.bean.Nhrequestresult;
 import com.whpe.bean.Nshresresult;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 
 public interface AppInterfaceService {
 
@@ -38,4 +39,7 @@ public interface AppInterfaceService {
     void queryTourYearCardByCardNo(JSONObject requestJson, JSONObject result, HttpSession session);
 
     void feedback(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void applyYearCardRenew(JSONObject requestJson, JSONObject result, HttpSession session) throws ParseException;
+
 }

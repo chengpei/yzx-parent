@@ -87,6 +87,31 @@ public class RechargeServiceImpl extends CommonService implements RechargeServic
     }
 
     /**
+     * 计算修改15文件的Mac
+     *
+     * @param cardNo
+     * @param newEffectiveDate
+     * @param random
+     * @return
+     */
+    @Override
+    public String calculateYearCardRenewMac(String cardNo, String newEffectiveDate, String random) {
+        String macDate = random + "0000000004D6951808" + newEffectiveDate; // 计算mac的数据
+        String strMessage = "87654321" + "50" + "0" + "0" + "0210" + "0"
+                + cardNo
+                + String.format("%03d", macDate.length() / 2)
+                + macDate;
+        strMessage = String.format("%04X", strMessage.length()) + StringUtils.strToHex(strMessage, false);
+        byte[] result = sendByteMessageToJMJ(StringUtils.hexString2Bytes(strMessage, false));
+        if(result[2+8]!='5' && result[3+8]!='1' && result[4+8]!='0'&& result[5+8]!='0'){
+            new RuntimeException("mac计算失败！"
+                    + StringUtils.hexToStr(StringUtils.bytes2HexString(result, false)).substring(10));
+        }
+        String mac = StringUtils.hexToStr(StringUtils.bytes2HexString(result, false).substring(12 + 8 + 8));
+        return mac;
+    }
+
+    /**
      * 发送二进制数据给加密机
      * @param bytes
      * @return
