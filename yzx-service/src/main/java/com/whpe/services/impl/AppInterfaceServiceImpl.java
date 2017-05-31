@@ -279,6 +279,10 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("E0001", "补登订单不属于该卡", result);
             return;
         }
+        if(!"01".equals(nfcCardRecharge.getBackrcvresponse())){
+            makeRetInfo("E0001", "订单未支付", result);
+            return;
+        }
         int rechargeMoney = Integer.parseInt(nfcCardRecharge.getOrdermount());
         int oldBalanceInt = Integer.parseInt(data8050Bean.getOldBalance(), 16);
         if(rechargeMoney + oldBalanceInt > 80000){
@@ -362,6 +366,10 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         String cardNo = file15.get("cardNo");
         if(!cardNo.equals(nfcCardRecharge.getCardno())){
             makeRetInfo("E0001", "补登订单不属于该卡", result);
+            return;
+        }
+        if(!"01".equals(nfcCardRecharge.getBackrcvresponse())){
+            makeRetInfo("E0001", "订单未支付", result);
             return;
         }
 
