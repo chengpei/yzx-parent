@@ -116,16 +116,25 @@ public class RechargeServiceImpl extends CommonService implements RechargeServic
      * @return
      */
     private byte[] sendByteMessageToJMJ(byte[] bytes) {
-        SocketClient socketClient = new SocketClient(jmjIp1, Integer.parseInt(jmjPort1));
-        if(!socketClient.isConnected()){
-            socketClient = new SocketClient(jmjIp2, Integer.parseInt(jmjPort2));
+        SocketClient socketClient = null;
+        try {
+            socketClient = new SocketClient(jmjIp1, Integer.parseInt(jmjPort1));
+            if(!socketClient.isConnected()){
+                socketClient = new SocketClient(jmjIp2, Integer.parseInt(jmjPort2));
+            }
+            if(!socketClient.isConnected()){
+                throw new RuntimeException("加密机连接失败！！！");
+            }
+            logger.info("发送给加密机的数据 ==== " + StringUtils.bytes2HexString(bytes, false));
+            byte[] resultBytes = socketClient.sendMessage(bytes);
+            logger.info("加密机返回的数据 ==== " + StringUtils.bytes2HexString(resultBytes, false));
+            return resultBytes;
+        }catch (Exception e){
+            throw e;
+        }finally {
+            if(socketClient != null){
+                socketClient.close();
+            }
         }
-        if(!socketClient.isConnected()){
-            throw new RuntimeException("加密机连接失败！！！");
-        }
-        logger.info("发送给加密机的数据 ==== " + StringUtils.bytes2HexString(bytes, false));
-        byte[] resultBytes = socketClient.sendMessage(bytes);
-        logger.info("加密机返回的数据 ==== " + StringUtils.bytes2HexString(resultBytes, false));
-        return resultBytes;
     }
 }

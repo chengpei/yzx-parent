@@ -381,6 +381,7 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         String newEffectiveDate = DateUtils.getFormatDate(cal.getTime(), "yyyyMMdd");
 
         String mac = rechargeService.calculateYearCardRenewMac(cardNo, newEffectiveDate, random);
+        // 04D6 + 文件标志(1字节) + 更新文件偏移量(1字节) + 长度(1字节，包含更新内容和mac) + 更新内容 + mac
         String apdu = "04D6951808" + newEffectiveDate + mac;
 
         putRetContent("apdu", apdu, result);
