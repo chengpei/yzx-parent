@@ -42,4 +42,6 @@ public interface AppInterfaceService {
 
     void applyYearCardRenew(JSONObject requestJson, JSONObject result, HttpSession session) throws ParseException;
 
+    void queryDictionary(JSONObject requestJson, JSONObject result, HttpSession session);
+
 }

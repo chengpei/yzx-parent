@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.whpe.bean.*;
+import com.whpe.bean.Dictionary;
 import com.whpe.bean.dto.SysPeopleDTO;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.dao.ycbus.CardInfoMapper;
@@ -70,6 +71,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private FeedbackMapper feedbackMapper;
+
+    @Resource
+    private DictionaryMapper dictionaryMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -386,6 +390,30 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
         putRetContent("apdu", apdu + mac, result);
         makeRetInfo("S0000", "申请成功", result);
+        return;
+    }
+
+    @Override
+    public void queryDictionary(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String code = reqContent.getString("code");
+        if(StringUtils.isEmpty(code)){
+            makeRetInfo("E0001", "参数不能为空", result);
+            return;
+        }
+        List<Dictionary> dictionaryList = dictionaryMapper.selectListByCode(code.toUpperCase());
+        if(dictionaryList == null || dictionaryList.size() == 0){
+            makeRetInfo("S0001", "未查询到数据", result);
+            return;
+        }
+        List<String> payMoneyList = new ArrayList<String>();
+        for (Dictionary dic : dictionaryList){
+            payMoneyList.add(dic.getValue());
+        }
+        putRetContent(JSONArray.parseArray(JSON.toJSONString(payMoneyList)), result);
+        makeRetInfo("S0000", "查询成功", result);
         return;
     }
 

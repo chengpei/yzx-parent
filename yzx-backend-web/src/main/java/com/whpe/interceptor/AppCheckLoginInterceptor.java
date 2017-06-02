@@ -62,7 +62,8 @@ public class AppCheckLoginInterceptor extends HandlerInterceptorAdapter {
                 JSONObject requestJson = JSONObject.parseObject(content);
                 JSONObject commonInfo = requestJson.getJSONObject("common");
                 if("queryCitzenCardNoByID".equals(commonInfo.getString("txCode"))
-                        || "queryTourYearCardByCardNo".equals(commonInfo.getString("txCode"))){
+                        || "queryTourYearCardByCardNo".equals(commonInfo.getString("txCode"))
+                        || "queryDictionary".equals(commonInfo.getString("txCode"))){
                     // 查询市民卡接口不需要Token验证
                     return true;
                 }
