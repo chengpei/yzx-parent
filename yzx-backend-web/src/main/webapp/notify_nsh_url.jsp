@@ -81,6 +81,7 @@
         nfcCardRecharge.setBackrcvresponse(tranResult);
     }
     nfcCardRecharge.setCommcode("0000100606"); // 农信商户编号
+    nfcCardRecharge.setPaytype("07");
     if (appInterfaceService.updateNfcCardRechargeOrder(nfcCardRecharge)) {
         logger.info("订单状态更新成功，订单【" + orderNum + "】更新为【" + nfcCardRecharge.getBackrcvresponse() + "】");
     }

@@ -85,6 +85,7 @@
         nfcCardRecharge.setOrderno(OrderNo);
         nfcCardRecharge.setBackrcvresponse("01");
         nfcCardRecharge.setCommcode("103881739010024"); // 农行商户编号
+        nfcCardRecharge.setPaytype("06");
         if(appInterfaceService.updateNfcCardRechargeOrder(nfcCardRecharge)){
             logger.info("订单状态更新成功，订单【"+OrderNo+"】更新为【"+nfcCardRecharge.getBackrcvresponse()+"】");
         }

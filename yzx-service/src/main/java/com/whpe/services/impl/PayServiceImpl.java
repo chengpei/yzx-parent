@@ -124,7 +124,7 @@ public class PayServiceImpl extends CommonService implements PayService{
         hiddens.put("MSG", tSignature);
         hiddens.put("errorPage", sErrorUrl);
 
-        String htmlTxt = DemoBase.createHtml(sTrustPayIETrxURL, hiddens);
+        String htmlTxt = createNhHtml(sTrustPayIETrxURL, hiddens);
         logger.info(htmlTxt);
         //创建文件
         String webappRoot = System.getProperty("webapp.root");
@@ -254,6 +254,41 @@ public class PayServiceImpl extends CommonService implements PayService{
             }
         }
         sf.append("</form>");
+        sf.append("</body>");
+        sf.append("<script type=\"text/javascript\">");
+        sf.append("document.all.pay_form.submit();");
+        sf.append("</script>");
+        sf.append("</html>");
+        return sf.toString();
+    }
+
+    /**
+     * 构造HTTP POST交易表单的方法示例
+     *
+     * @param action
+     *            表单提交地址
+     * @param hiddens
+     *            以MAP形式存储的表单键值
+     * @return 构造好的HTTP POST交易表单
+     */
+    public static String createNhHtml(String action, Map<String, String> hiddens) {
+        StringBuffer sf = new StringBuffer();
+        sf.append("<HTML><HEAD><TITLE>农行网上支付平台-商户接口范例-支付请求</TITLE></HEAD><BODY BGCOLOR='#FFFFFF' TEXT='#000000' LINK='#0000FF' VLINK='#0000FF' ALINK='#FF0000'>");
+        sf.append("<form id = \"pay_form\" action=\"" + action
+                + "\" method=\"post\">");
+        sf.append("<center><img src='/NetServer_NFC/image/loadapp.gif' alt='' />");
+        if (null != hiddens && 0 != hiddens.size()) {
+            Set<Map.Entry<String, String>> set = hiddens.entrySet();
+            Iterator<Map.Entry<String, String>> it = set.iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, String> ey = it.next();
+                String key = ey.getKey();
+                String value = ey.getValue();
+                sf.append("<input type=\"hidden\" name=\"" + key + "\" id=\""
+                        + key + "\" value=\"" + value + "\"/>");
+            }
+        }
+        sf.append("</form></center>");
         sf.append("</body>");
         sf.append("<script type=\"text/javascript\">");
         sf.append("document.all.pay_form.submit();");

@@ -86,6 +86,7 @@ public class AppInterfaceController extends CommonController{
         NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
         nfcCardRecharge.setOrderno(orderNo);
         nfcCardRecharge.setCommcode(payService.getUnionpayMerchantId());
+        nfcCardRecharge.setPaytype("08");
         // 验证签名
         if (!SDKUtil.validate(valideData, encoding)) {
             LogUtil.writeLog("验证签名结果[失败].");
