@@ -86,20 +86,19 @@ public class RechargeServiceImpl extends CommonService implements RechargeServic
     }
 
     /**
-     * 计算修改15文件的Mac
-     *
-     * @param cardNo
-     * @param newEffectiveDate
-     * @param random
+     * 计算mac
+     * @param cardNo    卡号
+     * @param random    随机数
+     * @param apdu      apdu指令内容(MAC指令的内容)
      * @return
      */
     @Override
-    public String calculateYearCardRenewMac(String cardNo, String newEffectiveDate, String random) {
-        String macDate = random + "0000000004D6951808" + newEffectiveDate; // 计算mac的数据
+    public String calculateMac(String cardNo, String random, String apdu) {
+        String macData = random + "00000000" + apdu;
         String strMessage = "87654321" + "50" + "0" + "0" + "0210" + "0"
                 + cardNo
-                + String.format("%03d", macDate.length() / 2)
-                + macDate;
+                + String.format("%03d", macData.length() / 2)
+                + macData;
         strMessage = String.format("%04X", strMessage.length()) + StringUtils.strToHex(strMessage, false);
         byte[] result = sendByteMessageToJMJ(StringUtils.hexString2Bytes(strMessage, false));
         if(result[2+8]!='5' && result[3+8]!='1' && result[4+8]!='0'&& result[5+8]!='0'){

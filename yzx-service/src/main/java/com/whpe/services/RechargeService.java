@@ -10,5 +10,5 @@ public interface RechargeService {
 
     String buildCreditForLoad(String mac2);
 
-    String calculateYearCardRenewMac(String cardNo, String newEffectiveDate, String random);
+    String calculateMac(String cardNo, String random, String apdu);
 }

@@ -380,11 +380,11 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         cal.add(Calendar.YEAR, 1);
         String newEffectiveDate = DateUtils.getFormatDate(cal.getTime(), "yyyyMMdd");
 
-        String mac = rechargeService.calculateYearCardRenewMac(cardNo, newEffectiveDate, random);
         // 04D6 + 文件标志(1字节) + 更新文件偏移量(1字节) + 长度(1字节，包含更新内容和mac) + 更新内容 + mac
-        String apdu = "04D6951808" + newEffectiveDate + mac;
+        String apdu = "04D6951808" + newEffectiveDate;
+        String mac = rechargeService.calculateMac(cardNo, random, apdu);
 
-        putRetContent("apdu", apdu, result);
+        putRetContent("apdu", apdu + mac, result);
         makeRetInfo("S0000", "申请成功", result);
         return;
     }
