@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.whpe.bean.*;
 import com.whpe.bean.Dictionary;
 import com.whpe.bean.dto.SysPeopleDTO;
+import com.whpe.bean.vo.OrderVO;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.dao.ycbus.CardInfoMapper;
 import com.whpe.dao.ycbus.TSmcardYhInfoMapper;
@@ -74,6 +75,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private DictionaryMapper dictionaryMapper;
+
+    @Resource
+    private OrderTMapper orderTMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -258,6 +262,117 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("E0001", "不支持的支付方式", result);
             return;
         }
+    }
+
+    @Override
+    public void applyMallPay(JSONObject requestJson, JSONObject result, HttpSession session) {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderId = reqContent.getString("orderId");
+        String payType = reqContent.getString("payType");
+        // 根据订单号查询订单信息
+        OrderVO orderInfo = orderTMapper.selectOrderInfoByOrderId(orderId);
+        if(orderInfo == null){
+            makeRetInfo("E0001", "订单不存在", result);
+            return;
+        }
+        if("1".equals(orderInfo.getPayState())){
+            makeRetInfo("E0001", "订单已支付过", result);
+            return;
+        }
+        if("08".equals(payType)){
+            //银联支付
+            String tn = payService.getUnionPayTN(orderInfo.getOrderId(), orderInfo.getRealGetMoney()+"");
+            if (StringUtils.isNotEmpty(tn)){
+                putRetContent("tn", tn, result);
+                makeRetInfo("S0000", "申请成功", result);
+                return;
+            }else {
+                makeRetInfo("E0001", "申请失败", result);
+                return;
+            }
+        }else if("06".equals(payType)){
+            // 农行支付
+            if (payService.generateAbcPayHtml(orderInfo.getOrderId(), orderInfo.getRealGetMoney()+"")){
+                HttpServletRequest request = (HttpServletRequest) session.getAttribute("javax.servlet.http.HttpServletRequest");
+                String url = request.getScheme() + "://" + request.getServerName() + ":"
+                        + request.getServerPort() + request.getContextPath() + "/abcPayHtml/" + orderId + ".html";
+                putRetContent("url", url, result);
+                makeRetInfo("S0000", "申请成功", result);
+                return;
+            }else {
+                makeRetInfo("E0001", "申请失败", result);
+                return;
+            }
+        }else if("07".equals(payType)){
+            // 农信支付
+            if(payService.generateNxhPayHtml(orderInfo.getOrderId(), orderInfo.getRealGetMoney()+"")){
+                HttpServletRequest request = (HttpServletRequest) session.getAttribute("javax.servlet.http.HttpServletRequest");
+                String url = request.getScheme() + "://" + request.getServerName() + ":"
+                        + request.getServerPort() + request.getContextPath() + "/nxhPayHtml/" + orderId + ".html";
+                putRetContent("url", url, result);
+                makeRetInfo("S0000", "申请成功", result);
+                return;
+            }else {
+                makeRetInfo("E0001", "申请失败", result);
+                return;
+            }
+        }else{
+            makeRetInfo("E0001", "不支持的支付方式", result);
+            return;
+        }
+    }
+
+    @Override
+    public void payConfirm(JSONObject requestJson, JSONObject result, HttpSession session) {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderNo = reqContent.getString("orderNo");
+        String payType = reqContent.getString("payType");
+        logger.info("订单号【"+orderNo+"】，支付类型【"+payType+"】，支付确认！");
+
+        // 根据订单号查询订单信息
+        if(orderNo.startsWith("M")){
+            OrderVO orderInfo = orderTMapper.selectOrderInfoByOrderId(orderNo);
+            if(orderInfo == null){
+                makeRetInfo("E0001", "订单不存在", result);
+                return;
+            }
+        }else {
+            NfcCardRecharge nfcCardRecharge = nfcCardRechargeMapper.selectByPrimaryKey(orderNo);
+            if(nfcCardRecharge == null){
+                makeRetInfo("E0001", "订单不存在", result);
+                return;
+            }
+        }
+
+        // TODO 支付确认
+        makeRetInfo("E0001", "正在开发中...", result);
+        return;
+    }
+
+    @Override
+    public void generateLeaseVouchers(JSONObject requestJson, JSONObject result, HttpSession session) {
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderId = reqContent.getString("orderId");
+        String offerType = reqContent.getString("offerType");
+        OrderVO orderInfo = orderTMapper.selectOrderInfoByOrderId(orderId);
+        if(orderInfo == null){
+            makeRetInfo("E0001", "订单不存在", result);
+            return;
+        }
+        if(!orderInfo.getUserId().equals(appUser.getuId())){
+            makeRetInfo("E0001", "订单不属于当前用户", result);
+            return;
+        }
+
+        // TODO 生成卷码、发送短信
+        makeRetInfo("E0001", "正在开发中...", result);
+        return;
     }
 
     @Override
@@ -488,6 +603,11 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     @Override
     public boolean updateNfcCardRechargeOrder(NfcCardRecharge nfcCardRecharge) {
         return nfcCardRechargeMapper.updateByPrimaryKeySelective(nfcCardRecharge) > 0;
+    }
+
+    @Override
+    public boolean updateMallOrder(OrderT order) {
+        return orderTMapper.updateByPrimaryKeySelective(order) > 0;
     }
 
     @Override

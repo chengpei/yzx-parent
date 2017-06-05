@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yckq.OrderPayTMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.OrderPayT" >
+    <id column="PAY_ID" property="payId" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="PAY_MONEY" property="payMoney" jdbcType="DECIMAL" />
+    <result column="PAY_TYPE" property="payType" jdbcType="VARCHAR" />
+    <result column="PAY_OBJECT_ID" property="payObjectId" jdbcType="VARCHAR" />
+    <result column="PAY_STATE" property="payState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PAY_ID, ORDER_ID, PAY_MONEY, PAY_TYPE, PAY_OBJECT_ID, PAY_STATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORDER_PAY_T
+    where PAY_ID = #{payId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from ORDER_PAY_T
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ORDER_PAY_T
+    where PAY_ID = #{payId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.OrderPayT" >
+    insert into ORDER_PAY_T (PAY_ID, ORDER_ID, PAY_MONEY, 
+      PAY_TYPE, PAY_OBJECT_ID, PAY_STATE
+      )
+    values (#{payId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{payMoney,jdbcType=DECIMAL}, 
+      #{payType,jdbcType=VARCHAR}, #{payObjectId,jdbcType=VARCHAR}, #{payState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.OrderPayT" >
+    insert into ORDER_PAY_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="payId != null" >
+        PAY_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="payObjectId != null" >
+        PAY_OBJECT_ID,
+      </if>
+      <if test="payState != null" >
+        PAY_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payObjectId != null" >
+        #{payObjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.OrderPayT" >
+    update ORDER_PAY_T
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payObjectId != null" >
+        PAY_OBJECT_ID = #{payObjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        PAY_STATE = #{payState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PAY_ID = #{payId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.OrderPayT" >
+    update ORDER_PAY_T
+    set ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      PAY_MONEY = #{payMoney,jdbcType=DECIMAL},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      PAY_OBJECT_ID = #{payObjectId,jdbcType=VARCHAR},
+      PAY_STATE = #{payState,jdbcType=VARCHAR}
+    where PAY_ID = #{payId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yckq.OrderTMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.OrderT" >
+    <id column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="ORDER_MONEY" property="orderMoney" jdbcType="DECIMAL" />
+    <result column="REAL_GET_MONEY" property="realGetMoney" jdbcType="DECIMAL" />
+    <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="PAY_FLAG" property="payFlag" jdbcType="VARCHAR" />
+    <result column="PAY_STATE" property="payState" jdbcType="VARCHAR" />
+    <result column="RECEIVE_PERSON" property="receivePerson" jdbcType="VARCHAR" />
+    <result column="RECEIVE_PHONE" property="receivePhone" jdbcType="VARCHAR" />
+    <result column="RECEIVE_ADDRESS" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="SEND_STATE" property="sendState" jdbcType="DECIMAL" />
+    <result column="EXPRESS_NO" property="expressNo" jdbcType="VARCHAR" />
+    <result column="SEND_PERSON" property="sendPerson" jdbcType="VARCHAR" />
+    <result column="EVALUATE_FLAG" property="evaluateFlag" jdbcType="DECIMAL" />
+    <result column="RECEIVE_FLAG" property="receiveFlag" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <resultMap id="OrderInfoResultMap" type="com.whpe.bean.vo.OrderVO" >
+    <id column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="ORDER_MONEY" property="orderMoney" jdbcType="DECIMAL" />
+    <result column="REAL_GET_MONEY" property="realGetMoney" jdbcType="DECIMAL" />
+    <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="PAY_FLAG" property="payFlag" jdbcType="VARCHAR" />
+    <result column="PAY_STATE" property="payState" jdbcType="VARCHAR" />
+    <result column="RECEIVE_PERSON" property="receivePerson" jdbcType="VARCHAR" />
+    <result column="RECEIVE_PHONE" property="receivePhone" jdbcType="VARCHAR" />
+    <result column="RECEIVE_ADDRESS" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="SEND_STATE" property="sendState" jdbcType="DECIMAL" />
+    <result column="EXPRESS_NO" property="expressNo" jdbcType="VARCHAR" />
+    <result column="SEND_PERSON" property="sendPerson" jdbcType="VARCHAR" />
+    <result column="EVALUATE_FLAG" property="evaluateFlag" jdbcType="DECIMAL" />
+    <result column="RECEIVE_FLAG" property="receiveFlag" jdbcType="DECIMAL" />
+
+    <collection property="orderDetailList" column="ORDER_ID" select="com.whpe.dao.yckq.OrderDetailTMapper.selectByOrderId"/>
+
+    <collection property="orderPayList" column="ORDER_ID" select="com.whpe.dao.yckq.OrderPayTMapper.selectByOrderId"/>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ORDER_ID, USER_ID, ORDER_MONEY, REAL_GET_MONEY, PRICE_TYPE, CREATE_TIME, STATE, REMARK, 
+    PAY_FLAG, PAY_STATE, RECEIVE_PERSON, RECEIVE_PHONE, RECEIVE_ADDRESS, SEND_STATE, 
+    EXPRESS_NO, SEND_PERSON, EVALUATE_FLAG, RECEIVE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORDER_T
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectOrderInfoByOrderId" resultMap="OrderInfoResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from ORDER_T
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ORDER_T
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.OrderT" >
+    insert into ORDER_T (ORDER_ID, USER_ID, ORDER_MONEY, 
+      REAL_GET_MONEY, PRICE_TYPE, CREATE_TIME, 
+      STATE, REMARK, PAY_FLAG, 
+      PAY_STATE, RECEIVE_PERSON, RECEIVE_PHONE, 
+      RECEIVE_ADDRESS, SEND_STATE, EXPRESS_NO, 
+      SEND_PERSON, EVALUATE_FLAG, RECEIVE_FLAG
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{orderMoney,jdbcType=DECIMAL}, 
+      #{realGetMoney,jdbcType=DECIMAL}, #{priceType,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{state,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{payFlag,jdbcType=VARCHAR}, 
+      #{payState,jdbcType=VARCHAR}, #{receivePerson,jdbcType=VARCHAR}, #{receivePhone,jdbcType=VARCHAR}, 
+      #{receiveAddress,jdbcType=VARCHAR}, #{sendState,jdbcType=DECIMAL}, #{expressNo,jdbcType=VARCHAR}, 
+      #{sendPerson,jdbcType=VARCHAR}, #{evaluateFlag,jdbcType=DECIMAL}, #{receiveFlag,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.OrderT" >
+    insert into ORDER_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="orderMoney != null" >
+        ORDER_MONEY,
+      </if>
+      <if test="realGetMoney != null" >
+        REAL_GET_MONEY,
+      </if>
+      <if test="priceType != null" >
+        PRICE_TYPE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="payFlag != null" >
+        PAY_FLAG,
+      </if>
+      <if test="payState != null" >
+        PAY_STATE,
+      </if>
+      <if test="receivePerson != null" >
+        RECEIVE_PERSON,
+      </if>
+      <if test="receivePhone != null" >
+        RECEIVE_PHONE,
+      </if>
+      <if test="receiveAddress != null" >
+        RECEIVE_ADDRESS,
+      </if>
+      <if test="sendState != null" >
+        SEND_STATE,
+      </if>
+      <if test="expressNo != null" >
+        EXPRESS_NO,
+      </if>
+      <if test="sendPerson != null" >
+        SEND_PERSON,
+      </if>
+      <if test="evaluateFlag != null" >
+        EVALUATE_FLAG,
+      </if>
+      <if test="receiveFlag != null" >
+        RECEIVE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null" >
+        #{orderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="realGetMoney != null" >
+        #{realGetMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="priceType != null" >
+        #{priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payFlag != null" >
+        #{payFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePerson != null" >
+        #{receivePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePhone != null" >
+        #{receivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAddress != null" >
+        #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sendState != null" >
+        #{sendState,jdbcType=DECIMAL},
+      </if>
+      <if test="expressNo != null" >
+        #{expressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPerson != null" >
+        #{sendPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateFlag != null" >
+        #{evaluateFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveFlag != null" >
+        #{receiveFlag,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.OrderT" >
+    update ORDER_T
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null" >
+        ORDER_MONEY = #{orderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="realGetMoney != null" >
+        REAL_GET_MONEY = #{realGetMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="priceType != null" >
+        PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payFlag != null" >
+        PAY_FLAG = #{payFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        PAY_STATE = #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePerson != null" >
+        RECEIVE_PERSON = #{receivePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePhone != null" >
+        RECEIVE_PHONE = #{receivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAddress != null" >
+        RECEIVE_ADDRESS = #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sendState != null" >
+        SEND_STATE = #{sendState,jdbcType=DECIMAL},
+      </if>
+      <if test="expressNo != null" >
+        EXPRESS_NO = #{expressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPerson != null" >
+        SEND_PERSON = #{sendPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateFlag != null" >
+        EVALUATE_FLAG = #{evaluateFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveFlag != null" >
+        RECEIVE_FLAG = #{receiveFlag,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.OrderT" >
+    update ORDER_T
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      ORDER_MONEY = #{orderMoney,jdbcType=DECIMAL},
+      REAL_GET_MONEY = #{realGetMoney,jdbcType=DECIMAL},
+      PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      STATE = #{state,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PAY_FLAG = #{payFlag,jdbcType=VARCHAR},
+      PAY_STATE = #{payState,jdbcType=VARCHAR},
+      RECEIVE_PERSON = #{receivePerson,jdbcType=VARCHAR},
+      RECEIVE_PHONE = #{receivePhone,jdbcType=VARCHAR},
+      RECEIVE_ADDRESS = #{receiveAddress,jdbcType=VARCHAR},
+      SEND_STATE = #{sendState,jdbcType=DECIMAL},
+      EXPRESS_NO = #{expressNo,jdbcType=VARCHAR},
+      SEND_PERSON = #{sendPerson,jdbcType=VARCHAR},
+      EVALUATE_FLAG = #{evaluateFlag,jdbcType=DECIMAL},
+      RECEIVE_FLAG = #{receiveFlag,jdbcType=DECIMAL}
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -8,6 +8,7 @@
 <%@page import="com.koalii.svs.client.Svs2ClientHelper.SvsResultData"%>
 <%@page import="com.koalii.svs.client.Svs2ClientHelper"%>
 <%@ page import="com.whpe.services.PayService" %>
+<%@ page import="com.whpe.bean.OrderT" %>
 <%@ page contentType="text/html; charset=utf-8" %>
 <% response.setHeader("Cache-Control", "no-cache"); %>
 <%
@@ -72,19 +73,33 @@
 
     int saveNshRequestResult = appInterfaceService.saveNshRequestResult(nshresresult);
 
-    NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
+    if(orderNum.startsWith("M")){
+        // 商城订单
+        OrderT order = new OrderT();
+        order.setOrderId(orderNum);
+        if (tranResult.equals("20")) {
+            order.setPayState("1");
+        }else{
+            order.setPayState("3");
+        }
+        if(appInterfaceService.updateMallOrder(order)) {
+            logger.info("订单状态更新成功，订单【"+orderNum+"】更新为【"+order.getPayState()+"】");
+        }
+    }else {
+        NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
+        nfcCardRecharge.setOrderno(orderNum);
+        if (tranResult.equals("20")) {
+            nfcCardRecharge.setBackrcvresponse("01");
+        } else {
+            nfcCardRecharge.setBackrcvresponse(tranResult);
+        }
+        nfcCardRecharge.setCommcode("0000100606"); // 农信商户编号
+        nfcCardRecharge.setPaytype("07");
+        if (appInterfaceService.updateNfcCardRechargeOrder(nfcCardRecharge)) {
+            logger.info("订单状态更新成功，订单【" + orderNum + "】更新为【" + nfcCardRecharge.getBackrcvresponse() + "】");
+        }
+    }
 
-    nfcCardRecharge.setOrderno(orderNum);
-    if (tranResult.equals("20")) {
-        nfcCardRecharge.setBackrcvresponse("01");
-    } else {
-        nfcCardRecharge.setBackrcvresponse(tranResult);
-    }
-    nfcCardRecharge.setCommcode("0000100606"); // 农信商户编号
-    nfcCardRecharge.setPaytype("07");
-    if (appInterfaceService.updateNfcCardRechargeOrder(nfcCardRecharge)) {
-        logger.info("订单状态更新成功，订单【" + orderNum + "】更新为【" + nfcCardRecharge.getBackrcvresponse() + "】");
-    }
     if (saveNshRequestResult > 0) {
         logger.info("入库成功");
     } else {

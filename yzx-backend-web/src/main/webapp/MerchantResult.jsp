@@ -7,6 +7,7 @@
 <%@ page import="com.whpe.utils.DateUtils" %>
 <%@ page import="com.whpe.bean.NfcCardRecharge" %>
 <%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="com.whpe.bean.OrderT" %>
 <% response.setHeader("Cache-Control", "no-cache"); %>
 
 <%
@@ -80,15 +81,25 @@
 
         int saveAbcRequestResult = appInterfaceService.saveAbcRequestResult(nhrequestresult);
 
-        NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
-
-        nfcCardRecharge.setOrderno(OrderNo);
-        nfcCardRecharge.setBackrcvresponse("01");
-        nfcCardRecharge.setCommcode("103881739010024"); // 农行商户编号
-        nfcCardRecharge.setPaytype("06");
-        if(appInterfaceService.updateNfcCardRechargeOrder(nfcCardRecharge)){
-            logger.info("订单状态更新成功，订单【"+OrderNo+"】更新为【"+nfcCardRecharge.getBackrcvresponse()+"】");
+        if(OrderNo.startsWith("M")){
+            // 商城订单
+            OrderT order = new OrderT();
+            order.setOrderId(OrderNo);
+            order.setPayState("1");
+            if(appInterfaceService.updateMallOrder(order)) {
+                logger.info("订单状态更新成功，订单【"+OrderNo+"】更新为【"+order.getPayState()+"】");
+            }
+        }else{
+            NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
+            nfcCardRecharge.setOrderno(OrderNo);
+            nfcCardRecharge.setBackrcvresponse("01");
+            nfcCardRecharge.setCommcode("103881739010024"); // 农行商户编号
+            nfcCardRecharge.setPaytype("06");
+            if(appInterfaceService.updateNfcCardRechargeOrder(nfcCardRecharge)){
+                logger.info("订单状态更新成功，订单【"+OrderNo+"】更新为【"+nfcCardRecharge.getBackrcvresponse()+"】");
+            }
         }
+
         if(saveAbcRequestResult > 0){
             logger.info("入库成功");
         }else{

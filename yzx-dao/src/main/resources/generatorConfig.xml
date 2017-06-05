@@ -41,15 +41,15 @@
 		<!--<table tableName="sys_app_user" enableCountByExample="false" enableSelectByExample="false"-->
 			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
 				<!--/>-->
-		<!--<table tableName="sys_user" enableCountByExample="false" enableSelectByExample="false"-->
-			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
-				<!--/>-->
-		<table tableName="dictionary" enableCountByExample="false" enableSelectByExample="false"
+		<table tableName="ORDER_T" enableCountByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
 				/>
-		<!--<table tableName="yh_ic_kz" enableCountByExample="false" enableSelectByExample="false"-->
-			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
-				<!--/>-->
+		<table tableName="ORDER_DETAIL_T" enableCountByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
+				/>
+		<table tableName="ORDER_PAY_T" enableCountByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
+				/>
 
 	</context>
     

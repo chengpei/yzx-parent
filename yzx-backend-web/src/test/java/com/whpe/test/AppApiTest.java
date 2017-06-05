@@ -1,7 +1,10 @@
 package com.whpe.test;
 
+import com.alibaba.fastjson.JSON;
 import com.whpe.bean.*;
+import com.whpe.bean.vo.OrderVO;
 import com.whpe.dao.yckq.NfcCardRechargeMapper;
+import com.whpe.dao.yckq.OrderTMapper;
 import com.whpe.dao.yckq.SmsSendLogMapper;
 import com.whpe.dao.yckq.SysAppUserMapper;
 import com.whpe.services.AppInterfaceService;
@@ -36,6 +39,9 @@ public class AppApiTest extends SpringTestContext{
 
     @Resource
     private AppInterfaceService appInterfaceService;
+
+    @Resource
+    private OrderTMapper orderTMapper;
 
     @Test
     public void sendSMSTest() throws Exception {
@@ -123,6 +129,12 @@ public class AppApiTest extends SpringTestContext{
         nshresresult.setPaytype("1");
 
         int saveNshRequestResult = appInterfaceService.saveNshRequestResult(nshresresult);
+    }
+
+    @Test
+    public void testOrderQuery(){
+        OrderVO orderVO = orderTMapper.selectOrderInfoByOrderId("M20170329111711000000000000012");
+        System.out.println(JSON.toJSONString(orderVO));
     }
 
 }

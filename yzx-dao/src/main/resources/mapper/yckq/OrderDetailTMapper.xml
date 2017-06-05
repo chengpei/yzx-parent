@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yckq.OrderDetailTMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.OrderDetailT" >
+    <id column="ORDER_DETAIL_ID" property="orderDetailId" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_OFFER_ID" property="productOfferId" jdbcType="VARCHAR" />
+    <result column="OFFER_NUMBER" property="offerNumber" jdbcType="DECIMAL" />
+    <result column="SINGLE_PRICE" property="singlePrice" jdbcType="DECIMAL" />
+    <result column="TOTAL_PRICE" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="SETTLE_ACCOUNT_PRICE" property="settleAccountPrice" jdbcType="DECIMAL" />
+    <result column="EVALUATE_FLAG" property="evaluateFlag" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ORDER_DETAIL_ID, ORDER_ID, PRODUCT_OFFER_ID, OFFER_NUMBER, SINGLE_PRICE, TOTAL_PRICE, 
+    CREATE_TIME, STATE, SETTLE_ACCOUNT_PRICE, EVALUATE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORDER_DETAIL_T
+    where ORDER_DETAIL_ID = #{orderDetailId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from ORDER_DETAIL_T
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ORDER_DETAIL_T
+    where ORDER_DETAIL_ID = #{orderDetailId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.OrderDetailT" >
+    insert into ORDER_DETAIL_T (ORDER_DETAIL_ID, ORDER_ID, PRODUCT_OFFER_ID, 
+      OFFER_NUMBER, SINGLE_PRICE, TOTAL_PRICE, 
+      CREATE_TIME, STATE, SETTLE_ACCOUNT_PRICE, 
+      EVALUATE_FLAG)
+    values (#{orderDetailId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{productOfferId,jdbcType=VARCHAR}, 
+      #{offerNumber,jdbcType=DECIMAL}, #{singlePrice,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=DATE}, #{state,jdbcType=VARCHAR}, #{settleAccountPrice,jdbcType=DECIMAL}, 
+      #{evaluateFlag,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.OrderDetailT" >
+    insert into ORDER_DETAIL_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        ORDER_DETAIL_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="productOfferId != null" >
+        PRODUCT_OFFER_ID,
+      </if>
+      <if test="offerNumber != null" >
+        OFFER_NUMBER,
+      </if>
+      <if test="singlePrice != null" >
+        SINGLE_PRICE,
+      </if>
+      <if test="totalPrice != null" >
+        TOTAL_PRICE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="settleAccountPrice != null" >
+        SETTLE_ACCOUNT_PRICE,
+      </if>
+      <if test="evaluateFlag != null" >
+        EVALUATE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productOfferId != null" >
+        #{productOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="offerNumber != null" >
+        #{offerNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="singlePrice != null" >
+        #{singlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="settleAccountPrice != null" >
+        #{settleAccountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluateFlag != null" >
+        #{evaluateFlag,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.OrderDetailT" >
+    update ORDER_DETAIL_T
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productOfferId != null" >
+        PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="offerNumber != null" >
+        OFFER_NUMBER = #{offerNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="singlePrice != null" >
+        SINGLE_PRICE = #{singlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null" >
+        TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="settleAccountPrice != null" >
+        SETTLE_ACCOUNT_PRICE = #{settleAccountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluateFlag != null" >
+        EVALUATE_FLAG = #{evaluateFlag,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ORDER_DETAIL_ID = #{orderDetailId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.OrderDetailT" >
+    update ORDER_DETAIL_T
+    set ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR},
+      OFFER_NUMBER = #{offerNumber,jdbcType=DECIMAL},
+      SINGLE_PRICE = #{singlePrice,jdbcType=DECIMAL},
+      TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      STATE = #{state,jdbcType=VARCHAR},
+      SETTLE_ACCOUNT_PRICE = #{settleAccountPrice,jdbcType=DECIMAL},
+      EVALUATE_FLAG = #{evaluateFlag,jdbcType=DECIMAL}
+    where ORDER_DETAIL_ID = #{orderDetailId,jdbcType=VARCHAR}
+  </update>
+</mapper>

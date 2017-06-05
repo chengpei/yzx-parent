@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.whpe.bean.NfcCardRecharge;
 import com.whpe.bean.Nhrequestresult;
 import com.whpe.bean.Nshresresult;
+import com.whpe.bean.OrderT;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -19,6 +20,10 @@ public interface AppInterfaceService {
     void commitOrder(JSONObject requestJson, JSONObject result, HttpSession session);
 
     void applyPay(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void applyMallPay(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void payConfirm(JSONObject requestJson, JSONObject result, HttpSession session);
 
     void applyRecharge(JSONObject requestJson, JSONObject result, HttpSession session);
 
@@ -44,4 +49,7 @@ public interface AppInterfaceService {
 
     void queryDictionary(JSONObject requestJson, JSONObject result, HttpSession session);
 
+    boolean updateMallOrder(OrderT order);
+
+    void generateLeaseVouchers(JSONObject requestJson, JSONObject result, HttpSession session);
 }

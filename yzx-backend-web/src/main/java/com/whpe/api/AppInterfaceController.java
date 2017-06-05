@@ -5,6 +5,7 @@ import com.unionpay.acp.sdk.LogUtil;
 import com.unionpay.acp.sdk.SDKConstants;
 import com.unionpay.acp.sdk.SDKUtil;
 import com.whpe.bean.NfcCardRecharge;
+import com.whpe.bean.OrderT;
 import com.whpe.controller.CommonController;
 import com.whpe.services.AppInterfaceService;
 import com.whpe.services.PayService;
@@ -83,6 +84,30 @@ public class AppInterfaceController extends CommonController{
             }
         }
         String orderNo = valideData.get("orderId");
+        if(orderNo.startsWith("M")){
+            // 商城订单
+            OrderT order = new OrderT();
+            order.setOrderId(orderNo);
+
+            // 验证签名
+            if (!SDKUtil.validate(valideData, encoding)) {
+                LogUtil.writeLog("验证签名结果[失败].");
+                logger.error("验证签名失败【"+orderNo+"】");
+                order.setPayState("1");
+            } else {
+                LogUtil.writeLog("验证签名结果[成功].");
+                logger.error("验证签名成功【"+orderNo+"】");
+                order.setPayState("3");
+            }
+            if(appInterfaceService.updateMallOrder(order)) {
+                logger.info("订单状态更新成功，订单【"+orderNo+"】更新为【"+order.getPayState()+"】");
+            }else{
+                logger.error("订单状态更新失败，订单【"+orderNo+"】更新为【"+order.getPayState()+"】失败！");
+            }
+            return;
+        }
+
+        // 圈存订单
         NfcCardRecharge nfcCardRecharge = new NfcCardRecharge();
         nfcCardRecharge.setOrderno(orderNo);
         nfcCardRecharge.setCommcode(payService.getUnionpayMerchantId());
