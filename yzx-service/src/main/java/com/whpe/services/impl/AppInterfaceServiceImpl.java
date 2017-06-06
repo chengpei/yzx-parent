@@ -792,13 +792,13 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
      * @return
      */
     private synchronized String generateVouchers() {
-        String vouchers = StringUtils.getRadomString(16);
+        String vouchers = StringUtils.getRadomString2(16);
         // 检查凭证串码是否重复
         LeaseVouchers leaseVouchers = leaseVouchersMapper.selectByVouchers(vouchers);
         if(leaseVouchers != null){
             return generateVouchers();
         }
-        return StringUtils.getRadomString(16);
+        return vouchers;
     }
 
     public static void makeRetInfo(String retCode,String retMsg , JSONObject result){
