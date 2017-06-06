@@ -1,6 +1,5 @@
 package com.whpe.bean.vo;
 
-import com.whpe.bean.OrderDetailT;
 import com.whpe.bean.OrderPayT;
 import com.whpe.bean.OrderT;
 
@@ -8,15 +7,15 @@ import java.util.List;
 
 public class OrderVO extends OrderT{
 
-    private List<OrderDetailT> orderDetailList;
+    private List<OrderDetailVO> orderDetailList;
 
     private List<OrderPayT> orderPayList;
 
-    public List<OrderDetailT> getOrderDetailList() {
+    public List<OrderDetailVO> getOrderDetailList() {
         return orderDetailList;
     }
 
-    public void setOrderDetailList(List<OrderDetailT> orderDetailList) {
+    public void setOrderDetailList(List<OrderDetailVO> orderDetailList) {
         this.orderDetailList = orderDetailList;
     }
 

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yckq.ProductOfferTMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.ProductOfferT" >
+    <id column="PRODUCT_OFFER_ID" property="productOfferId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_OFFER_NAME" property="productOfferName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_OFFER_DESC" property="productOfferDesc" jdbcType="VARCHAR" />
+    <result column="IMAGE_CODE" property="imageCode" jdbcType="VARCHAR" />
+    <result column="MERCHANT_ID" property="merchantId" jdbcType="VARCHAR" />
+    <result column="ORIGINAL_PRICE" property="originalPrice" jdbcType="DECIMAL" />
+    <result column="REAL_PRICE" property="realPrice" jdbcType="DECIMAL" />
+    <result column="SALES_NUMBER" property="salesNumber" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="SALES_DESC" property="salesDesc" jdbcType="VARCHAR" />
+    <result column="INTEGRAL_FLAG" property="integralFlag" jdbcType="VARCHAR" />
+    <result column="OFFER_TYPE" property="offerType" jdbcType="VARCHAR" />
+    <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
+    <result column="PRICE_METHOD" property="priceMethod" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+    <result column="SETTLE_ACCOUNT_PRICE" property="settleAccountPrice" jdbcType="DECIMAL" />
+    <result column="EXTEND_COLUMN1" property="extendColumn1" jdbcType="VARCHAR" />
+    <result column="EXTEND_COLUMN2" property="extendColumn2" jdbcType="VARCHAR" />
+    <result column="STORE_NUMBER" property="storeNumber" jdbcType="DECIMAL" />
+    <result column="SALE_STATE" property="saleState" jdbcType="DECIMAL" />
+    <result column="IMAGE_CODE2" property="imageCode2" jdbcType="VARCHAR" />
+    <result column="IMAGE_CODE3" property="imageCode3" jdbcType="VARCHAR" />
+    <result column="IMAGE_CODE4" property="imageCode4" jdbcType="VARCHAR" />
+    <result column="IMAGE_CODE5" property="imageCode5" jdbcType="VARCHAR" />
+    <result column="IMAGE_CODE1" property="imageCode1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PRODUCT_OFFER_ID, PRODUCT_OFFER_NAME, PRODUCT_OFFER_DESC, IMAGE_CODE, MERCHANT_ID, 
+    ORIGINAL_PRICE, REAL_PRICE, SALES_NUMBER, CREATE_TIME, STATE, SALES_DESC, INTEGRAL_FLAG, 
+    OFFER_TYPE, PRICE_TYPE, PRICE_METHOD, UPDATE_TIME, OPERATOR, SETTLE_ACCOUNT_PRICE, 
+    EXTEND_COLUMN1, EXTEND_COLUMN2, STORE_NUMBER, SALE_STATE, IMAGE_CODE2, IMAGE_CODE3, 
+    IMAGE_CODE4, IMAGE_CODE5, IMAGE_CODE1
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PRODUCT_OFFER_T
+    where PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PRODUCT_OFFER_T
+    where PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.ProductOfferT" >
+    insert into PRODUCT_OFFER_T (PRODUCT_OFFER_ID, PRODUCT_OFFER_NAME, 
+      PRODUCT_OFFER_DESC, IMAGE_CODE, MERCHANT_ID, 
+      ORIGINAL_PRICE, REAL_PRICE, SALES_NUMBER, 
+      CREATE_TIME, STATE, SALES_DESC, 
+      INTEGRAL_FLAG, OFFER_TYPE, PRICE_TYPE, 
+      PRICE_METHOD, UPDATE_TIME, OPERATOR, 
+      SETTLE_ACCOUNT_PRICE, EXTEND_COLUMN1, EXTEND_COLUMN2, 
+      STORE_NUMBER, SALE_STATE, IMAGE_CODE2, 
+      IMAGE_CODE3, IMAGE_CODE4, IMAGE_CODE5, 
+      IMAGE_CODE1)
+    values (#{productOfferId,jdbcType=VARCHAR}, #{productOfferName,jdbcType=VARCHAR}, 
+      #{productOfferDesc,jdbcType=VARCHAR}, #{imageCode,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, 
+      #{originalPrice,jdbcType=DECIMAL}, #{realPrice,jdbcType=DECIMAL}, #{salesNumber,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=DATE}, #{state,jdbcType=VARCHAR}, #{salesDesc,jdbcType=VARCHAR}, 
+      #{integralFlag,jdbcType=VARCHAR}, #{offerType,jdbcType=VARCHAR}, #{priceType,jdbcType=VARCHAR}, 
+      #{priceMethod,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, #{operator,jdbcType=VARCHAR}, 
+      #{settleAccountPrice,jdbcType=DECIMAL}, #{extendColumn1,jdbcType=VARCHAR}, #{extendColumn2,jdbcType=VARCHAR}, 
+      #{storeNumber,jdbcType=DECIMAL}, #{saleState,jdbcType=DECIMAL}, #{imageCode2,jdbcType=VARCHAR}, 
+      #{imageCode3,jdbcType=VARCHAR}, #{imageCode4,jdbcType=VARCHAR}, #{imageCode5,jdbcType=VARCHAR}, 
+      #{imageCode1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.ProductOfferT" >
+    insert into PRODUCT_OFFER_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productOfferId != null" >
+        PRODUCT_OFFER_ID,
+      </if>
+      <if test="productOfferName != null" >
+        PRODUCT_OFFER_NAME,
+      </if>
+      <if test="productOfferDesc != null" >
+        PRODUCT_OFFER_DESC,
+      </if>
+      <if test="imageCode != null" >
+        IMAGE_CODE,
+      </if>
+      <if test="merchantId != null" >
+        MERCHANT_ID,
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE,
+      </if>
+      <if test="realPrice != null" >
+        REAL_PRICE,
+      </if>
+      <if test="salesNumber != null" >
+        SALES_NUMBER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="salesDesc != null" >
+        SALES_DESC,
+      </if>
+      <if test="integralFlag != null" >
+        INTEGRAL_FLAG,
+      </if>
+      <if test="offerType != null" >
+        OFFER_TYPE,
+      </if>
+      <if test="priceType != null" >
+        PRICE_TYPE,
+      </if>
+      <if test="priceMethod != null" >
+        PRICE_METHOD,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="operator != null" >
+        OPERATOR,
+      </if>
+      <if test="settleAccountPrice != null" >
+        SETTLE_ACCOUNT_PRICE,
+      </if>
+      <if test="extendColumn1 != null" >
+        EXTEND_COLUMN1,
+      </if>
+      <if test="extendColumn2 != null" >
+        EXTEND_COLUMN2,
+      </if>
+      <if test="storeNumber != null" >
+        STORE_NUMBER,
+      </if>
+      <if test="saleState != null" >
+        SALE_STATE,
+      </if>
+      <if test="imageCode2 != null" >
+        IMAGE_CODE2,
+      </if>
+      <if test="imageCode3 != null" >
+        IMAGE_CODE3,
+      </if>
+      <if test="imageCode4 != null" >
+        IMAGE_CODE4,
+      </if>
+      <if test="imageCode5 != null" >
+        IMAGE_CODE5,
+      </if>
+      <if test="imageCode1 != null" >
+        IMAGE_CODE1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productOfferId != null" >
+        #{productOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="productOfferName != null" >
+        #{productOfferName,jdbcType=VARCHAR},
+      </if>
+      <if test="productOfferDesc != null" >
+        #{productOfferDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode != null" >
+        #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalPrice != null" >
+        #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="realPrice != null" >
+        #{realPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salesNumber != null" >
+        #{salesNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="salesDesc != null" >
+        #{salesDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="integralFlag != null" >
+        #{integralFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="offerType != null" >
+        #{offerType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceType != null" >
+        #{priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMethod != null" >
+        #{priceMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="settleAccountPrice != null" >
+        #{settleAccountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="extendColumn1 != null" >
+        #{extendColumn1,jdbcType=VARCHAR},
+      </if>
+      <if test="extendColumn2 != null" >
+        #{extendColumn2,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNumber != null" >
+        #{storeNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="saleState != null" >
+        #{saleState,jdbcType=DECIMAL},
+      </if>
+      <if test="imageCode2 != null" >
+        #{imageCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode3 != null" >
+        #{imageCode3,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode4 != null" >
+        #{imageCode4,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode5 != null" >
+        #{imageCode5,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode1 != null" >
+        #{imageCode1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.ProductOfferT" >
+    update PRODUCT_OFFER_T
+    <set >
+      <if test="productOfferName != null" >
+        PRODUCT_OFFER_NAME = #{productOfferName,jdbcType=VARCHAR},
+      </if>
+      <if test="productOfferDesc != null" >
+        PRODUCT_OFFER_DESC = #{productOfferDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode != null" >
+        IMAGE_CODE = #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE = #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="realPrice != null" >
+        REAL_PRICE = #{realPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salesNumber != null" >
+        SALES_NUMBER = #{salesNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="salesDesc != null" >
+        SALES_DESC = #{salesDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="integralFlag != null" >
+        INTEGRAL_FLAG = #{integralFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="offerType != null" >
+        OFFER_TYPE = #{offerType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceType != null" >
+        PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMethod != null" >
+        PRICE_METHOD = #{priceMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="operator != null" >
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="settleAccountPrice != null" >
+        SETTLE_ACCOUNT_PRICE = #{settleAccountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="extendColumn1 != null" >
+        EXTEND_COLUMN1 = #{extendColumn1,jdbcType=VARCHAR},
+      </if>
+      <if test="extendColumn2 != null" >
+        EXTEND_COLUMN2 = #{extendColumn2,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNumber != null" >
+        STORE_NUMBER = #{storeNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="saleState != null" >
+        SALE_STATE = #{saleState,jdbcType=DECIMAL},
+      </if>
+      <if test="imageCode2 != null" >
+        IMAGE_CODE2 = #{imageCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode3 != null" >
+        IMAGE_CODE3 = #{imageCode3,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode4 != null" >
+        IMAGE_CODE4 = #{imageCode4,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode5 != null" >
+        IMAGE_CODE5 = #{imageCode5,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode1 != null" >
+        IMAGE_CODE1 = #{imageCode1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.ProductOfferT" >
+    update PRODUCT_OFFER_T
+    set PRODUCT_OFFER_NAME = #{productOfferName,jdbcType=VARCHAR},
+      PRODUCT_OFFER_DESC = #{productOfferDesc,jdbcType=VARCHAR},
+      IMAGE_CODE = #{imageCode,jdbcType=VARCHAR},
+      MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},
+      ORIGINAL_PRICE = #{originalPrice,jdbcType=DECIMAL},
+      REAL_PRICE = #{realPrice,jdbcType=DECIMAL},
+      SALES_NUMBER = #{salesNumber,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      STATE = #{state,jdbcType=VARCHAR},
+      SALES_DESC = #{salesDesc,jdbcType=VARCHAR},
+      INTEGRAL_FLAG = #{integralFlag,jdbcType=VARCHAR},
+      OFFER_TYPE = #{offerType,jdbcType=VARCHAR},
+      PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
+      PRICE_METHOD = #{priceMethod,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      SETTLE_ACCOUNT_PRICE = #{settleAccountPrice,jdbcType=DECIMAL},
+      EXTEND_COLUMN1 = #{extendColumn1,jdbcType=VARCHAR},
+      EXTEND_COLUMN2 = #{extendColumn2,jdbcType=VARCHAR},
+      STORE_NUMBER = #{storeNumber,jdbcType=DECIMAL},
+      SALE_STATE = #{saleState,jdbcType=DECIMAL},
+      IMAGE_CODE2 = #{imageCode2,jdbcType=VARCHAR},
+      IMAGE_CODE3 = #{imageCode3,jdbcType=VARCHAR},
+      IMAGE_CODE4 = #{imageCode4,jdbcType=VARCHAR},
+      IMAGE_CODE5 = #{imageCode5,jdbcType=VARCHAR},
+      IMAGE_CODE1 = #{imageCode1,jdbcType=VARCHAR}
+    where PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR}
+  </update>
+</mapper>

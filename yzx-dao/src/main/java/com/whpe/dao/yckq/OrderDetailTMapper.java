@@ -1,6 +1,7 @@
 package com.whpe.dao.yckq;
 
 import com.whpe.bean.OrderDetailT;
+import com.whpe.bean.vo.OrderDetailVO;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface OrderDetailTMapper {
 
     int updateByPrimaryKey(OrderDetailT record);
 
-    List<OrderDetailT> selectByOrderId(String orderId);
+    List<OrderDetailVO> selectByOrderId(String orderId);
 }

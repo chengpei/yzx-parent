@@ -7,7 +7,7 @@
     <result column="ORDER_MONEY" property="orderMoney" jdbcType="DECIMAL" />
     <result column="REAL_GET_MONEY" property="realGetMoney" jdbcType="DECIMAL" />
     <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="STATE" property="state" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="PAY_FLAG" property="payFlag" jdbcType="VARCHAR" />
@@ -28,7 +28,7 @@
     <result column="ORDER_MONEY" property="orderMoney" jdbcType="DECIMAL" />
     <result column="REAL_GET_MONEY" property="realGetMoney" jdbcType="DECIMAL" />
     <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="STATE" property="state" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="PAY_FLAG" property="payFlag" jdbcType="VARCHAR" />
@@ -77,7 +77,7 @@
       SEND_PERSON, EVALUATE_FLAG, RECEIVE_FLAG
       )
     values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{orderMoney,jdbcType=DECIMAL}, 
-      #{realGetMoney,jdbcType=DECIMAL}, #{priceType,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{realGetMoney,jdbcType=DECIMAL}, #{priceType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{state,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{payFlag,jdbcType=VARCHAR}, 
       #{payState,jdbcType=VARCHAR}, #{receivePerson,jdbcType=VARCHAR}, #{receivePhone,jdbcType=VARCHAR}, 
       #{receiveAddress,jdbcType=VARCHAR}, #{sendState,jdbcType=DECIMAL}, #{expressNo,jdbcType=VARCHAR}, 
@@ -159,7 +159,7 @@
         #{priceType,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},
@@ -215,7 +215,7 @@
         PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        CREATE_TIME = #{createTime,jdbcType=DATE},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null" >
         STATE = #{state,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
       ORDER_MONEY = #{orderMoney,jdbcType=DECIMAL},
       REAL_GET_MONEY = #{realGetMoney,jdbcType=DECIMAL},
       PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       STATE = #{state,jdbcType=VARCHAR},
       REMARK = #{remark,jdbcType=VARCHAR},
       PAY_FLAG = #{payFlag,jdbcType=VARCHAR},

@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.whpe.bean.*;
 import com.whpe.bean.Dictionary;
 import com.whpe.bean.dto.SysPeopleDTO;
+import com.whpe.bean.vo.OrderDetailVO;
 import com.whpe.bean.vo.OrderVO;
 import com.whpe.bean.vo.SysAppUserVO;
 import com.whpe.dao.ycbus.CardInfoMapper;
@@ -78,6 +79,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private OrderTMapper orderTMapper;
+
+    @Resource
+    private LeaseVouchersMapper leaseVouchersMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -349,7 +353,7 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         }
 
         // TODO 支付确认
-        makeRetInfo("E0001", "正在开发中...", result);
+        makeRetInfo("S0000", "正在开发中...", result);
         return;
     }
 
@@ -365,13 +369,55 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("E0001", "订单不存在", result);
             return;
         }
+        if("1".equals(orderInfo.getPayState())){
+            makeRetInfo("E0001", "订单未支付", result);
+            return;
+        }
         if(!orderInfo.getUserId().equals(appUser.getuId())){
             makeRetInfo("E0001", "订单不属于当前用户", result);
             return;
         }
 
-        // TODO 生成卷码、发送短信
-        makeRetInfo("E0001", "正在开发中...", result);
+        // 查询该订单是否已经生成过凭证串码
+        LeaseVouchers vouchers1 = leaseVouchersMapper.selectByOrderId(orderId);
+        if(vouchers1 != null){
+            putRetContent("leaseVouchers", vouchers1.getVouchers(), result);
+            makeRetInfo("S0000", "查询成功", result);
+            return;
+        }
+
+        // 判断该订单 商品类型是否可以生成凭证串码
+        List<OrderDetailVO> orderDetailList = orderInfo.getOrderDetailList();
+        if(orderDetailList == null || orderDetailList.size() == 0){
+            makeRetInfo("E0001", "异常订单", result);
+            return;
+        }
+        boolean canVouchers = false;
+        for (OrderDetailVO orderDetail : orderDetailList){
+            if("BUS_LEASE".equals(orderDetail.getProductOffer().getPriceType())){
+                canVouchers = true;
+            }
+        }
+        if(!canVouchers){
+            // 如果订单下的所有商品都不包含需要凭证类的商品，那么订单不能生成凭证串码
+            makeRetInfo("E0001", "该订单不能生成串码", result);
+            return;
+        }
+
+        // 生成凭证串码
+        String vouchers = generateVouchers();
+        LeaseVouchers leaseVouchers = new LeaseVouchers();
+        leaseVouchers.setOrderId(orderId);
+        leaseVouchers.setCreateTime(new Date());
+        leaseVouchers.setUserId(appUser.getuId());
+        leaseVouchers.setVouchers(vouchers);
+        leaseVouchersMapper.insertSelective(leaseVouchers);
+
+        // TODO 发送短信
+
+
+        putRetContent("leaseVouchers", vouchers, result);
+        makeRetInfo("S0000", "查询成功", result);
         return;
     }
 
@@ -739,6 +785,20 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         orderNo.append(DateUtils.getFormatDate(new Date(), "yyyyMMdd"));
         orderNo.append(String.format("%06d", orderSeq));
         return orderNo.toString();
+    }
+
+    /**
+     * 生成凭证串码
+     * @return
+     */
+    private synchronized String generateVouchers() {
+        String vouchers = StringUtils.getRadomString(16);
+        // 检查凭证串码是否重复
+        LeaseVouchers leaseVouchers = leaseVouchersMapper.selectByVouchers(vouchers);
+        if(leaseVouchers != null){
+            return generateVouchers();
+        }
+        return StringUtils.getRadomString(16);
     }
 
     public static void makeRetInfo(String retCode,String retMsg , JSONObject result){

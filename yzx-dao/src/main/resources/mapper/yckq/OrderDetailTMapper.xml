@@ -8,11 +8,27 @@
     <result column="OFFER_NUMBER" property="offerNumber" jdbcType="DECIMAL" />
     <result column="SINGLE_PRICE" property="singlePrice" jdbcType="DECIMAL" />
     <result column="TOTAL_PRICE" property="totalPrice" jdbcType="DECIMAL" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="STATE" property="state" jdbcType="VARCHAR" />
     <result column="SETTLE_ACCOUNT_PRICE" property="settleAccountPrice" jdbcType="DECIMAL" />
     <result column="EVALUATE_FLAG" property="evaluateFlag" jdbcType="DECIMAL" />
   </resultMap>
+
+  <resultMap id="OrderDetailResultMap" type="com.whpe.bean.vo.OrderDetailVO" >
+    <id column="ORDER_DETAIL_ID" property="orderDetailId" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_OFFER_ID" property="productOfferId" jdbcType="VARCHAR" />
+    <result column="OFFER_NUMBER" property="offerNumber" jdbcType="DECIMAL" />
+    <result column="SINGLE_PRICE" property="singlePrice" jdbcType="DECIMAL" />
+    <result column="TOTAL_PRICE" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="SETTLE_ACCOUNT_PRICE" property="settleAccountPrice" jdbcType="DECIMAL" />
+    <result column="EVALUATE_FLAG" property="evaluateFlag" jdbcType="DECIMAL" />
+
+    <association property="productOffer" column="PRODUCT_OFFER_ID" select="com.whpe.dao.yckq.ProductOfferTMapper.selectByPrimaryKey"/>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     ORDER_DETAIL_ID, ORDER_ID, PRODUCT_OFFER_ID, OFFER_NUMBER, SINGLE_PRICE, TOTAL_PRICE, 
     CREATE_TIME, STATE, SETTLE_ACCOUNT_PRICE, EVALUATE_FLAG
@@ -23,7 +39,7 @@
     from ORDER_DETAIL_T
     where ORDER_DETAIL_ID = #{orderDetailId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="selectByOrderId" resultMap="OrderDetailResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
     from ORDER_DETAIL_T
@@ -40,7 +56,7 @@
       EVALUATE_FLAG)
     values (#{orderDetailId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{productOfferId,jdbcType=VARCHAR}, 
       #{offerNumber,jdbcType=DECIMAL}, #{singlePrice,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, 
-      #{createTime,jdbcType=DATE}, #{state,jdbcType=VARCHAR}, #{settleAccountPrice,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{settleAccountPrice,jdbcType=DECIMAL},
       #{evaluateFlag,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.whpe.bean.OrderDetailT" >
@@ -97,7 +113,7 @@
         #{totalPrice,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},
@@ -129,7 +145,7 @@
         TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null" >
-        CREATE_TIME = #{createTime,jdbcType=DATE},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null" >
         STATE = #{state,jdbcType=VARCHAR},
@@ -150,7 +166,7 @@
       OFFER_NUMBER = #{offerNumber,jdbcType=DECIMAL},
       SINGLE_PRICE = #{singlePrice,jdbcType=DECIMAL},
       TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
-      CREATE_TIME = #{createTime,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       STATE = #{state,jdbcType=VARCHAR},
       SETTLE_ACCOUNT_PRICE = #{settleAccountPrice,jdbcType=DECIMAL},
       EVALUATE_FLAG = #{evaluateFlag,jdbcType=DECIMAL}

@@ -11,6 +11,8 @@ public class StringUtils {
     // 验证码可选字符
     private static char[] codeSequence = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
+    private static char[] codeSequence2 = "ABCDEFGHIJKLMEOPQRSTUVWXWZ1234567890".toCharArray();
+
     // 创建一个随机数生成器类
     private static Random random = new Random();
 
@@ -22,6 +24,22 @@ public class StringUtils {
             String strRand = String.valueOf(codeSequence[random.nextInt(codeSequence.length)]);
             // 将产生的随机数组合在一起。
             randomCode.append(strRand);
+        }
+        return randomCode.toString();
+    }
+
+    public static String getRadomString2(int length) {
+        StringBuffer randomCode = new StringBuffer();
+        // 随机产生codeCount数字的验证码。
+        for (int i = 0; i < length; i++) {
+            // 得到随机产生的验证码数字。
+            String strRand = String.valueOf(codeSequence2[random.nextInt(codeSequence2.length)]);
+            // 将产生的随机数组合在一起。
+            randomCode.append(strRand);
+
+//            if(i!=0 && i!=length-1 && (i+1)%4==0){
+//                randomCode.append("-");
+//            }
         }
         return randomCode.toString();
     }

@@ -2,11 +2,12 @@ package com.whpe.test;
 
 import com.alibaba.fastjson.JSON;
 import com.whpe.bean.Result;
+import com.whpe.services.impl.AppInterfaceServiceImpl;
 import com.whpe.utils.HttpUtils;
+import com.whpe.utils.StringUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String args[]) throws IOException {
@@ -23,6 +24,52 @@ public class Main {
 //        jsonStr = HttpUtils.urlPost("https://192.168.100.240:8443/api/changePassword.do", params);
 //        System.out.println("修改密码:" + jsonStr);
 
-        System.out.println(String.format("%015d", 1));
+//        System.out.println(String.format("%015d", 1));
+
+//        Set<String> stringSet = new HashSet<>();
+//        for (int i=0;i<10000;i++){
+//            stringSet.add(AppInterfaceServiceImpl.generateVouchers());
+//            stringSet.add(StringUtils.getRadomString(16));
+//        }
+//        System.out.println(stringSet.size());
+
+//        System.out.println(StringUtils.getRadomString2(16));
+
+        Thread t = new Thread(){
+            @Override
+            public void run() {
+                test();
+            }
+        };
+        Thread t1 = new Thread(){
+            @Override
+            public void run() {
+                test();
+            }
+        };
+        Thread t2 = new Thread(){
+            @Override
+            public void run() {
+                test();
+            }
+        };
+        t.setDaemon(false);
+        t1.setDaemon(false);
+        t2.setDaemon(false);
+
+        t1.start();
+        t2.start();
+        t.start();
+
+
+    }
+
+    public static int i=0;
+    public static synchronized void test(){
+        if(i != 10){
+            i++;
+            test();
+        }
+        System.out.println(i);
     }
 }
