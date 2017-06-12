@@ -540,10 +540,20 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
         // 计算新的有效日期
         String effectiveDate = file15.get("effectiveDate");
+        String newEffectiveDate = null;
+        Calendar currCal = Calendar.getInstance();
         Calendar cal = Calendar.getInstance();
         cal.setTime(DateUtils.getDateForString(effectiveDate, "yyyyMMdd"));
-        cal.add(Calendar.YEAR, 1);
-        String newEffectiveDate = DateUtils.getFormatDate(cal.getTime(), "yyyyMMdd");
+        if(cal.after(currCal)){
+            // 有效期还没到，续费在有效期基础上加1年
+            cal.add(Calendar.YEAR, 1);
+            newEffectiveDate = DateUtils.getFormatDate(cal.getTime(), "yyyyMMdd");
+        }else{
+            // 有效期过了，续费在当前日期基础上加1年
+            currCal.add(Calendar.YEAR, 1);
+            newEffectiveDate = DateUtils.getFormatDate(currCal.getTime(), "yyyyMMdd");
+        }
+
 
         // 04D6 + 文件标志(1字节) + 更新文件偏移量(1字节) + 长度(1字节，包含更新内容和mac) + 更新内容 + mac
         String apdu = "04D6951808" + newEffectiveDate;
