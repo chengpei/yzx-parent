@@ -1,10 +1,7 @@
 package com.whpe.services;
 
 import com.alibaba.fastjson.JSONObject;
-import com.whpe.bean.NfcCardRecharge;
-import com.whpe.bean.Nhrequestresult;
-import com.whpe.bean.Nshresresult;
-import com.whpe.bean.OrderT;
+import com.whpe.bean.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -52,4 +49,14 @@ public interface AppInterfaceService {
     boolean updateMallOrder(OrderT order);
 
     void generateLeaseVouchers(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void commitBusOrder(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void queryBusOrder(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    void queryBusOrderDetail(JSONObject requestJson, JSONObject result, HttpSession session);
+
+    boolean updateBusOrder(BusOrder busOrder);
+
+    int generateBusOrderVouchers(String orderNo);
 }

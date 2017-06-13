@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yckq.BusOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.BusOrder" >
+    <id column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+    <result column="ORDER_TYPE" property="orderType" jdbcType="VARCHAR" />
+    <result column="LINK_NAME" property="linkName" jdbcType="VARCHAR" />
+    <result column="LINK_PHONE" property="linkPhone" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RESERVE_MONEY" property="reserveMoney" jdbcType="DECIMAL" />
+    <result column="BUDGET_MONEY" property="budgetMoney" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_OFFER_ID" property="productOfferId" jdbcType="VARCHAR" />
+    <result column="USE_TIME" property="useTime" jdbcType="TIMESTAMP" />
+    <result column="USE_DAY" property="useDay" jdbcType="DECIMAL" />
+    <result column="USE_TYPE" property="useType" jdbcType="DECIMAL" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="DEPART_SITE" property="departSite" jdbcType="VARCHAR" />
+    <result column="TARGET_SITE" property="targetSite" jdbcType="VARCHAR" />
+    <result column="REAL_MONEY" property="realMoney" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="VOUCHERS" property="vouchers" jdbcType="VARCHAR" />
+    <result column="U_ID" property="uId" jdbcType="VARCHAR" />
+    <result column="BUS_ID" property="busId" jdbcType="VARCHAR" />
+    <result column="BUS_LICENSE" property="busLicense" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BusOrderResultMap" type="com.whpe.bean.vo.BusOrderVO" >
+    <id column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+    <result column="ORDER_TYPE" property="orderType" jdbcType="VARCHAR" />
+    <result column="LINK_NAME" property="linkName" jdbcType="VARCHAR" />
+    <result column="LINK_PHONE" property="linkPhone" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RESERVE_MONEY" property="reserveMoney" jdbcType="DECIMAL" />
+    <result column="BUDGET_MONEY" property="budgetMoney" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_OFFER_ID" property="productOfferId" jdbcType="VARCHAR" />
+    <result column="USE_TIME" property="useTime" jdbcType="TIMESTAMP" />
+    <result column="USE_DAY" property="useDay" jdbcType="DECIMAL" />
+    <result column="USE_TYPE" property="useType" jdbcType="DECIMAL" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="DEPART_SITE" property="departSite" jdbcType="VARCHAR" />
+    <result column="TARGET_SITE" property="targetSite" jdbcType="VARCHAR" />
+    <result column="REAL_MONEY" property="realMoney" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="VOUCHERS" property="vouchers" jdbcType="VARCHAR" />
+    <result column="U_ID" property="uId" jdbcType="VARCHAR" />
+    <result column="BUS_ID" property="busId" jdbcType="VARCHAR" />
+    <result column="BUS_LICENSE" property="busLicense" jdbcType="VARCHAR" />
+
+    <association property="productOffer" column="PRODUCT_OFFER_ID" select="com.whpe.dao.yckq.ProductOfferTMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ORDER_NO, ORDER_TYPE, LINK_NAME, LINK_PHONE, REMARK, RESERVE_MONEY, BUDGET_MONEY, 
+    CREATE_TIME, PRODUCT_OFFER_ID, USE_TIME, USE_DAY, USE_TYPE, COMPANY_NAME, DEPART_SITE, 
+    TARGET_SITE, REAL_MONEY, STATUS, VOUCHERS, U_ID, BUS_ID, BUS_LICENSE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BusOrderResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUS_ORDER
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByVouchers" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from BUS_ORDER
+    where VOUCHERS = #{vouchers,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCondition" resultMap="BusOrderResultMap" parameterType="com.whpe.bean.BusOrder">
+    select
+    <include refid="Base_Column_List" />
+    from BUS_ORDER
+    <where>
+      <if test="status != null">
+        AND STATUS = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="uId != null">
+        and U_ID = #{uId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from BUS_ORDER
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.BusOrder" >
+    insert into BUS_ORDER (ORDER_NO, ORDER_TYPE, LINK_NAME, 
+      LINK_PHONE, REMARK, RESERVE_MONEY, 
+      BUDGET_MONEY, CREATE_TIME, PRODUCT_OFFER_ID, 
+      USE_TIME, USE_DAY, USE_TYPE, 
+      COMPANY_NAME, DEPART_SITE, TARGET_SITE, 
+      REAL_MONEY, STATUS, VOUCHERS, 
+      U_ID, BUS_ID, BUS_LICENSE
+      )
+    values (#{orderNo,jdbcType=VARCHAR}, #{orderType,jdbcType=VARCHAR}, #{linkName,jdbcType=VARCHAR}, 
+      #{linkPhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{reserveMoney,jdbcType=DECIMAL}, 
+      #{budgetMoney,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{productOfferId,jdbcType=VARCHAR}, 
+      #{useTime,jdbcType=TIMESTAMP}, #{useDay,jdbcType=DECIMAL}, #{useType,jdbcType=DECIMAL}, 
+      #{companyName,jdbcType=VARCHAR}, #{departSite,jdbcType=VARCHAR}, #{targetSite,jdbcType=VARCHAR}, 
+      #{realMoney,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, #{vouchers,jdbcType=VARCHAR}, 
+      #{uId,jdbcType=VARCHAR}, #{busId,jdbcType=VARCHAR}, #{busLicense,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.BusOrder" >
+    insert into BUS_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE,
+      </if>
+      <if test="linkName != null" >
+        LINK_NAME,
+      </if>
+      <if test="linkPhone != null" >
+        LINK_PHONE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="reserveMoney != null" >
+        RESERVE_MONEY,
+      </if>
+      <if test="budgetMoney != null" >
+        BUDGET_MONEY,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="productOfferId != null" >
+        PRODUCT_OFFER_ID,
+      </if>
+      <if test="useTime != null" >
+        USE_TIME,
+      </if>
+      <if test="useDay != null" >
+        USE_DAY,
+      </if>
+      <if test="useType != null" >
+        USE_TYPE,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="departSite != null" >
+        DEPART_SITE,
+      </if>
+      <if test="targetSite != null" >
+        TARGET_SITE,
+      </if>
+      <if test="realMoney != null" >
+        REAL_MONEY,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="vouchers != null" >
+        VOUCHERS,
+      </if>
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="busId != null" >
+        BUS_ID,
+      </if>
+      <if test="busLicense != null" >
+        BUS_LICENSE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="linkName != null" >
+        #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveMoney != null" >
+        #{reserveMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="budgetMoney != null" >
+        #{budgetMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productOfferId != null" >
+        #{productOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useDay != null" >
+        #{useDay,jdbcType=DECIMAL},
+      </if>
+      <if test="useType != null" >
+        #{useType,jdbcType=DECIMAL},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="departSite != null" >
+        #{departSite,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSite != null" >
+        #{targetSite,jdbcType=VARCHAR},
+      </if>
+      <if test="realMoney != null" >
+        #{realMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="vouchers != null" >
+        #{vouchers,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="busId != null" >
+        #{busId,jdbcType=VARCHAR},
+      </if>
+      <if test="busLicense != null" >
+        #{busLicense,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.BusOrder" >
+    update BUS_ORDER
+    <set >
+      <if test="orderType != null" >
+        ORDER_TYPE = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="linkName != null" >
+        LINK_NAME = #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkPhone != null" >
+        LINK_PHONE = #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveMoney != null" >
+        RESERVE_MONEY = #{reserveMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="budgetMoney != null" >
+        BUDGET_MONEY = #{budgetMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productOfferId != null" >
+        PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="useTime != null" >
+        USE_TIME = #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useDay != null" >
+        USE_DAY = #{useDay,jdbcType=DECIMAL},
+      </if>
+      <if test="useType != null" >
+        USE_TYPE = #{useType,jdbcType=DECIMAL},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="departSite != null" >
+        DEPART_SITE = #{departSite,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSite != null" >
+        TARGET_SITE = #{targetSite,jdbcType=VARCHAR},
+      </if>
+      <if test="realMoney != null" >
+        REAL_MONEY = #{realMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="vouchers != null" >
+        VOUCHERS = #{vouchers,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null" >
+        U_ID = #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="busId != null" >
+        BUS_ID = #{busId,jdbcType=VARCHAR},
+      </if>
+      <if test="busLicense != null" >
+        BUS_LICENSE = #{busLicense,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.BusOrder" >
+    update BUS_ORDER
+    set ORDER_TYPE = #{orderType,jdbcType=VARCHAR},
+      LINK_NAME = #{linkName,jdbcType=VARCHAR},
+      LINK_PHONE = #{linkPhone,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      RESERVE_MONEY = #{reserveMoney,jdbcType=DECIMAL},
+      BUDGET_MONEY = #{budgetMoney,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      PRODUCT_OFFER_ID = #{productOfferId,jdbcType=VARCHAR},
+      USE_TIME = #{useTime,jdbcType=TIMESTAMP},
+      USE_DAY = #{useDay,jdbcType=DECIMAL},
+      USE_TYPE = #{useType,jdbcType=DECIMAL},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      DEPART_SITE = #{departSite,jdbcType=VARCHAR},
+      TARGET_SITE = #{targetSite,jdbcType=VARCHAR},
+      REAL_MONEY = #{realMoney,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=VARCHAR},
+      VOUCHERS = #{vouchers,jdbcType=VARCHAR},
+      U_ID = #{uId,jdbcType=VARCHAR},
+      BUS_ID = #{busId,jdbcType=VARCHAR},
+      BUS_LICENSE = #{busLicense,jdbcType=VARCHAR}
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

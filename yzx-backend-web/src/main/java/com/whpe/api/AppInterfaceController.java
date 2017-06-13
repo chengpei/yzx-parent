@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.unionpay.acp.sdk.LogUtil;
 import com.unionpay.acp.sdk.SDKConstants;
 import com.unionpay.acp.sdk.SDKUtil;
+import com.whpe.bean.BusOrder;
 import com.whpe.bean.NfcCardRecharge;
 import com.whpe.bean.OrderT;
 import com.whpe.controller.CommonController;
@@ -93,16 +94,39 @@ public class AppInterfaceController extends CommonController{
             if (!SDKUtil.validate(valideData, encoding)) {
                 LogUtil.writeLog("验证签名结果[失败].");
                 logger.error("验证签名失败【"+orderNo+"】");
-                order.setPayState("1");
+                order.setPayState("3");
             } else {
                 LogUtil.writeLog("验证签名结果[成功].");
                 logger.error("验证签名成功【"+orderNo+"】");
-                order.setPayState("3");
+                order.setPayState("1");
             }
             if(appInterfaceService.updateMallOrder(order)) {
                 logger.info("订单状态更新成功，订单【"+orderNo+"】更新为【"+order.getPayState()+"】");
             }else{
                 logger.error("订单状态更新失败，订单【"+orderNo+"】更新为【"+order.getPayState()+"】失败！");
+            }
+            return;
+        }else if(orderNo.startsWith("BUS")){
+            // BUS出租订单
+            BusOrder busOrder = new BusOrder();
+            busOrder.setOrderNo(orderNo);
+
+            // 验证签名
+            if (!SDKUtil.validate(valideData, encoding)) {
+                LogUtil.writeLog("验证签名结果[失败].");
+                logger.error("验证签名失败【"+orderNo+"】");
+                busOrder.setStatus("9");
+            } else {
+                LogUtil.writeLog("验证签名结果[成功].");
+                logger.error("验证签名成功【"+orderNo+"】");
+                busOrder.setStatus("1");
+                // 生成租用凭证
+                appInterfaceService.generateBusOrderVouchers(orderNo);
+            }
+            if(appInterfaceService.updateBusOrder(busOrder)) {
+                logger.info("订单状态更新成功，订单【"+orderNo+"】更新为【"+busOrder.getStatus()+"】");
+            }else{
+                logger.error("订单状态更新失败，订单【"+orderNo+"】更新为【" + busOrder.getStatus()+"】失败！");
             }
             return;
         }

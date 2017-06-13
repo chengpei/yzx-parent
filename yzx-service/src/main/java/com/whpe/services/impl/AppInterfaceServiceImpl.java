@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.whpe.bean.*;
 import com.whpe.bean.Dictionary;
 import com.whpe.bean.dto.SysPeopleDTO;
+import com.whpe.bean.vo.BusOrderVO;
 import com.whpe.bean.vo.OrderDetailVO;
 import com.whpe.bean.vo.OrderVO;
 import com.whpe.bean.vo.SysAppUserVO;
@@ -16,10 +17,7 @@ import com.whpe.dao.ycbus.YhIcKzMapper;
 import com.whpe.dao.yckq.*;
 import com.whpe.dao.yclyic.TCardInfoMapper;
 import com.whpe.dao.yclyic.TYhInfoMapper;
-import com.whpe.services.AppInterfaceService;
-import com.whpe.services.CommonService;
-import com.whpe.services.PayService;
-import com.whpe.services.RechargeService;
+import com.whpe.services.*;
 import com.whpe.utils.DateUtils;
 import com.whpe.utils.MessageAnalysisDevice;
 import com.whpe.utils.StringUtils;
@@ -28,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -82,6 +81,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private LeaseVouchersMapper leaseVouchersMapper;
+
+    @Resource
+    private BusOrderMapper busOrderMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -275,19 +277,46 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
         JSONObject reqContent = requestJson.getJSONObject("reqContent");
         String orderId = reqContent.getString("orderId");
         String payType = reqContent.getString("payType");
+        String orderNo = null;
+        String payMoney = null;
         // 根据订单号查询订单信息
-        OrderVO orderInfo = orderTMapper.selectOrderInfoByOrderId(orderId);
-        if(orderInfo == null){
-            makeRetInfo("E0001", "订单不存在", result);
+        if(orderId.startsWith("M")){
+            OrderVO orderInfo = orderTMapper.selectOrderInfoByOrderId(orderId);
+            if(orderInfo == null){
+                makeRetInfo("E0001", "订单不存在", result);
+                return;
+            }
+            if("1".equals(orderInfo.getPayState())){
+                makeRetInfo("E0001", "订单已支付过", result);
+                return;
+            }
+            orderNo = orderInfo.getOrderId();
+            payMoney = orderInfo.getRealGetMoney().toString();
+        }else if(orderId.startsWith("BUS")){
+            BusOrderVO orderInfo = busOrderMapper.selectByPrimaryKey(orderId);
+            if(orderInfo == null){
+                makeRetInfo("E0001", "订单不存在", result);
+                return;
+            }
+            if(!"0".equals(orderInfo.getStatus())){
+                makeRetInfo("E0001", "订单状态异常【"+orderInfo.getStatus()+"】", result);
+                return;
+            }
+            orderNo = orderInfo.getOrderNo();
+            payMoney = orderInfo.getReserveMoney().multiply(new BigDecimal(100)).longValue()+"";
+            payType = "08"; // BUS出租 只支持银联支付
+        }else {
+            makeRetInfo("E0001", "不支持该订单的支付", result);
             return;
         }
-        if("1".equals(orderInfo.getPayState())){
-            makeRetInfo("E0001", "订单已支付过", result);
+        if(StringUtils.isEmpty(orderNo) || StringUtils.isEmpty(payMoney)){
+            makeRetInfo("E0001", "参数异常", result);
             return;
         }
+
         if("08".equals(payType)){
             //银联支付
-            String tn = payService.getUnionPayTN(orderInfo.getOrderId(), orderInfo.getRealGetMoney()+"");
+            String tn = payService.getUnionPayTN(orderNo, payMoney);
             if (StringUtils.isNotEmpty(tn)){
                 putRetContent("tn", tn, result);
                 makeRetInfo("S0000", "申请成功", result);
@@ -298,7 +327,7 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             }
         }else if("06".equals(payType)){
             // 农行支付
-            if (payService.generateAbcPayHtml(orderInfo.getOrderId(), orderInfo.getRealGetMoney()+"")){
+            if (payService.generateAbcPayHtml(orderNo, payMoney)){
                 HttpServletRequest request = (HttpServletRequest) session.getAttribute("javax.servlet.http.HttpServletRequest");
                 String url = request.getScheme() + "://" + request.getServerName() + ":"
                         + request.getServerPort() + request.getContextPath() + "/abcPayHtml/" + orderId + ".html";
@@ -311,7 +340,7 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             }
         }else if("07".equals(payType)){
             // 农信支付
-            if(payService.generateNxhPayHtml(orderInfo.getOrderId(), orderInfo.getRealGetMoney()+"")){
+            if(payService.generateNxhPayHtml(orderNo, payMoney)){
                 HttpServletRequest request = (HttpServletRequest) session.getAttribute("javax.servlet.http.HttpServletRequest");
                 String url = request.getScheme() + "://" + request.getServerName() + ":"
                         + request.getServerPort() + request.getContextPath() + "/nxhPayHtml/" + orderId + ".html";
@@ -589,6 +618,91 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     }
 
     @Override
+    public void commitBusOrder(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        BusOrder busOrder = requestJson.getObject("reqContent", BusOrder.class);
+        if(StringUtils.isEmpty(busOrder.getOrderNo())){
+            // 订单号为空 新增订单
+            busOrder.setOrderNo(generateBusOrderNo("BUS"));
+            busOrder.setOrderType("BUS");
+            busOrder.setCreateTime(new Date());
+            busOrder.setuId(appUser.getuId());
+            busOrder.setStatus("0");
+            if(busOrderMapper.insertSelective(busOrder) > 0){
+                putRetContent("orderNo", busOrder.getOrderNo(), result);
+                makeRetInfo("S0000", "提交成功", result);
+                return;
+            }else{
+                makeRetInfo("E0001", "提交失败", result);
+                return;
+            }
+        }else{
+            // 订单号不为空 修改订单
+            busOrder.setOrderType(null);
+            busOrder.setReserveMoney(null);
+            busOrder.setCreateTime(null);
+            busOrder.setProductOfferId(null);
+            busOrder.setRealMoney(null);
+            busOrder.setStatus(null);
+            busOrder.setVouchers(null);
+            busOrder.setuId(null);
+            // 以上为修改订单中不能修改的信息
+            if(busOrderMapper.updateByPrimaryKeySelective(busOrder) > 0){
+                putRetContent("orderNo", busOrder.getOrderNo(), result);
+                makeRetInfo("S0000", "修改成功", result);
+                return;
+            }else{
+                makeRetInfo("E0001", "修改失败", result);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void queryBusOrder(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String status = reqContent.getString("status");
+        BusOrder params = new BusOrder();
+        if(StringUtils.isNotEmpty(status)){
+            params.setStatus(status);
+        }
+        params.setuId(appUser.getuId());
+        List<BusOrderVO> busOrderList = busOrderMapper.selectByCondition(params);
+        if(busOrderList != null && busOrderList.size() > 0){
+            result.put("retContent", busOrderList);
+            makeRetInfo("S0000", "查询成功", result);
+            return;
+        }else {
+            makeRetInfo("S0001", "未查询到数据", result);
+            return;
+        }
+    }
+
+    @Override
+    public void queryBusOrderDetail(JSONObject requestJson, JSONObject result, HttpSession session){
+        SysAppUserVO appUser = (SysAppUserVO) session.getAttribute("user");
+        JSONObject common = requestJson.getJSONObject("common");
+        JSONObject reqContent = requestJson.getJSONObject("reqContent");
+        String orderNo = reqContent.getString("orderNo");
+        if(StringUtils.isEmpty(orderNo)){
+            makeRetInfo("E0001", "参数不能为空", result);
+            return;
+        }
+        BusOrderVO busOrder = busOrderMapper.selectByPrimaryKey(orderNo);
+        if(busOrder != null){
+            result.put("retContent", busOrder);
+            makeRetInfo("S0000", "查询成功", result);
+            return;
+        }else {
+            makeRetInfo("S0001", "未查询到数据", result);
+            return;
+        }
+    }
+
+    @Override
     public int saveAbcRequestResult(Nhrequestresult nhrequestresult) {
         return nhrequestresultMapper.insertSelective(nhrequestresult);
     }
@@ -664,6 +778,11 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     @Override
     public boolean updateMallOrder(OrderT order) {
         return orderTMapper.updateByPrimaryKeySelective(order) > 0;
+    }
+
+    @Override
+    public boolean updateBusOrder(BusOrder busOrder) {
+        return busOrderMapper.updateByPrimaryKeySelective(busOrder) > 0;
     }
 
     @Override
@@ -798,6 +917,21 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     }
 
     /**
+     * 生成BUS订单号
+     * @param txChan
+     * @return
+     */
+    private String generateBusOrderNo(String txChan) {
+        // 获取数据库序列 seq_orderno 下一个的值,作为订单序号
+        String orderSeq = StaticVariable.getOrderSeq();
+        StringBuilder orderNo = new StringBuilder(txChan);
+        // Y10000000000100020170510123456
+        orderNo.append(DateUtils.getFormatDate(new Date(), "yyyyMMddHHmmss"));
+        orderNo.append(orderSeq);
+        return orderNo.toString();
+    }
+
+    /**
      * 生成凭证串码
      * @return
      */
@@ -809,6 +943,24 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             return generateVouchers();
         }
         return vouchers;
+    }
+
+    /**
+     * 根据BUS出租的订单号，生成卷码更新订单
+     * @param orderNo
+     * @return
+     */
+    @Override
+    public synchronized int generateBusOrderVouchers(String orderNo) {
+        String vouchers = StringUtils.getRadomString2(16);
+        BusOrder order = busOrderMapper.selectByVouchers(vouchers);
+        if(order != null){
+            return generateBusOrderVouchers(orderNo);
+        }
+        BusOrder busOrder = new BusOrder();
+        busOrder.setOrderNo(orderNo);
+        busOrder.setVouchers(vouchers);
+        return busOrderMapper.updateByPrimaryKeySelective(busOrder);
     }
 
     public static void makeRetInfo(String retCode,String retMsg , JSONObject result){

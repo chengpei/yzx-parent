@@ -1,16 +1,20 @@
 package com.whpe.test;
 
 import com.alibaba.fastjson.JSON;
+import com.whpe.bean.BusOrder;
 import com.whpe.bean.Result;
 import com.whpe.services.impl.AppInterfaceServiceImpl;
+import com.whpe.utils.DateUtils;
 import com.whpe.utils.HttpUtils;
 import com.whpe.utils.StringUtils;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.*;
 
 public class Main {
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, ParseException {
 //        Map<String, String> params = new HashMap<>();
 //        params.put("phoneNumber", "13476073978");
 //        params.put("smsType", "1");
@@ -35,41 +39,22 @@ public class Main {
 
 //        System.out.println(StringUtils.getRadomString2(16));
 
-        Thread t = new Thread(){
-            @Override
-            public void run() {
-                test();
-            }
-        };
-        Thread t1 = new Thread(){
-            @Override
-            public void run() {
-                test();
-            }
-        };
-        Thread t2 = new Thread(){
-            @Override
-            public void run() {
-                test();
-            }
-        };
-        t.setDaemon(false);
-        t1.setDaemon(false);
-        t2.setDaemon(false);
-
-        t1.start();
-        t2.start();
-        t.start();
-
-
-    }
-
-    public static int i=0;
-    public static synchronized void test(){
-        if(i != 10){
-            i++;
-            test();
-        }
-        System.out.println(i);
+        BusOrder busOrder = new BusOrder();
+        busOrder.setOrderNo("BUS20170613153253000000000000001");
+        busOrder.setLinkName("张三");
+        busOrder.setLinkPhone("13476073978");
+        busOrder.setRemark("公司旅游");
+        busOrder.setReserveMoney(new BigDecimal("199"));
+        busOrder.setBudgetMoney(new BigDecimal("1500"));
+        busOrder.setProductOfferId("e973e1c7a15449108d0366655948ee9b");
+        busOrder.setUseTime(DateUtils.getDateForString("20170620093000", "yyyyMMddHHmmss"));
+        busOrder.setUseDay(1L);
+        busOrder.setUseType(0L);
+        busOrder.setCompanyName("武汉公用电子");
+        busOrder.setDepartSite("古田二路汇丰企业总部");
+        busOrder.setTargetSite("XXXX风景区");
+        busOrder.setRealMoney(new BigDecimal("2000"));
+        busOrder.setBusLicense("鄂A12345");
+        System.out.println(JSON.toJSONString(busOrder));
     }
 }
