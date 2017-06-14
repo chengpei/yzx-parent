@@ -47,7 +47,7 @@
 		<!--<table tableName="ORDER_DETAIL_T" enableCountByExample="false" enableSelectByExample="false"-->
 			   <!--selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
 				<!--/>-->
-		<table tableName="BUS_ORDER" enableCountByExample="false" enableSelectByExample="false"
+		<table tableName="param_t" enableCountByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false"
 				/>
 

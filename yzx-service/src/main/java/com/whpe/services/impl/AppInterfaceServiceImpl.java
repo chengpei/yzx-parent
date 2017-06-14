@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.whpe.bean.*;
-import com.whpe.bean.Dictionary;
 import com.whpe.bean.dto.SysPeopleDTO;
 import com.whpe.bean.vo.BusOrderVO;
 import com.whpe.bean.vo.OrderDetailVO;
@@ -74,9 +73,6 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
     private FeedbackMapper feedbackMapper;
 
     @Resource
-    private DictionaryMapper dictionaryMapper;
-
-    @Resource
     private OrderTMapper orderTMapper;
 
     @Resource
@@ -84,6 +80,9 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
 
     @Resource
     private BusOrderMapper busOrderMapper;
+
+    @Resource
+    private ParamTMapper paramTMapper;
 
     @Override
     public void updateSysPeople(JSONObject requestJson, JSONObject result, HttpSession session) {
@@ -603,14 +602,14 @@ public class AppInterfaceServiceImpl extends CommonService implements AppInterfa
             makeRetInfo("E0001", "参数不能为空", result);
             return;
         }
-        List<Dictionary> dictionaryList = dictionaryMapper.selectListByCode(code.toUpperCase());
-        if(dictionaryList == null || dictionaryList.size() == 0){
+        List<ParamT> paramList = paramTMapper.selectListByCode(code.toUpperCase());
+        if(paramList == null || paramList.size() == 0){
             makeRetInfo("S0001", "未查询到数据", result);
             return;
         }
         List<String> payMoneyList = new ArrayList<String>();
-        for (Dictionary dic : dictionaryList){
-            payMoneyList.add(dic.getValue());
+        for (ParamT param : paramList){
+            payMoneyList.add(param.getParamValue());
         }
         putRetContent(JSONArray.parseArray(JSON.toJSONString(payMoneyList)), result);
         makeRetInfo("S0000", "查询成功", result);

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whpe.dao.yckq.ParamTMapper" >
+  <resultMap id="BaseResultMap" type="com.whpe.bean.ParamT" >
+    <id column="PARAM_ID" property="paramId" jdbcType="VARCHAR" />
+    <result column="PARAM_CODE" property="paramCode" jdbcType="VARCHAR" />
+    <result column="PARAM_NAME" property="paramName" jdbcType="VARCHAR" />
+    <result column="PARAM_VALUE" property="paramValue" jdbcType="VARCHAR" />
+    <result column="PARAM_DESC" property="paramDesc" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PARAM_ID, PARAM_CODE, PARAM_NAME, PARAM_VALUE, PARAM_DESC, STATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PARAM_T
+    where PARAM_ID = #{paramId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectListByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from PARAM_T
+    where PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PARAM_T
+    where PARAM_ID = #{paramId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whpe.bean.ParamT" >
+    insert into PARAM_T (PARAM_ID, PARAM_CODE, PARAM_NAME, 
+      PARAM_VALUE, PARAM_DESC, STATE
+      )
+    values (#{paramId,jdbcType=VARCHAR}, #{paramCode,jdbcType=VARCHAR}, #{paramName,jdbcType=VARCHAR}, 
+      #{paramValue,jdbcType=VARCHAR}, #{paramDesc,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whpe.bean.ParamT" >
+    insert into PARAM_T
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paramId != null" >
+        PARAM_ID,
+      </if>
+      <if test="paramCode != null" >
+        PARAM_CODE,
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME,
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE,
+      </if>
+      <if test="paramDesc != null" >
+        PARAM_DESC,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paramId != null" >
+        #{paramId,jdbcType=VARCHAR},
+      </if>
+      <if test="paramCode != null" >
+        #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null" >
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null" >
+        #{paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whpe.bean.ParamT" >
+    update PARAM_T
+    <set >
+      <if test="paramCode != null" >
+        PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null" >
+        PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PARAM_ID = #{paramId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whpe.bean.ParamT" >
+    update PARAM_T
+    set PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR}
+    where PARAM_ID = #{paramId,jdbcType=VARCHAR}
+  </update>
+</mapper>
