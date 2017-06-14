@@ -10,14 +10,14 @@
     <result column="ORIGINAL_PRICE" property="originalPrice" jdbcType="DECIMAL" />
     <result column="REAL_PRICE" property="realPrice" jdbcType="DECIMAL" />
     <result column="SALES_NUMBER" property="salesNumber" jdbcType="DECIMAL" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="STATE" property="state" jdbcType="VARCHAR" />
     <result column="SALES_DESC" property="salesDesc" jdbcType="VARCHAR" />
     <result column="INTEGRAL_FLAG" property="integralFlag" jdbcType="VARCHAR" />
     <result column="OFFER_TYPE" property="offerType" jdbcType="VARCHAR" />
     <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
     <result column="PRICE_METHOD" property="priceMethod" jdbcType="VARCHAR" />
-    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
     <result column="SETTLE_ACCOUNT_PRICE" property="settleAccountPrice" jdbcType="DECIMAL" />
     <result column="EXTEND_COLUMN1" property="extendColumn1" jdbcType="VARCHAR" />
@@ -61,9 +61,9 @@
     values (#{productOfferId,jdbcType=VARCHAR}, #{productOfferName,jdbcType=VARCHAR}, 
       #{productOfferDesc,jdbcType=VARCHAR}, #{imageCode,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, 
       #{originalPrice,jdbcType=DECIMAL}, #{realPrice,jdbcType=DECIMAL}, #{salesNumber,jdbcType=DECIMAL}, 
-      #{createTime,jdbcType=DATE}, #{state,jdbcType=VARCHAR}, #{salesDesc,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{salesDesc,jdbcType=VARCHAR},
       #{integralFlag,jdbcType=VARCHAR}, #{offerType,jdbcType=VARCHAR}, #{priceType,jdbcType=VARCHAR}, 
-      #{priceMethod,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, #{operator,jdbcType=VARCHAR}, 
+      #{priceMethod,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR},
       #{settleAccountPrice,jdbcType=DECIMAL}, #{extendColumn1,jdbcType=VARCHAR}, #{extendColumn2,jdbcType=VARCHAR}, 
       #{storeNumber,jdbcType=DECIMAL}, #{saleState,jdbcType=DECIMAL}, #{imageCode2,jdbcType=VARCHAR}, 
       #{imageCode3,jdbcType=VARCHAR}, #{imageCode4,jdbcType=VARCHAR}, #{imageCode5,jdbcType=VARCHAR}, 
@@ -180,7 +180,7 @@
         #{salesNumber,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},
@@ -201,7 +201,7 @@
         #{priceMethod,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=DATE},
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="operator != null" >
         #{operator,jdbcType=VARCHAR},
@@ -263,7 +263,7 @@
         SALES_NUMBER = #{salesNumber,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null" >
-        CREATE_TIME = #{createTime,jdbcType=DATE},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null" >
         STATE = #{state,jdbcType=VARCHAR},
@@ -284,7 +284,7 @@
         PRICE_METHOD = #{priceMethod,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null" >
-        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="operator != null" >
         OPERATOR = #{operator,jdbcType=VARCHAR},
@@ -331,14 +331,14 @@
       ORIGINAL_PRICE = #{originalPrice,jdbcType=DECIMAL},
       REAL_PRICE = #{realPrice,jdbcType=DECIMAL},
       SALES_NUMBER = #{salesNumber,jdbcType=DECIMAL},
-      CREATE_TIME = #{createTime,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       STATE = #{state,jdbcType=VARCHAR},
       SALES_DESC = #{salesDesc,jdbcType=VARCHAR},
       INTEGRAL_FLAG = #{integralFlag,jdbcType=VARCHAR},
       OFFER_TYPE = #{offerType,jdbcType=VARCHAR},
       PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
       PRICE_METHOD = #{priceMethod,jdbcType=VARCHAR},
-      UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       OPERATOR = #{operator,jdbcType=VARCHAR},
       SETTLE_ACCOUNT_PRICE = #{settleAccountPrice,jdbcType=DECIMAL},
       EXTEND_COLUMN1 = #{extendColumn1,jdbcType=VARCHAR},
